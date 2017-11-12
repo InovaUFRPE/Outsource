@@ -28,10 +28,9 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.outsource.inovaufrpe.usuario.R;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+//Teste
 public class LoginActivity extends Activity {
 
     private EditText etEmail;
@@ -51,12 +50,12 @@ public class LoginActivity extends Activity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(com.outsource.inovaufrpe.usuario.R.layout.activity_login);
         FirebaseAuth.getInstance().signOut();
-        etEmail = (EditText) findViewById(R.id.etEmailID);
-        etSenha = (EditText) findViewById(R.id.etsenhaID);
-        etTelefone = (EditText) findViewById(R.id.etTelefoneID);
-        Button login = (Button) findViewById(R.id.btLogarID);
-        Button cadastro = (Button) findViewById(R.id.btCadastrarID);
-        loginButton = (LoginButton) findViewById(R.id.btFacebookID);
+        etEmail = findViewById(R.id.etEmailID);
+        etSenha = findViewById(R.id.etsenhaID);
+        etTelefone = findViewById(R.id.etTelefoneID);
+        Button login = findViewById(R.id.btLogarID);
+        Button cadastro = findViewById(R.id.btCadastrarID);
+        loginButton = findViewById(R.id.btFacebookID);
         callbackManager = CallbackManager.Factory.create();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
