@@ -1,8 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.outsource.inovaufrpe.usuario.application.MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/etAtualizaNomeID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nome"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etAtualizaSobrenomeID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Sobrenome"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etAtualizaCpfID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="cpf"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etAtualizaEmailID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="e-mail"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/etAtualizaTelefoneID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Celular"
+        android:inputType="phone" />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <Button
+        android:id="@+id/btAtualizarID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Atualizar" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <Button
+        android:id="@+id/btDeletarID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deletar" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <Button
+        android:id="@+id/btSair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sair" />
+</LinearLayout>

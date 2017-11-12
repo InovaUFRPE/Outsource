@@ -41,7 +41,7 @@ public class CadastroActivity extends Activity {
         etCpf = (EditText) findViewById(R.id.etCpfID);
         etEmail = (EditText) findViewById(R.id.etEmailID);
         etTelefone = (EditText) findViewById(R.id.etTelefoneID);
-        etSenha = (EditText) findViewById(R.id.etNomeID);
+        etSenha = (EditText) findViewById(R.id.etSenhaID);
         btCadastrar = (Button) findViewById(R.id.btCadastrarID);
 
         btCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +75,8 @@ public class CadastroActivity extends Activity {
                                         usuario.setNome(nome);
                                         usuario.setUsername(etSobrenome.getText().toString());
                                         usuario.setNumero(etTelefone.getText().toString());
+                                        usuario.setEmail(etEmail.getText().toString());
+                                        usuario.setTelefone(etTelefone.getText().toString().trim());
                                         usuarioReference.child(user.getUid()).setValue(usuario);
                                         startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                                         finish();

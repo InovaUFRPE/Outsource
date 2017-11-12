@@ -10,8 +10,29 @@ public class Usuario {
     private String id;
     private String nome;
     private String username;
+    private String email;
+    private String telefone;
     private String nascimento;
     private String numero;
+
+    public Usuario() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 
     public String getId() {
         return id;
