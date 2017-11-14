@@ -1,67 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/colorPrimary"
     tools:context="com.outsource.inovaufrpe.usuario.application.CadastroActivity">
 
-    <EditText
-        android:id="@+id/etNomeID"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Nome"
-        android:inputType="textPersonName" />
+        android:layout_margin="16dp">
 
-    <EditText
-        android:id="@+id/etSobrenomeID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Sobrenome"
-        android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/etCpfID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="cpf"
-        android:inputType="textPersonName" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etEmailID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="e-mail"
-        android:inputType="textEmailAddress" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cadastre-se no Outsource"
+                android:layout_marginBottom="20dp"
+                android:theme="@style/TextAppearance.AppCompat.Headline"/>
 
-    <EditText
-        android:id="@+id/etTelefoneID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Celular"
-        android:inputType="phone" />
 
-    <EditText
-        android:id="@+id/etSenhaID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Senha"
-        android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/etNomeID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Primeiro nome"
+                android:inputType="textPersonName" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
+            <EditText
+                android:id="@+id/etSobrenomeID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Último nome"
+                android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/btCadastrarID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cadastrar" />
+            <EditText
+                android:id="@+id/etCpfID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CPF"
+                android:inputType="textPersonName" />
 
-</LinearLayout>
+            <EditText
+                android:id="@+id/etEmailID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/etTelefoneID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Celular"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/etSenhaID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Senha"
+                android:inputType="textPassword" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="Aceito os termos de uso e a política de privacidade"/>
+
+            <Button
+                android:id="@+id/btCadastrarID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorAccent"
+                android:text="Cadastrar" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

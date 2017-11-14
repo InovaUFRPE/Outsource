@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
     tools:context="com.outsource.inovaufrpe.usuario.application.LoginActivity">
 
     <!--<com.facebook.login.widget.LoginButton-->
@@ -17,81 +20,75 @@
     <!--android:layout_alignParentBottom="true"-->
     <!--android:layout_centerHorizontal="true" />-->
 
-    <EditText
-        android:id="@+id/etEmailID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="email "
-        android:inputType="textEmailAddress"
-        android:layout_marginBottom="17dp"
-        android:layout_above="@+id/etsenhaID"
-        android:layout_centerHorizontal="true" />
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/out" />
 
-    <EditText
-        android:id="@+id/etsenhaID"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="senha"
-        android:inputType="textPassword"
-        android:layout_above="@+id/textView"
-        android:layout_alignLeft="@+id/etEmailID"
-        android:layout_alignStart="@+id/etEmailID"
-        android:layout_marginBottom="37dp" />
+        android:background="@color/cardview_light_background"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/btLogarID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btCadastrarID"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp"
-        android:text="Login" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/etEmailID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="email "
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/etsenhaID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="senha"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/btLogarID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:background="@color/colorAccent"
+                android:text="Login" />
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/btFacebookID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="OU"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/etTelefoneID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="telefone"
+                android:inputType="phone" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <Button
         android:id="@+id/btCadastrarID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cadastro"
-        android:layout_marginBottom="53dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/btFacebookID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="23dp"></com.facebook.login.widget.LoginButton>
-
-    <EditText
-        android:id="@+id/etTelefoneID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="telefone"
-        android:inputType="phone"
-        android:layout_above="@+id/btCadastrarID"
-        android:layout_alignLeft="@+id/etEmailID"
-        android:layout_alignStart="@+id/etEmailID"
-        android:layout_marginBottom="114dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="27dp"
-        android:text="OU"
-        android:layout_above="@+id/etTelefoneID"
-        android:layout_centerHorizontal="true" />
-
-    <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:background="@color/colorPrimaryDark"
+        android:text="Cadastro" />
 
-</RelativeLayout>
+</LinearLayout>
