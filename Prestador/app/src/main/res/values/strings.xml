@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Outsource</string>
+    <string name="facebook_app_id">1052106148264805</string>
+    <string name="fb_login_protocol_scheme">fb1052106148264805</string>
+    <string name="login">Login</string>
+
+</resources>
