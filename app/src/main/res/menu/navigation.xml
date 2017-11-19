@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_servicos"
+        android:icon="@drawable/ic_work_black_24dp"
+        android:title="Serviços" />
+
+    <item
+        android:id="@+id/navigation_carteira"
+        android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+        android:title="Carteira" />
+
+    <item
+        android:id="@+id/navigation_perfil"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="Perfil" />
+
+</menu>

@@ -12,31 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".application.LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".application.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".application.CadastroActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".application.CadastroActivity" />
 
-        <activity
-            android:name=".application.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity android:name=".application.MainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity
-            android:name=".application.CodigoActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".application.CodigoActivity" />
+        <activity android:name=".application.ConfiguracoesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.outsource.inovaufrpe.usuario.application.MainActivity" />
+        </activity>
 
     </application>
+
 </manifest>
