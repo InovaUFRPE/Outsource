@@ -23,7 +23,6 @@ import com.outsource.inovaufrpe.usuario.dominio.Usuario;
 public class CadastroActivity extends Activity {
     private EditText etNome;
     private EditText etSobrenome;
-    private EditText etCpf;
     private EditText etEmail;
     private EditText etTelefone;
     private EditText etSenha;

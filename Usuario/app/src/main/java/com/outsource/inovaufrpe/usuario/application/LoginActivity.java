@@ -30,7 +30,6 @@ import com.outsource.inovaufrpe.usuario.R;
 
 import java.util.concurrent.TimeUnit;
 
-//Teste
 public class LoginActivity extends Activity {
 
     private EditText etEmail;
@@ -38,7 +37,6 @@ public class LoginActivity extends Activity {
     private EditText etTelefone;
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    private static final int RC_SIGN_IN = 123;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private String mVerificationId;
@@ -49,7 +47,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(com.outsource.inovaufrpe.usuario.R.layout.activity_login);
-        FirebaseAuth.getInstance().signOut();
+        firebaseAuth.signOut();
         etEmail = findViewById(R.id.etEmailID);
         etSenha = findViewById(R.id.etsenhaID);
         etTelefone = findViewById(R.id.etTelefoneID);
