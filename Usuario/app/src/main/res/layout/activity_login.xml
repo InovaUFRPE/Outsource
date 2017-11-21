@@ -32,24 +32,6 @@
             android:padding="16dp">
 
             <EditText
-                android:id="@+id/etEmailID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="email"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorGray" />
-
-            <EditText
-                android:id="@+id/etsenhaID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="senha"
-                android:inputType="textPassword"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorGray" />
-
-            <EditText
                 android:id="@+id/etTelefoneID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,6 +39,14 @@
                 android:inputType="phone"
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorGray" />
+
+            <EditText
+                android:id="@+id/etCodigoID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Codigo"
+                android:inputType="number" />
 
             <Button
                 android:id="@+id/btLogarID"

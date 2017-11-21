@@ -45,8 +45,6 @@ public class CadastroServicoActivity extends AppCompatActivity {
         btVoltarID = (Button)findViewById(R.id.btVoltarID);
         btConfirmarID = (Button)findViewById(R.id.btConfirmarID);
 
-        inicializarFirebase();
-
         btVoltarID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,14 +58,16 @@ public class CadastroServicoActivity extends AppCompatActivity {
                 confirmar();
             }
         });
+
+        if (firebaseDatabase == null) {
+            inicializarFirebase();
+        }
     }
 
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(CadastroServicoActivity.this);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(true);
         databaseReference = firebaseDatabase.getReference();
-
     }
 
     public void voltar(){

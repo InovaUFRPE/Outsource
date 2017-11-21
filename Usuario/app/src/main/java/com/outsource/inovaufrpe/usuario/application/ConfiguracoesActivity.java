@@ -38,7 +38,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
         setTitle("Configurações");
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
         DatabaseReference firebasereference = usuarioReference.child(user.getUid());
         firebasereference.addValueEventListener(new ValueEventListener() {
             @Override

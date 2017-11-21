@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -20,21 +21,29 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.ListaServicosActivity;
 import com.outsource.inovaufrpe.usuario.R;
 
 import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements View.OnClickListener{
 
-    private EditText etEmail;
-    private EditText etSenha;
+    private Button login;
+    private Button cadastro;
+    private EditText etCodigo;
     private EditText etTelefone;
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
@@ -42,6 +51,7 @@ public class LoginActivity extends Activity {
     private CallbackManager callbackManager;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
+    DatabaseReference root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +59,19 @@ public class LoginActivity extends Activity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(com.outsource.inovaufrpe.usuario.R.layout.activity_login);
         firebaseAuth.signOut();
-        etEmail = findViewById(R.id.etEmailID);
-        etSenha = findViewById(R.id.etsenhaID);
         etTelefone = findViewById(R.id.etTelefoneID);
-        Button login = findViewById(R.id.btLogarID);
-        Button cadastro = findViewById(R.id.btCadastrarID);
+        etCodigo = findViewById(R.id.etCodigoID);
+        login = findViewById(R.id.btLogarID);
+        cadastro = findViewById(R.id.btCadastrarID);
         loginButton = findViewById(R.id.btFacebookID);
+        findViewById(R.id.btCadastrarID).setOnClickListener(this);
         callbackManager = CallbackManager.Factory.create();
+        loginButton.setReadPermissions("email", "public_profile");
+        etCodigo.setVisibility(View.INVISIBLE);
+        login.setOnClickListener(this);
+        loginButton.setOnClickListener(this);
+        cadastro.setOnClickListener(this);
+        root = FirebaseDatabase.getInstance().getReference();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -93,43 +109,44 @@ public class LoginActivity extends Activity {
         });
     }
 
-    private void logar() {
-        String email = etEmail.getText().toString();
-        String senha = etSenha.getText().toString();
+    private void LoginFacebook(AccessToken token){
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                            usuarioLogado();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("kkj", "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
 
-        if (validaCampos(email, senha)) {
-            firebaseAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-
-                    if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
-                        finish();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Tentativa de Login falhou" + task.getException(), Toast.LENGTH_SHORT).show();
+                        // ...
                     }
-                }
-            });
-        }else if(etTelefone.getText().toString().trim().length() != 0){
-            cadastrartelefone(etTelefone.getText().toString());
+                });
+    }
+
+    private void logarComCredential() {
+        String code = etCodigo.getText().toString();
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+        loginCelular(credential);
+    }
+
+    private void logar() {
+        if(etTelefone.getText().toString().trim().length() != 0){
+            String numero = "+55" + etTelefone.getText().toString();
+            cadastrartelefone(numero);
+        }else{
+            etTelefone.setError("Número inválido");
         }
     }
 
-    private boolean validaCampos(String email, String senha) {
-        boolean validacao = true;
 
-        if (email.trim().length() == 0) {
-            etEmail.setError("Email inválido");
-            validacao = false;
-        }
-        if (senha.trim().length() == 0) {
-            etSenha.setError("Senha inválida");
-            validacao = false;
-        }
-
-        return validacao;
-    }
 
     private void cadastrartelefone(String phoneNumber) {
 
@@ -177,8 +194,11 @@ public class LoginActivity extends Activity {
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
                 mResendToken = token;
-                // ...
+                etCodigo.setVisibility(View.VISIBLE);
+                etTelefone.setVisibility(View.INVISIBLE);
+                login.setText("Confirmar Codigo");
             }
+
         };
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
@@ -195,11 +215,8 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithCredential:success");
-                            Toast.makeText(LoginActivity.this, "logado telefone", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = task.getResult().getUser();
-                            // ...
+                            Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                            usuarioLogado();
                         } else {
                             // Sign in failed, display a message and update the UI
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
@@ -211,8 +228,67 @@ public class LoginActivity extends Activity {
                 });
     }
 
+    private void usuarioLogado(){
+        DatabaseReference users = root.child("prestador");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(firebaseAuth.getCurrentUser().getUid())) {
+                    finish();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }else{
+                    finish();
+                    startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btLogarID:
+                Toast.makeText(LoginActivity.this, "ADLE", Toast.LENGTH_SHORT).show();
+                if(etCodigo.getVisibility() == View.VISIBLE){
+                    logarComCredential();
+                }else {
+                    logar();
+                }
+                break;
+            case R.id.btCadastrarID:
+                startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
+                break;
+            case R.id.btFacebookID:
+                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        AuthCredential credential = FacebookAuthProvider.getCredential(loginResult.getAccessToken().getToken());
+                        LoginFacebook(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Toast.makeText(LoginActivity.this, "Falha ao logar", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                break;
+        }
+    }
+
 }

@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name="com.outsource.inovaufrpe.usuario.utils.FirebaseApp">
         <activity android:name=".application.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +26,6 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".application.CodigoActivity" />
         <activity android:name=".application.ConfiguracoesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
