@@ -40,21 +40,21 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         setTitle("Configurações");
         final FirebaseUser user = firebaseAuth.getCurrentUser();
         DatabaseReference firebasereference = usuarioReference.child(user.getUid());
-//        firebasereference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Prestador usuario = dataSnapshot.getValue(Prestador.class);
-//                etAtualizaNome.setText(usuario.getNome());
-//                etAtualizaSobrenome.setText(usuario.getUsername());
-//                etAtualizaEmail.setText(usuario.getEmail());
-//                etAtualizaTelefone.setText(usuario.getTelefone());
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+        firebasereference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Prestador usuario = dataSnapshot.getValue(Prestador.class);
+                etAtualizaNome.setText(usuario.getNome());
+                etAtualizaSobrenome.setText(usuario.getUsername());
+                etAtualizaEmail.setText(usuario.getEmail());
+                etAtualizaTelefone.setText(usuario.getTelefone());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         etAtualizaNome = (EditText) findViewById(R.id.etAtualizaNomeID);
         etAtualizaSobrenome = (EditText) findViewById(R.id.etAtualizaSobrenomeID);
         etAtualizaEmail = (EditText) findViewById(R.id.etAtualizaEmailID);

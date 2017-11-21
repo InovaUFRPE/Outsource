@@ -57,13 +57,6 @@
                 android:hint="Celular"
                 android:inputType="phone" />
 
-            <EditText
-                android:id="@+id/etSenhaID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Senha"
-                android:inputType="textPassword" />
-
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
