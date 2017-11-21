@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:color="http://schemas.android.com/apk/res-auto"
+    tools:context="com.outsource.inovaufrpe.prestador.MainPerfilFragment"
+    android:layout_below="@id/toolbar">
+
+    <Button
+        android:id="@+id/bt2"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:text="config" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="219dp"
+        android:layout_gravity="center_vertical"
+        android:tint="@color/colorPrimaryDark"
+        color:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+</LinearLayout>

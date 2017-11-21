@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="@string/login" />
+                android:text="login" />
 
             <TextView
                 android:id="@+id/textView"
