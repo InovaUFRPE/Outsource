@@ -1,6 +1,7 @@
 package com.outsource.inovaufrpe.prestador.activities;
 
         import android.content.Intent;
+        import android.net.wifi.hotspot2.pps.Credential;
         import android.support.annotation.NonNull;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
@@ -10,6 +11,7 @@ package com.outsource.inovaufrpe.prestador.activities;
         import android.widget.EditText;
         import android.widget.Toast;
 
+        import com.facebook.AccessToken;
         import com.facebook.CallbackManager;
         import com.facebook.FacebookCallback;
         import com.facebook.FacebookException;
@@ -20,27 +22,36 @@ package com.outsource.inovaufrpe.prestador.activities;
         import com.google.android.gms.tasks.Task;
         import com.google.firebase.FirebaseException;
         import com.google.firebase.FirebaseTooManyRequestsException;
+        import com.google.firebase.auth.AuthCredential;
         import com.google.firebase.auth.AuthResult;
+        import com.google.firebase.auth.FacebookAuthProvider;
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
         import com.google.firebase.auth.FirebaseUser;
         import com.google.firebase.auth.PhoneAuthCredential;
         import com.google.firebase.auth.PhoneAuthProvider;
+        import com.google.firebase.database.DataSnapshot;
+        import com.google.firebase.database.DatabaseError;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+        import com.google.firebase.database.ValueEventListener;
         import com.outsource.inovaufrpe.prestador.R;
 
         import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText etTelefone;
     private EditText etCodigo;
-    private Button login;
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private LoginButton loginButton;
+    private Button login;
+    private Button cadastro;
     private CallbackManager callbackManager;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
+    DatabaseReference root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,51 +62,76 @@ public class LoginActivity extends AppCompatActivity {
         etTelefone = findViewById(R.id.etTelefoneID);
         etCodigo = findViewById(R.id.etCodigoID);
         login = findViewById(R.id.btLogarID);
-        Button cadastro = findViewById(R.id.btCadastrarID);
+        cadastro = findViewById(R.id.btCadastrarID);
         loginButton = findViewById(R.id.btFacebookID);
+        findViewById(R.id.btCadastrarID).setOnClickListener(this);
         callbackManager = CallbackManager.Factory.create();
-
+        loginButton.setReadPermissions("email", "public_profile");
         etCodigo.setVisibility(View.INVISIBLE);
+        login.setOnClickListener(this);
+        loginButton.setOnClickListener(this);
+        cadastro.setOnClickListener(this);
+        root = FirebaseDatabase.getInstance().getReference();
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
-                finish();
-                startActivity(new Intent(LoginActivity.this, ConfiguracoesActivity.class));
+    }
 
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(LoginActivity.this, "Falha ao logar", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public void onClick(View view){
+        switch (view.getId()) {
+            case R.id.btLogarID:
+                Toast.makeText(LoginActivity.this, "ADLE", Toast.LENGTH_SHORT).show();
                 if(etCodigo.getVisibility() == View.VISIBLE){
                     logarComCredential();
                 }else {
                     logar();
                 }
-            }
-        });
-
-        cadastro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
+                break;
+            case R.id.btCadastrarID:
                 startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
-            }
-        });
+                break;
+            case R.id.btFacebookID:
+                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        AuthCredential credential = FacebookAuthProvider.getCredential(loginResult.getAccessToken().getToken());
+                        LoginFacebook(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Toast.makeText(LoginActivity.this, "Falha ao logar", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                break;
+        }
+    }
+
+    private void LoginFacebook(AccessToken token){
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                            usuarioLogado();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("kkj", "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
     }
 
     private void logarComCredential() {
@@ -181,12 +217,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithCredential:success");
-                            Toast.makeText(LoginActivity.this, "logado telefone", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = task.getResult().getUser();
-                            finish();
-                            startActivity(new Intent(LoginActivity.this, ConfiguracoesActivity.class));
+                            Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                            usuarioLogado();
                         } else {
                             // Sign in failed, display a message and update the UI
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
@@ -201,6 +233,27 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void usuarioLogado(){
+        DatabaseReference users = root.child("prestador");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(firebaseAuth.getCurrentUser().getUid())) {
+                    finish();
+                    startActivity(new Intent(LoginActivity.this, ConfiguracoesActivity.class));
+                }else{
+                    finish();
+                    startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }
