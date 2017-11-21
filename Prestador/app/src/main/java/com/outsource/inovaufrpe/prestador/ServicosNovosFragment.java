@@ -3,27 +3,22 @@ package com.outsource.inovaufrpe.prestador;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.outsource.inovaufrpe.prestador.CadastroServicoActivity;
-import com.outsource.inovaufrpe.prestador.MainActivity;
 import com.outsource.inovaufrpe.prestador.dominio.Servico;
-import com.outsource.inovaufrpe.prestador.dominio.Prestador;
+import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,20 +27,12 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class ServicosNovosFragment extends Fragment {
-    TextView tNomeServicoID;
-    TextView tDataServicoID;
-    TextView tDonoServicoID;
-    TextView tNotaDonoServicoID;
-    TextView tPrecoServicoID;
-    ListView lDados;
+    private RecyclerView mRecyclerView;
+    private FirebaseRecyclerAdapter adapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseDatabase firebaseDatabase;
-
-    private List<Servico> listServico = new ArrayList<Servico>();
-    private ArrayAdapter<Servico> arrayAdapterServico;
-
 
     public ServicosNovosFragment() {
         // Required empty public constructor
@@ -55,61 +42,48 @@ public class ServicosNovosFragment extends Fragment {
                              Bundle savedInstanceState) throws NullPointerException{
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_servicos_novos, container, false);
-        /*inicializarFirebase();
-        eventoDataBase();
-        preencheDados();*/
+        mRecyclerView = (RecyclerView) layout.findViewById(R.id.recycleID);
+
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        adaptador();
 
         return layout;
     }
 
-    /*private void inicializarFirebase() {
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(true);
-        databaseReference = firebaseDatabase.getReference();
+    private void adaptador(){
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.linha_recycleview, ServicoListHolder.class, databaseReference.child("servico")) {
 
-    }
+            @Override
+            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+                viewHolder.mainLayout.setVisibility(View.VISIBLE);
+                viewHolder.linearLayout.setVisibility(View.VISIBLE);
+                viewHolder.titulo.setText(model.getNome());
+                viewHolder.descricao.setText(model.getDescricao());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getPreco())));
 
-    public void eventoDataBase(){
-        try {
-            databaseReference.child("servico").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    listServico.clear();
-                    for (DataSnapshot objSnapshot:dataSnapshot.getChildren()){
-                        Servico servico = objSnapshot.getValue(Servico.class);
-                        tNomeServicoID.setText(servico.getNome());
-                        tDataServicoID.setText(servico.getData());
-                        tPrecoServicoID.setText(servico.getPreco());
-                        listServico.add(servico);
+                viewHolder.aceitar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getActivity(), "Voce aceitou", Toast.LENGTH_SHORT).show();
                     }
-                    arrayAdapterServico = new ArrayAdapter<Servico>(getActivity(),R.layout.fragment_servicos_novos,listServico);
-                    lDados.setAdapter(arrayAdapterServico);
-                }
+                });
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                viewHolder.negociar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getActivity(), "Voce esta negociando", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
-                }
-            });
-        } catch (NullPointerException e){
-            Log.e("ServicosNovosFragment","Tabela serviços não possui elementos");
-        }
+            };
+
+        mRecyclerView.setAdapter(adapter);
     }
-
-    public void preencheDados(){
-        databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                tDonoServicoID.setText(usuario.getNome());
-                tNotaDonoServicoID.setText(usuario.getNota());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }*/
 
 }

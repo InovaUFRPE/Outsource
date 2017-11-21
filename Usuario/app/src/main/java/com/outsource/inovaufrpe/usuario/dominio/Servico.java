@@ -1,5 +1,7 @@
 package com.outsource.inovaufrpe.usuario.dominio;
 
+import java.util.Date;
+
 /**
  * Created by Heitor on 19/11/2017.
  */
@@ -9,7 +11,8 @@ public class Servico {
     private String nome;
     private String descricao;
     private String preco;
-    private String data;
+    private Date data;
+    private EstadoServico estado;
 
     public Servico() {
     }
@@ -46,11 +49,20 @@ public class Servico {
         this.preco = preco;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
+
+    public EstadoServico getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoServico estado) {
+        this.estado = estado;
+    }
+
 }

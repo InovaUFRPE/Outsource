@@ -58,7 +58,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(com.outsource.inovaufrpe.usuario.R.layout.activity_login);
-        firebaseAuth.signOut();
+        checaSessao();
         etTelefone = findViewById(R.id.etTelefoneID);
         etCodigo = findViewById(R.id.etCodigoID);
         login = findViewById(R.id.btLogarID);
@@ -72,41 +72,14 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         loginButton.setOnClickListener(this);
         cadastro.setOnClickListener(this);
         root = FirebaseDatabase.getInstance().getReference();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
-                finish();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
-            }
+    }
 
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(LoginActivity.this, "Falha ao logar", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logar();
-            }
-        });
-
-        cadastro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
-            }
-        });
+    private void checaSessao() {
+        if(firebaseAuth.getCurrentUser() != null){
+            finish();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
     }
 
     private void LoginFacebook(AccessToken token){

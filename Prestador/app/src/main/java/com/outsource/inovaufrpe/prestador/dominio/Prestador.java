@@ -1,5 +1,8 @@
 package com.outsource.inovaufrpe.prestador.dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Pichau on 19/11/2017.
  */
@@ -11,6 +14,8 @@ public class Prestador {
     private String email;
     private String telefone;
     private String nascimento;
+    private float dinheiro;
+    private List<Servico> listaServicos = new ArrayList<Servico>();
 
     public Prestador() {
     }
@@ -62,4 +67,21 @@ public class Prestador {
     public void setNascimento(String nascimento) {
         this.nascimento = nascimento;
     }
+
+    public List<Servico> getListaServicos() {
+        return listaServicos;
+    }
+
+    public void setListaServicos(List<Servico> listaServicos) {
+        this.listaServicos = listaServicos;
+    }
+
+    public float getDinheiro() {
+        return dinheiro;
+    }
+
+    public void setDinheiro(float dinheiro) {
+        this.dinheiro = dinheiro;
+    }
+
 }

@@ -35,6 +35,7 @@ package com.outsource.inovaufrpe.prestador.activities;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.ValueEventListener;
+        import com.outsource.inovaufrpe.prestador.MainActivity;
         import com.outsource.inovaufrpe.prestador.R;
 
         import java.util.concurrent.TimeUnit;
@@ -58,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
-        firebaseAuth.signOut();
+        checaSessao();
         etTelefone = findViewById(R.id.etTelefoneID);
         etCodigo = findViewById(R.id.etCodigoID);
         login = findViewById(R.id.btLogarID);
@@ -73,6 +74,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         cadastro.setOnClickListener(this);
         root = FirebaseDatabase.getInstance().getReference();
 
+    }
+
+    private void checaSessao() {
+        if(firebaseAuth.getCurrentUser() != null){
+            finish();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
     }
 
     @Override
@@ -242,7 +250,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.hasChild(firebaseAuth.getCurrentUser().getUid())) {
                     finish();
-                    startActivity(new Intent(LoginActivity.this, ConfiguracoesActivity.class));
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }else{
                     finish();
                     startActivity(new Intent(LoginActivity.this, CadastroActivity.class));

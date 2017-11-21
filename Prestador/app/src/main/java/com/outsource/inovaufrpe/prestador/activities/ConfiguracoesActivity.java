@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -117,6 +118,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     public void Logout(){
         Toast.makeText(ConfiguracoesActivity.this, "Saiu com sucesso.", Toast.LENGTH_SHORT).show();
         firebaseAuth.signOut();
+        LoginManager.getInstance().logOut();
         finish();
         startActivity(new Intent(ConfiguracoesActivity.this, LoginActivity.class));
     }

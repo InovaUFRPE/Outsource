@@ -99,15 +99,13 @@ public class CadastroServicoActivity extends AppCompatActivity {
         });
     }
     private Servico criaServico(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
-        String data = dateFormat.format(date);
         Servico servico = new Servico();
         servico.setId(UUID.randomUUID().toString());
         servico.setNome(etNomeServicoID.getText().toString().trim());
         servico.setDescricao(etDescricaoServicoID.getText().toString().trim());
         servico.setPreco(etPrecoServicoID.getText().toString().trim());
-        servico.setData(data);
+        servico.setData(date);
         databaseReference.child("servico").child(servico.getId()).setValue(servico);
         return servico;
     }
