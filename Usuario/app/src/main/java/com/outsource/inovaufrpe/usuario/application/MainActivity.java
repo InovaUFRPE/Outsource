@@ -1,5 +1,6 @@
 package com.outsource.inovaufrpe.usuario.application;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -127,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.notificacoesBtn) {
             Toast.makeText(MainActivity.this, "Notificações", Toast.LENGTH_SHORT).show();
+        }
+        if (id == R.id.inserirBtn){
+            startActivity(new Intent(this,CadastroServicoActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

@@ -3,9 +3,13 @@
     <string name="facebook_app_id">1052106148264805</string>
     <string name="fb_login_protocol_scheme">fb1052106148264805</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="nome">Nome</string>
+    <string name="descricao">Descrição</string>
+    <string name="voltar">Voltar</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="preco">Preço</string>
+    <string name="deletar">Deletar</string>
 </resources>

@@ -24,10 +24,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/service_name"
+                    android:id="@+id/tNomeServicoID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nome do serviço especifico"
+                    android:text="@+id/tNomeServicoID"
                     android:textSize="22sp" />
 
             </LinearLayout>
@@ -40,23 +40,23 @@
                 android:layout_margin="16dp">
 
                 <TextView
-                    android:id="@+id/service_data"
+                    android:id="@+id/tDataServicoID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="20/12"
+                    android:text="@+id/tDataServicoID"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/service_price"
+                    android:id="@+id/tPrecoServicoID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:text="R$50,00"
+                    android:text="@+id/tPrecoServicoID"
                     android:textColor="@color/colorGreen"
                     android:textSize="30sp"
                     android:textStyle="bold" />
@@ -73,21 +73,22 @@
                 android:paddingVertical="8dp">
 
                 <TextView
+                    android:id="@+id/tDonoServicoID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:text="Gabriel Lourenço" />
+                    android:text="@+id/tDonoServicoID" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/tNotaDonoServicoID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:text="5,0" />
+                    android:text="@+id/tNotaDonoServicoID" />
             </RelativeLayout>
 
         </RelativeLayout>

@@ -71,7 +71,7 @@ public class CadastroActivity extends Activity {
                                         Usuario usuario = new Usuario();
                                         usuario.setId(user.getUid());
                                         usuario.setNome(nome);
-                                        usuario.setUsername(etSobrenome.getText().toString());
+                                        usuario.setSobrenome(etSobrenome.getText().toString());
                                         usuario.setEmail(etEmail.getText().toString());
                                         usuario.setTelefone(etTelefone.getText().toString().trim());
                                         usuarioReference.child(user.getUid()).setValue(usuario);

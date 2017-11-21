@@ -1,6 +1,5 @@
 package com.outsource.inovaufrpe.usuario.application;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,7 +45,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
                 etAtualizaNome.setText(usuario.getNome());
-                etAtualizaSobrenome.setText(usuario.getUsername());
+                etAtualizaSobrenome.setText(usuario.getSobrenome());
                 etAtualizaEmail.setText(usuario.getEmail());
                 etAtualizaTelefone.setText(usuario.getTelefone());
             }
@@ -97,7 +95,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                     Usuario usuario = new Usuario();
                     usuario.setId(firebaseAuth.getCurrentUser().getUid());
                     usuario.setNome(etAtualizaNome.getText().toString().trim());
-                    usuario.setUsername(etAtualizaSobrenome.getText().toString().trim());
+                    usuario.setSobrenome(etAtualizaSobrenome.getText().toString().trim());
                     usuario.setEmail(etAtualizaEmail.getText().toString().trim());
                     usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
                     databaseReference.child("usuario").child(usuario.getId()).setValue(usuario);

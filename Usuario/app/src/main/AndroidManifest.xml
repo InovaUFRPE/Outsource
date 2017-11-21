@@ -11,16 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".application.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".application.CadastroActivity" />
-
         <activity android:name=".application.MainActivity" />
 
         <meta-data
@@ -33,7 +31,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.usuario.application.MainActivity" />
         </activity>
-
+        <activity android:name=".application.CadastroServicoActivity" />
+        <activity android:name=".ListaServicosActivity"/>
     </application>
 
 </manifest>

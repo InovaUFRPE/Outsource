@@ -1,5 +1,8 @@
 package com.outsource.inovaufrpe.usuario.dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Nicollas on 05/11/2017.
  */
@@ -9,10 +12,12 @@ package com.outsource.inovaufrpe.usuario.dominio;
 public class Usuario {
     private String id;
     private String nome;
-    private String username;
+    private String sobrenome;
     private String email;
     private String telefone;
     private String nascimento;
+    private int nota;
+    private List<Servico> listaServicos = new ArrayList<Servico>();
 
     public Usuario() {
     }
@@ -49,12 +54,12 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getUsername() {
-        return username;
+    public String getSobrenome() {
+        return sobrenome;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 
     public String getNascimento() {
@@ -65,4 +70,19 @@ public class Usuario {
         this.nascimento = nascimento;
     }
 
+    public int getNota() {
+        return nota;
+    }
+
+    public void setNota(int nota) {
+        this.nota = nota;
+    }
+
+    public List<Servico> getListaServicos() {
+        return listaServicos;
+    }
+
+    public void setListaServicos(List<Servico> listaServicos) {
+        this.listaServicos = listaServicos;
+    }
 }
