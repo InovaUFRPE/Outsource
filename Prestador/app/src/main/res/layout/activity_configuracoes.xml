@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.outsource.inovaufrpe.prestador.activities.ConfiguracoesActivity"
+    tools:context="com.outsource.inovaufrpe.prestador.prestador.gui.ConfiguracoesActivity"
     android:orientation="vertical">
     <EditText
         android:id="@+id/etAtualizaNomeID"

@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context="com.outsource.inovaufrpe.usuario.application.LoginActivity">
+    tools:context="com.outsource.inovaufrpe.usuario.solicitante.gui.LoginActivity">
 
     <ImageView
         android:layout_width="130dp"

@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.outsource.inovaufrpe.prestador.R;
-import com.outsource.inovaufrpe.prestador.dominio.Servico;
+import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 
 /**
  * Created by Pichau on 21/11/2017.

@@ -8,7 +8,7 @@
     android:id="@+id/container"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.outsource.inovaufrpe.usuario.application.MainActivity">
+    tools:context="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

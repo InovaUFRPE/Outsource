@@ -6,7 +6,7 @@
     android:padding="16dp"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="com.outsource.inovaufrpe.prestador.activities.LoginActivity">
+    tools:context="com.outsource.inovaufrpe.prestador.prestador.gui.LoginActivity">
 
     <ImageView
         android:layout_width="130dp"

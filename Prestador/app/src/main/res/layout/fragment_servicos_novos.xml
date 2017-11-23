@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="fill_vertical|fill_horizontal"
     android:orientation="vertical"
-    tools:context="com.outsource.inovaufrpe.prestador.ServicosNovosFragment">
+    tools:context=".servico.gui.ServicosNovosFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleID"

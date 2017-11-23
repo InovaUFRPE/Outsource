@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.outsource.inovaufrpe.prestador.activities.CadastroActivity">
+    tools:context="com.outsource.inovaufrpe.prestador.prestador.gui.CadastroActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

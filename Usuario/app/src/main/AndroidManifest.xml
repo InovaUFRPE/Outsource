@@ -12,27 +12,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name="com.outsource.inovaufrpe.usuario.utils.FirebaseApp">
-        <activity android:name=".application.LoginActivity">
+        <activity android:name=".solicitante.gui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".application.CadastroActivity" />
-        <activity android:name=".application.MainActivity" />
+        <activity android:name=".solicitante.gui.CadastroActivity" />
+        <activity android:name=".solicitante.gui.MainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".application.ConfiguracoesActivity">
+        <activity android:name=".solicitante.gui.ConfiguracoesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.outsource.inovaufrpe.usuario.application.MainActivity" />
+                android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
         </activity>
-        <activity android:name=".application.CadastroServicoActivity" />
-        <activity android:name=".ListaServicosActivity"/>
+        <activity android:name=".servico.gui.CadastroServicoActivity" />
+        <activity android:name=".servico.gui.ListaServicosActivity"/>
     </application>
 
 </manifest>
