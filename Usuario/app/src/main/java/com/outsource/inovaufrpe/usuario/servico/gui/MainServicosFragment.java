@@ -33,7 +33,7 @@ public class MainServicosFragment extends android.support.v4.app.Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapter adapter = new TabAdapter(getChildFragmentManager());
-        adapter.addFragment(new ServicosNovosFragment(), "Novos");
+        adapter.addFragment(new ServicosPessoaisFragment(), "Meus");
         adapter.addFragment(new ServicosAndamentoFragment(), "Em Andamento");
         adapter.addFragment(new ServicosConcluidosFragment(), "Concluídos");
         viewPager.setAdapter(adapter);

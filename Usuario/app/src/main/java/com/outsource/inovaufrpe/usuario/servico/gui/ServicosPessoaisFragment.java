@@ -1,7 +1,9 @@
 package com.outsource.inovaufrpe.usuario.servico.gui;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +25,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ServicosNovosFragment extends Fragment {
+public class ServicosPessoaisFragment extends Fragment {
     TextView tNomeServicoID;
     TextView tDataServicoID;
     TextView tDonoServicoID;
     TextView tNotaDonoServicoID;
     TextView tPrecoServicoID;
     ListView lDados;
+    private FloatingActionButton bCriarServico;
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -39,19 +42,29 @@ public class ServicosNovosFragment extends Fragment {
     private ArrayAdapter<Servico> arrayAdapterServico;
 
 
-    public ServicosNovosFragment() {
+    public ServicosPessoaisFragment() {
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) throws NullPointerException{
         // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_servicos_novos, container, false);
+        View view = inflater.inflate(R.layout.fragment_servicos_pessoais, container, false);
+
+        bCriarServico = view.findViewById(R.id.inserirBtn);
+
+        bCriarServico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext() ,CadastroServicoActivity.class));
+            }
+        });
+
         /*inicializarFirebase();
         eventoDataBase();
         preencheDados();*/
 
-        return layout;
+        return view;
     }
 
     /*private void inicializarFirebase() {
@@ -74,7 +87,7 @@ public class ServicosNovosFragment extends Fragment {
                         tPrecoServicoID.setText(servico.getPreco());
                         listServico.add(servico);
                     }
-                    arrayAdapterServico = new ArrayAdapter<Servico>(getActivity(),R.layout.fragment_servicos_novos,listServico);
+                    arrayAdapterServico = new ArrayAdapter<Servico>(getActivity(),R.layout.fragment_servicos_pessoais,listServico);
                     lDados.setAdapter(arrayAdapterServico);
                 }
 
@@ -84,7 +97,7 @@ public class ServicosNovosFragment extends Fragment {
                 }
             });
         } catch (NullPointerException e){
-            Log.e("ServicosNovosFragment","Tabela serviços não possui elementos");
+            Log.e("ServicosPessoaisFragment","Tabela serviços não possui elementos");
         }
     }
 
