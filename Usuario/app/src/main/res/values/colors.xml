@@ -8,5 +8,6 @@
     <color name="colorGray">#26000000</color>
     <color name="colorWhite">#FAFAFF</color>
     <color name="colorGreen">#40F99B</color>
+    <color name="colorGreenAlpha">#2640F99B</color>
     <color name="colorTransparent">#00000000</color>
 </resources>

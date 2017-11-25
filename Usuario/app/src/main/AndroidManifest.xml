@@ -5,13 +5,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".utils.FirebaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.outsource.inovaufrpe.usuario.utils.FirebaseApp">
+        android:theme="@style/AppTheme">
         <activity android:name=".solicitante.gui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,13 @@
                 android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
         </activity>
         <activity android:name=".servico.gui.CadastroServicoActivity" />
-        <activity android:name=".servico.gui.ListaServicosActivity"/>
+        <activity android:name=".servico.gui.ListaServicosActivity" />
+        <activity android:name=".servico.gui.VisualizarServicoActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

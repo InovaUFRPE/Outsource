@@ -14,10 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.outsource.inovaufrpe.usuario.carteira.gui.MainCarteiraFragment;
-import com.outsource.inovaufrpe.usuario.servico.gui.MainServicosFragment;
 import com.outsource.inovaufrpe.usuario.R;
+import com.outsource.inovaufrpe.usuario.carteira.gui.MainCarteiraFragment;
 import com.outsource.inovaufrpe.usuario.servico.gui.CadastroServicoActivity;
+import com.outsource.inovaufrpe.usuario.servico.gui.MainServicosFragment;
 
 public class MainActivity extends AppCompatActivity {
     private static final String SELECTED_ITEM = "arg_selected_item";

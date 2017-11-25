@@ -57,6 +57,8 @@ public class ServicosPessoaisFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(view.getContext() ,CadastroServicoActivity.class));
+
+//                startActivity(new Intent(view.getContext() ,VisualizarServicoActivity.class));
             }
         });
 
