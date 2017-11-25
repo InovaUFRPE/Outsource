@@ -1,100 +1,15 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/DefaultActivities"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.outsource.inovaufrpe.usuario.servico.gui.ServicosPessoaisFragment">
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
+    <include
+        layout="@layout/card_servico"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-
-            <LinearLayout
-                android:id="@+id/nomeServico"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tNomeServicoID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@+id/tNomeServicoID"
-                    android:textSize="22sp" />
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/service_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nomeServico"
-                android:layout_margin="16dp">
-
-                <TextView
-                    android:id="@+id/tDataServicoID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:text="@+id/tDataServicoID"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tPrecoServicoID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:text="@+id/tPrecoServicoID"
-                    android:textColor="@color/colorGreen"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/service_info"
-                android:layout_marginVertical="0dp"
-                android:background="@color/colorGray"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingVertical="8dp">
-
-                <TextView
-                    android:id="@+id/tDonoServicoID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:text="@+id/tDonoServicoID" />
-
-                <TextView
-                    android:id="@+id/tNotaDonoServicoID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:text="@+id/tNotaDonoServicoID" />
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
+        android:layout_height="wrap_content" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/inserirBtn"
