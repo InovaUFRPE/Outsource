@@ -59,14 +59,14 @@ public class CadastroActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Prestador prestador = new Prestador();
-                            prestador.setId(firebaseAuth.getCurrentUser().getUid());
+                            prestador.setId(user.getUid());
                             prestador.setNome(etNome.getText().toString());
                             prestador.setUsername(etSobrenome.getText().toString());
                             prestador.setEmail(etEmail.getText().toString());
                             prestador.setTelefone(etTelefone.getText().toString().trim());
 
-                            usuarioReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(prestador);
-                            startActivity(new Intent(CadastroActivity.this, ConfiguracoesActivity.class));
+                            usuarioReference.child(user.getUid()).setValue(prestador);
+                            startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                             finish();
                         } else {
                             Toast.makeText(CadastroActivity.this, "Falha no Cadastro" + task.getException(), Toast.LENGTH_SHORT).show();
