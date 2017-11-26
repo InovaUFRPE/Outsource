@@ -11,6 +11,7 @@ public class Servico {
     private String nome;
     private String descricao;
     private String preco;
+    private String valorAtual;
     private Date data;
     private EstadoServico estado;
 

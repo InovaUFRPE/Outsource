@@ -23,6 +23,12 @@
         </activity>
         <activity android:name=".prestador.gui.CadastroActivity" />
         <activity android:name=".prestador.gui.MainActivity" />
+        <activity android:name=".servico.gui.VisualizarServicoActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
+        </activity>
 
 
         <activity android:name=".prestador.gui.ConfiguracoesActivity">

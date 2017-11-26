@@ -13,12 +13,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity;
 import com.outsource.inovaufrpe.prestador.R;
+import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -82,7 +85,6 @@ public class CadastroServicoActivity extends AppCompatActivity {
     }
 
     private void adicionaServicoUsuario(Servico servico){
-        final Servico newServico = servico;
         databaseReference.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -98,14 +100,17 @@ public class CadastroServicoActivity extends AppCompatActivity {
         });
     }
     private Servico criaServico(){
-        Date date = new Date();
+        String servicoId = databaseReference.child("servico").child("aberto").push().getKey();
+        Date data = new Date();
         Servico servico = new Servico();
-        servico.setId(UUID.randomUUID().toString());
+        servico.setId(servicoId);
         servico.setNome(etNomeServicoID.getText().toString().trim());
         servico.setDescricao(etDescricaoServicoID.getText().toString().trim());
         servico.setPreco(etPrecoServicoID.getText().toString().trim());
-        servico.setData(date);
-        databaseReference.child("servico").child(servico.getId()).setValue(servico);
+        servico.setData(new Timestamp(data.getTime()).toString());
+        servico.setEstado(EstadoServico.ABERTA.getValue());
+        databaseReference.child("servico").child("aberto").child(servicoId).setValue(servico);
+        databaseReference.child("servico").child("aberto").child(servicoId).child("ordem-ref").setValue(new Timestamp(-1 * data.getTime()).toString());
         return servico;
     }
 }

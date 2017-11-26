@@ -18,10 +18,9 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
     View mView;
     Servico servico = new Servico();
     public TextView titulo;
-    public TextView descricao;
     public TextView valor;
-    public Button aceitar;
-    public Button negociar;
+    public TextView status;
+    public TextView solicitante;
 
     View view;
 
@@ -30,17 +29,30 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
         mView = itemView;
 
         titulo = (TextView) itemView.findViewById(R.id.tituloID);
-        descricao = (TextView) itemView.findViewById(R.id.descricaoID);
+        status = (TextView) itemView.findViewById(R.id.statusID);
         valor = (TextView) itemView.findViewById(R.id.valorID);
-        aceitar = (Button) itemView.findViewById(R.id.aceitarID);
-        negociar = (Button) itemView.findViewById(R.id.negociarID);
-        mainLayout = itemView.findViewById(R.id.mainLayout);
-        linearLayout = itemView.findViewById(R.id.row_profile_lists);
+        solicitante = (TextView) itemView.findViewById(R.id.solicitanteID);
+        mainLayout = itemView.findViewById(R.id.card_view);
+        linearLayout = itemView.findViewById(R.id.servico_card);
 
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClickListener.onItemClick(v, getAdapterPosition());
 
+            }
+        });
 
+        view = itemView.findViewById(R.id.servico_card);
+    }
 
+    private ServicoListHolder.ClickListener mClickListener;
 
-        view = itemView.findViewById(R.id.row_profile_lists);
+    public interface ClickListener{
+        public void onItemClick(View view, int position);
+    }
+
+    public void setOnClickListener(ServicoListHolder.ClickListener clickListener){
+        mClickListener = clickListener;
     }
 }

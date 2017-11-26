@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ly"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.outsource.inovaufrpe.prestador.servico.gui.VisualizarServicoActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvNomeServico"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Nome do Serviço"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvPrecoServico"
+            android:layout_alignBottom="@+id/tvPrecoServico"
+            android:layout_toLeftOf="@+id/tvPrecoServico"
+            android:layout_toStartOf="@+id/tvPrecoServico"
+            android:text="R$"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tvPrecoServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView6"
+            android:layout_alignBottom="@+id/textView6"
+            android:layout_toLeftOf="@+id/textView6"
+            android:layout_toStartOf="@+id/textView6"
+            android:text="100"
+            android:textAlignment="textEnd"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text=",00"
+            android:textAlignment="textEnd"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGray"
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Descrição"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDescricaoServico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultrices rutrum blandit. Vestibulum scelerisque ornare purus, sed mollis metus tempor sed." />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSolicitarOrcamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Solicitar Orçamento" />
+
+    <!--<com.outsource.inovaufrpe.usuario.utils.SwipeButton-->
+    <!--android:id="@+id/swipe_btn"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="90dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--/>-->
+
+    <!--Layout p/ exibir Quem Solicita ou Executado por-->
+    <LinearLayout
+        android:id="@+id/layoutPessoa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvTituloLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text=""
+            android:textAllCaps="true"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvNomePessoa"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:text="Gabriel Morais"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvNomePessoa"
+                app:srcCompat="@drawable/ic_star_black_24dp" />
+
+            <TextView
+                android:id="@+id/tvNotaPessoa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/imageView"
+                android:layout_toRightOf="@+id/imageView"
+                android:text="5,0"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/ivFotoSolicitante"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/me1" />
+
+        </RelativeLayout>
+    </LinearLayout>
+    <!--Fim Layout Prestador-->
+
+    <!-- Layout solicitante -->
+    <LinearLayout
+        android:id="@+id/layoutNegociacoes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Negociações"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
+
+        <include
+            layout="@layout/card_perfil_negociacao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <!-- Fim Layout Solicitante -->
+
+
+    <RelativeLayout
+        android:id="@+id/layoutBotoesBottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layoutBtnNegociar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/screenEnd"
+            android:background="@color/colorPrimary">
+
+            <Button
+                android:id="@+id/btnNegociar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:text="Negociar"
+                android:textColor="@color/colorWhite" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutBtnConcluir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/screenEnd"
+            android:background="@color/colorGreen">
+
+            <Button
+                android:id="@+id/btnConcluirServico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:text="Concluir Serviço"
+                android:textColor="@color/colorPrimaryDark" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/screenEnd"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimaryDark" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -99,6 +99,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
     }
     private Servico criaServico(){
         Date date = new Date();
+
         Servico servico = new Servico();
         servico.setId(UUID.randomUUID().toString());
         servico.setNome(etNomeServicoID.getText().toString().trim());

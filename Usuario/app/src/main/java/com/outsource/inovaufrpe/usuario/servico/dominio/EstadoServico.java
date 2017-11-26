@@ -5,5 +5,5 @@ package com.outsource.inovaufrpe.usuario.servico.dominio;
  */
 
 public enum EstadoServico {
-    ABERTA, NEGOCIACAO, CONCLUIDA;
+    ABERTA, NEGOCIACAO, ANDAMENTO,CONCLUIDA;
 }

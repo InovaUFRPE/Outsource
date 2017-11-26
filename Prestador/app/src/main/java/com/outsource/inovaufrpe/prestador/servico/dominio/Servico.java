@@ -1,6 +1,7 @@
 package com.outsource.inovaufrpe.prestador.servico.dominio;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by Pichau on 21/11/2017.
@@ -8,11 +9,12 @@ import java.util.Date;
 
 public class Servico {
     private String id;
+    private String idCriador;
     private String nome;
     private String descricao;
     private String preco;
-    private Date data;
-    private EstadoServico estado;
+    private String data;
+    private String estado;
 
     public Servico() {
     }
@@ -23,6 +25,14 @@ public class Servico {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIdCriador() {
+        return idCriador;
+    }
+
+    public void setIdCriador(String idCriador) {
+        this.idCriador = idCriador;
     }
 
     public String getNome() {
@@ -49,19 +59,19 @@ public class Servico {
         this.preco = preco;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public EstadoServico getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoServico estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 }

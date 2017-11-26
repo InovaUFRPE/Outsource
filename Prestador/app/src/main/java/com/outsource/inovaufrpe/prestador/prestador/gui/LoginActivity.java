@@ -240,7 +240,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+
     private void usuarioLogado(){
+        String usuarioId = firebaseAuth.getCurrentUser().getUid();
         DatabaseReference users = root.child("prestador");
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
