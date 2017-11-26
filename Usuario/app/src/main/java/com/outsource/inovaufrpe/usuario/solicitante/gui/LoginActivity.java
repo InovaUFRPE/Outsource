@@ -200,7 +200,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     }
 
     private void usuarioLogado(){
-        DatabaseReference users = root.child("prestador");
+        DatabaseReference users = root.child("usuario");
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
