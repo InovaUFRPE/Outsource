@@ -93,13 +93,24 @@ public class ConfiguracoesActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Usuario usuario = new Usuario();
+                    final Usuario usuario = new Usuario();
                     usuario.setId(firebaseAuth.getCurrentUser().getUid());
                     usuario.setNome(etAtualizaNome.getText().toString().trim());
                     usuario.setSobrenome(etAtualizaSobrenome.getText().toString().trim());
                     usuario.setEmail(etAtualizaEmail.getText().toString().trim());
                     usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
-                    databaseReference.child("usuario").child(usuario.getId()).setValue(usuario);
+                    databaseReference.child("usuario").child(user.getUid()).child("carteira").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Long moeda = dataSnapshot.getValue(Long.class);
+                            usuario.setCarteira(moeda);
+                            databaseReference.child("usuario").child(usuario.getId()).setValue(usuario);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
                 }
             }});
     }

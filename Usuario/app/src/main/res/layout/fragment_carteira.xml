@@ -43,19 +43,19 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvMoedaCarteiraID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/textView2"
                 android:layout_toRightOf="@+id/textView2"
                 android:fontFamily="sans-serif-light"
-                android:text="100,00"
+                android:text="@+id/tvMoedaCarteiraID"
                 android:textColor="@color/colorWhite"
                 android:textSize="70sp" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btAdicionarMoedaID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

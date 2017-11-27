@@ -33,12 +33,14 @@
         </activity>
         <activity android:name=".servico.gui.CadastroServicoActivity" />
         <activity android:name=".servico.gui.ListaServicosActivity" />
-        <activity android:name=".servico.gui.VisualizarServicoActivity"
+        <activity
+            android:name=".servico.gui.VisualizarServicoActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
         </activity>
+        <activity android:name=".carteira.gui.AdicionarMoedaActivity"></activity>
     </application>
 
 </manifest>

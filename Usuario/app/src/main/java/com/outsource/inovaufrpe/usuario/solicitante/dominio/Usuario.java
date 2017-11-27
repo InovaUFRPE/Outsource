@@ -1,5 +1,6 @@
 package com.outsource.inovaufrpe.usuario.solicitante.dominio;
 
+import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Usuario {
     private String nascimento;
     private int nota;
     private List<Servico> listaServicos = new ArrayList<Servico>();
+    private God carteira;
 
     public Usuario() {
     }
@@ -86,5 +88,13 @@ public class Usuario {
 
     public void setListaServicos(List<Servico> listaServicos) {
         this.listaServicos = listaServicos;
+    }
+
+    public Long getCarteira() {
+        return carteira.getMoeda();
+    }
+
+    public void setCarteira(Long carteira) {
+        this.carteira = new God(carteira);
     }
 }

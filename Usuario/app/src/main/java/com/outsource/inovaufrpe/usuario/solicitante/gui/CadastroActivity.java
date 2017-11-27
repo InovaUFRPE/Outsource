@@ -17,7 +17,10 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.outsource.inovaufrpe.usuario.R;
+import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
+
+import java.math.BigDecimal;
 
 public class CadastroActivity extends Activity {
     private EditText etNome;
@@ -65,6 +68,7 @@ public class CadastroActivity extends Activity {
                             usuario.setSobrenome(etSobrenome.getText().toString());
                             usuario.setEmail(etEmail.getText().toString());
                             usuario.setTelefone(etTelefone.getText().toString().trim());
+                            usuario.setCarteira(Long.valueOf("0"));
                             usuarioReference.child(user.getUid()).setValue(usuario);
                             startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                             finish();
