@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.outsource.inovaufrpe.usuario.servico.gui.MainServicosFragment"
-    android:layout_below="@+id/toolbar"
     android:layout_above="@id/navigation">
 
     <android.support.design.widget.AppBarLayout
@@ -16,7 +15,6 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
             app:tabGravity="center"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorAccent"

@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -29,11 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -74,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
                 alterarFragment("0", ft, getServicosFragment());
                 break;
             case R.id.navigation_carteira:
-                alterarFragment("2", ft, getCarteiraFragment());
+                alterarFragment("1", ft, getCarteiraFragment());
                 break;
             case R.id.navigation_perfil:
-                alterarFragment("3", ft, getPerfilFragment());
+                alterarFragment("2", ft, getPerfilFragment());
         }
 
         mSelectedItem = item.getItemId();
