@@ -34,6 +34,7 @@
                 android:id="@+id/etNomeID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:hint="Primeiro nome"
                 android:inputType="textPersonName" />
 
@@ -41,6 +42,7 @@
                 android:id="@+id/etSobrenomeID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:hint="Último nome"
                 android:inputType="textPersonName" />
 
@@ -49,12 +51,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
+                android:textColor="@color/colorBlack"
                 android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/etTelefoneID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:hint="Celular"
                 android:inputType="phone" />
 
