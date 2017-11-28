@@ -64,7 +64,7 @@ public class MainPerfilFragment extends Fragment {
 
         nomeUsuario.setText(usuarioAtual.getDisplayName());
 
-        return v;
+        return view;
     }
 
     @Override
