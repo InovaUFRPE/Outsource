@@ -28,7 +28,7 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
         titulo = (TextView) itemView.findViewById(R.id.tituloID);
         status = (TextView) itemView.findViewById(R.id.statusID);
         valor = (TextView) itemView.findViewById(R.id.valorID);
-        solicitante = (TextView) itemView.findViewById(R.id.solicitanteID);
+//        solicitante = (TextView) itemView.findViewById(R.id.solicitanteID);
         mainLayout = itemView.findViewById(R.id.card_view);
         linearLayout = itemView.findViewById(R.id.servico_card);
 

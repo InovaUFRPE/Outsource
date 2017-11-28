@@ -75,7 +75,7 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/service_info"
@@ -102,7 +102,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:text="@+id/tNotaDonoServicoID" />
-        </RelativeLayout>
+        </RelativeLayout>-->
 
     </RelativeLayout>
 
