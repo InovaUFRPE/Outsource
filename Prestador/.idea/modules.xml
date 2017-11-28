@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Prestador.iml" filepath="$PROJECT_DIR$/Prestador.iml" />
-      <module fileurl="file://C:\Users\Heitor\AndroidStudioProjects\Outsource\Prestador\Prestador.iml" filepath="C:\Users\Heitor\AndroidStudioProjects\Outsource\Prestador\Prestador.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Heitor\AndroidStudioProjects\Outsource\Prestador\app\app.iml" filepath="C:\Users\Heitor\AndroidStudioProjects\Outsource\Prestador\app\app.iml" />
     </modules>
   </component>
 </project>
