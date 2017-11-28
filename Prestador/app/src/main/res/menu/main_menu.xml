@@ -7,9 +7,4 @@
         android:title="notificacoes"
         app:showAsAction="ifRoom|collapseActionView" />
 
-    <item
-        android:id="@+id/inserirBtn"
-        android:icon="@drawable/ic_inserir_white"
-        android:title="adicionar"
-        app:showAsAction="ifRoom|collapseActionView" />
 </menu>

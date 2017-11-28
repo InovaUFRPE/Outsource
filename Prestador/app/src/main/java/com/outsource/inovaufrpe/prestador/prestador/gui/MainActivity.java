@@ -30,11 +30,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
-
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -128,9 +123,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.notificacoesBtn) {
             Toast.makeText(MainActivity.this, "Notificações", Toast.LENGTH_SHORT).show();
-        }
-        if (id == R.id.inserirBtn){
-            startActivity(new Intent(this,CadastroServicoActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

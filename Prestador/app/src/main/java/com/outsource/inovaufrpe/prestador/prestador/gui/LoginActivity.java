@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private LoginButton loginButton;
     private Button login;
-    private Button cadastro;
     private CallbackManager callbackManager;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
@@ -60,15 +59,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         etTelefone = findViewById(R.id.etTelefoneID);
         etCodigo = findViewById(R.id.etCodigoID);
         login = findViewById(R.id.btLogarID);
-        cadastro = findViewById(R.id.btCadastrarID);
         loginButton = findViewById(R.id.btFacebookID);
-        findViewById(R.id.btCadastrarID).setOnClickListener(this);
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions("email", "public_profile");
         etCodigo.setVisibility(View.INVISIBLE);
         login.setOnClickListener(this);
         loginButton.setOnClickListener(this);
-        cadastro.setOnClickListener(this);
         root = FirebaseDatabase.getInstance().getReference();
 
     }
@@ -90,9 +86,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }else {
                     logar();
                 }
-                break;
-            case R.id.btCadastrarID:
-                startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
                 break;
             case R.id.btFacebookID:
                 loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

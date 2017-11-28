@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.outsource.inovaufrpe.prestador.prestador.gui.CadastroActivity">
 
     <android.support.v7.widget.CardView
@@ -34,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Primeiro nome"
+                android:textColor="@color/colorBlack"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -41,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Último nome"
+                android:textColor="@color/colorBlack"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -48,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
+                android:textColor="@color/colorBlack"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -55,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Celular"
+                android:textColor="@color/colorBlack"
                 android:inputType="phone" />
 
             <CheckBox
