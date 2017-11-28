@@ -20,12 +20,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
+import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
 
 public class MainPerfilFragment extends Fragment {
     ImageButton btnConfig;
     TextView nomeUsuario;
     TextView emailUsuario;
     TextView telefoneUsuario;
+    private FirebaseAux firebase;
 
 
     public MainPerfilFragment() {
@@ -41,10 +43,8 @@ public class MainPerfilFragment extends Fragment {
         nomeUsuario = view.findViewById(R.id.tvNomePerfil);
         emailUsuario = view.findViewById(R.id.tvEmailPerfil);
         telefoneUsuario = view.findViewById(R.id.tvTelefonePerfil);
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference usuarioReference = databaseReference.child("usuario").child(usuarioAtual.getUid());
+        firebase = FirebaseAux.getInstancia();
+        DatabaseReference usuarioReference = firebase.getUsuarioReference().child(firebase.getUser().getUid());
                 usuarioReference.addValueEventListener(
                 new ValueEventListener() {
                     @Override
@@ -62,7 +62,7 @@ public class MainPerfilFragment extends Fragment {
                 }
         );
 
-        nomeUsuario.setText(usuarioAtual.getDisplayName());
+        nomeUsuario.setText(firebase.getUser().getDisplayName());
 
         return view;
     }

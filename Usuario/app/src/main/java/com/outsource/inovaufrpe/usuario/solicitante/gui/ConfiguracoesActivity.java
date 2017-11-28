@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
+import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
     private EditText etAtualizaNome;
@@ -30,17 +31,17 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private Button btAtualizarID;
     private Button btDeletarID;
     private Button btSair;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private DatabaseReference usuarioReference = databaseReference.child("usuario");
+    private FirebaseAux firebase;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
         setTitle("Configurações");
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        DatabaseReference firebasereference = usuarioReference.child(user.getUid());
+        firebase = FirebaseAux.getInstancia();
+
+        DatabaseReference firebasereference = firebase.getUsuarioReference().child(firebase.getUser().getUid());
         firebasereference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -88,23 +89,23 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     }
 
     public void Atualizar(){
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        user = firebase.getUser();
         user.updateEmail(etAtualizaEmail.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     final Usuario usuario = new Usuario();
-                    usuario.setId(firebaseAuth.getCurrentUser().getUid());
+                    usuario.setId(user.getUid());
                     usuario.setNome(etAtualizaNome.getText().toString().trim());
                     usuario.setSobrenome(etAtualizaSobrenome.getText().toString().trim());
                     usuario.setEmail(etAtualizaEmail.getText().toString().trim());
                     usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
-                    databaseReference.child("usuario").child(user.getUid()).child("carteira").addValueEventListener(new ValueEventListener() {
+                    firebase.getUsuarioReference().child(user.getUid()).child("carteira").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Long moeda = dataSnapshot.getValue(Long.class);
                             usuario.setCarteira(moeda);
-                            databaseReference.child("usuario").child(usuario.getId()).setValue(usuario);
+                            firebase.getUsuarioReference().child(usuario.getId()).setValue(usuario);
                         }
 
                         @Override
@@ -116,7 +117,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     }
 
     public void Deletar(){
-        firebaseAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        firebase.getUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
@@ -128,7 +129,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
     public void Logout(){
         Toast.makeText(ConfiguracoesActivity.this, "Saiu com sucesso.", Toast.LENGTH_SHORT).show();
-        firebaseAuth.signOut();
+        firebase.getFirebaseAuth().signOut();
         LoginManager.getInstance().logOut();
         finish();
         startActivity(new Intent(ConfiguracoesActivity.this, LoginActivity.class));

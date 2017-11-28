@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
+import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
 
 import java.math.BigDecimal;
 
@@ -28,13 +29,14 @@ public class CadastroActivity extends Activity {
     private EditText etEmail;
     private EditText etTelefone;
     private Button btCadastrar;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private DatabaseReference usuarioReference = databaseReference.child("usuario");
+    private FirebaseAux firebase;
+    private FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebase = FirebaseAux.getInstancia();
         setContentView(R.layout.activity_cadastro);
         etNome = (EditText) findViewById(R.id.etNomeID);
         etSobrenome = (EditText) findViewById(R.id.etSobrenomeID);
@@ -53,7 +55,7 @@ public class CadastroActivity extends Activity {
     }
 
     private void cadastrar() {
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        user = firebase.getUser();
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(etNome.getText().toString()).build();
         user.updateProfile(profileUpdates)
@@ -69,7 +71,7 @@ public class CadastroActivity extends Activity {
                             usuario.setEmail(etEmail.getText().toString());
                             usuario.setTelefone(etTelefone.getText().toString().trim());
                             usuario.setCarteira(Long.valueOf("0"));
-                            usuarioReference.child(user.getUid()).setValue(usuario);
+                            firebase.getUsuarioReference().child(user.getUid()).setValue(usuario);
                             startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                             finish();
 
