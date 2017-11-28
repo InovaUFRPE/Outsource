@@ -10,9 +10,12 @@ import java.util.Map;
 public class Servico {
     private String id;
     private String idCriador;
+    private String idPrestador;
     private String nome;
     private String descricao;
     private String preco;
+    private String oferta;
+    private String ofertante;
     private String data;
     private String estado;
 
@@ -33,6 +36,14 @@ public class Servico {
 
     public void setIdCriador(String idCriador) {
         this.idCriador = idCriador;
+    }
+
+    public String getIdPrestador() {
+        return idPrestador;
+    }
+
+    public void setIdPrestador(String idPrestador) {
+        this.idPrestador = idPrestador;
     }
 
     public String getNome() {
@@ -57,6 +68,22 @@ public class Servico {
 
     public void setPreco(String preco) {
         this.preco = preco;
+    }
+
+    public String getOferta() {
+        return oferta;
+    }
+
+    public void setOferta(String oferta) {
+        this.oferta = oferta;
+    }
+
+    public String getOfertante() {
+        return ofertante;
+    }
+
+    public void setOfertante(String ofertante) {
+        this.ofertante = ofertante;
     }
 
     public String getData() {

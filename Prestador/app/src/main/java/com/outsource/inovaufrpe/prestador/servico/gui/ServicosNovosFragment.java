@@ -78,7 +78,9 @@ public class ServicosNovosFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                        it.putExtra("servicoID", ((Servico) adapter.getItem(position)).getId());
+                        Servico servico = (Servico) adapter.getItem(position);
+                        it.putExtra("servicoID", servico.getId());
+                        it.putExtra("estado",servico.getEstado());
                         startActivity(it);
                     }
 

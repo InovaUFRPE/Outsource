@@ -12,7 +12,7 @@ import java.util.List;
 public class Prestador {
     private String id;
     private String nome;
-    private String username;
+    private String sobrenome;
     private String email;
     private String telefone;
     private String nascimento;
@@ -55,11 +55,11 @@ public class Prestador {
     }
 
     public String getUsername() {
-        return username;
+        return sobrenome;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 
     public String getNascimento() {

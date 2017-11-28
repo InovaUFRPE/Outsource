@@ -15,10 +15,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
+import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
 import com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -82,31 +84,23 @@ public class CadastroServicoActivity extends AppCompatActivity {
     }
 
     private void adicionaServicoUsuario(Servico servico){
-        final Servico newServico = servico;
-        databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                usuario.getListaServicos().add(newServico);
-                databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).setValue(usuario);
-            }
+        databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).child("servicos").child(servico.getId()).setValue(servico.getEstado());
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
     private Servico criaServico(){
-        Date date = new Date();
-
+        String servicoId = databaseReference.child("servico").child("aberto").push().getKey();
+        Date data = new Date();
         Servico servico = new Servico();
-        servico.setId(UUID.randomUUID().toString());
+        servico.setId(servicoId);
         servico.setNome(etNomeServicoID.getText().toString().trim());
         servico.setDescricao(etDescricaoServicoID.getText().toString().trim());
         servico.setPreco(etPrecoServicoID.getText().toString().trim());
-        servico.setData(date);
-        databaseReference.child("servico").child(servico.getId()).setValue(servico);
+        servico.setOferta(etPrecoServicoID.getText().toString().trim());
+        servico.setData(new Timestamp(data.getTime()).toString());
+        servico.setEstado(EstadoServico.ABERTA.getValue());
+        servico.setIdCriador(firebaseAuth.getCurrentUser().getUid());
+        databaseReference.child("servico").child("aberto").child(servicoId).setValue(servico);
+        databaseReference.child("servico").child("aberto").child(servicoId).child("ordem-ref").setValue(new Timestamp(-1 * data.getTime()).toString());
         return servico;
     }
 }

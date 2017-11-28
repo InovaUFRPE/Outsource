@@ -17,9 +17,9 @@
             android:id="@+id/tvNomeServico"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
             android:text="Nome do Serviço"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -55,6 +55,15 @@
             android:layout_centerVertical="true"
             android:text=",00"
             android:textAlignment="textEnd"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvEstadoServicoID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Estado"
             android:textSize="20sp" />
     </RelativeLayout>
 
@@ -169,6 +178,7 @@
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/tvTituloNegociacaoID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

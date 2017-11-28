@@ -1,19 +1,20 @@
 package com.outsource.inovaufrpe.usuario.servico.dominio;
 
-import java.util.Date;
-
 /**
- * Created by Heitor on 19/11/2017.
+ * Created by Pichau on 21/11/2017.
  */
 
 public class Servico {
     private String id;
+    private String idCriador;
+    private String idPrestador;
     private String nome;
     private String descricao;
     private String preco;
-    private String valorAtual;
-    private Date data;
-    private EstadoServico estado;
+    private String oferta;
+    private String ofertante;
+    private String data;
+    private String estado;
 
     public Servico() {
     }
@@ -24,6 +25,22 @@ public class Servico {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIdCriador() {
+        return idCriador;
+    }
+
+    public void setIdCriador(String idCriador) {
+        this.idCriador = idCriador;
+    }
+
+    public String getIdPrestador() {
+        return idPrestador;
+    }
+
+    public void setIdPrestador(String idPrestador) {
+        this.idPrestador = idPrestador;
     }
 
     public String getNome() {
@@ -50,20 +67,36 @@ public class Servico {
         this.preco = preco;
     }
 
-    public Date getData() {
+    public String getOferta() {
+        return oferta;
+    }
+
+    public void setOferta(String oferta) {
+        this.oferta = oferta;
+    }
+
+    public String getOfertante() {
+        return ofertante;
+    }
+
+    public void setOfertante(String ofertante) {
+        this.ofertante = ofertante;
+    }
+
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public EstadoServico getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoServico estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
-
 }
+

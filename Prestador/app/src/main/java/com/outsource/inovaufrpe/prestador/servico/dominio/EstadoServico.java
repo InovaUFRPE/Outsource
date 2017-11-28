@@ -5,7 +5,7 @@ package com.outsource.inovaufrpe.prestador.servico.dominio;
  */
 
 public enum EstadoServico {
-    ABERTA("Aberto"), NEGOCIACAO("Negociação"),ANDAMENTO("Em andamento"), CONCLUIDA("Concluida");
+    ABERTA("aberto"), NEGOCIACAO("negociacao"),ANDAMENTO("andamento"), CONCLUIDA("concluido");
 
     private final String estado;
     EstadoServico(String estado) { this.estado = estado; }

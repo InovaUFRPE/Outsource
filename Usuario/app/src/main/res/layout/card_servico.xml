@@ -14,7 +14,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/servico_card">
 
 
         <LinearLayout
@@ -25,19 +26,19 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tNomeServicoID"
+                android:id="@+id/tituloID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@+id/tNomeServicoID"
+                android:text="@+id/tituloID"
                 android:textColor="@color/colorBlack"
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/tStatusServicoID"
+                android:id="@+id/statusID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="@+id/tStatusServicoID"
+                android:text="@+id/statusID"
                 android:textAllCaps="true"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -62,13 +63,13 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/tPrecoServicoID"
+                android:id="@+id/valorID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="@+id/tPrecoServicoID"
+                android:text="@+id/valorID"
                 android:textColor="@color/colorGreen"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -85,13 +86,13 @@
             android:paddingVertical="8dp">
 
             <TextView
-                android:id="@+id/tDonoServicoID"
+                android:id="@+id/solicitanteID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:text="@+id/tDonoServicoID" />
+                android:text="@+id/solicitanteID" />
 
             <TextView
                 android:id="@+id/tNotaDonoServicoID"

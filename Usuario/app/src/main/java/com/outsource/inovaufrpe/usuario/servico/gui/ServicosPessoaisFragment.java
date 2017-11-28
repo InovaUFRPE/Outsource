@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,30 +32,30 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class ServicosPessoaisFragment extends Fragment {
-    TextView tNomeServicoID;
-    TextView tDataServicoID;
-    TextView tDonoServicoID;
-    TextView tNotaDonoServicoID;
-    TextView tPrecoServicoID;
-    ListView lDados;
     private FloatingActionButton bCriarServico;
+    FirebaseDatabase firebaseDatabase;
+
+    private RecyclerView mRecyclerView;
+    private FirebaseRecyclerAdapter adapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseDatabase firebaseDatabase;
-
-    private List<Servico> listServico = new ArrayList<Servico>();
-    private ArrayAdapter<Servico> arrayAdapterServico;
-
 
     public ServicosPessoaisFragment() {
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) throws NullPointerException{
+                             Bundle savedInstanceState) throws NullPointerException {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_servicos_pessoais, container, false);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.RecycleID);
+
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         bCriarServico = view.findViewById(R.id.inserirBtn);
 
@@ -57,66 +63,50 @@ public class ServicosPessoaisFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(view.getContext() ,CadastroServicoActivity.class));
-
-//                startActivity(new Intent(view.getContext() ,VisualizarServicoActivity.class));
             }
         });
 
-        /*inicializarFirebase();
-        eventoDataBase();
-        preencheDados();*/
+        adaptador();
 
         return view;
-    }
-
-    /*private void inicializarFirebase() {
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(true);
-        databaseReference = firebaseDatabase.getReference();
 
     }
 
-    public void eventoDataBase(){
-        try {
-            databaseReference.child("servico").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    listServico.clear();
-                    for (DataSnapshot objSnapshot:dataSnapshot.getChildren()){
-                        Servico servico = objSnapshot.getValue(Servico.class);
-                        tNomeServicoID.setText(servico.getNome());
-                        tDataServicoID.setText(servico.getData());
-                        tPrecoServicoID.setText(servico.getPreco());
-                        listServico.add(servico);
+    private void adaptador(){
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("servico").child("aberto");
+        Query query = databaseReference.orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
+
+            @Override
+            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+                viewHolder.mainLayout.setVisibility(View.VISIBLE);
+                viewHolder.linearLayout.setVisibility(View.VISIBLE);
+                viewHolder.titulo.setText(model.getNome());
+                viewHolder.status.setText(model.getEstado());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getPreco())));
+
+            }
+
+            @Override
+            public ServicoListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+                final ServicoListHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+                viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
+                        Servico servico = (Servico) adapter.getItem(position);
+                        it.putExtra("servicoID", servico.getId());
+                        it.putExtra("estado",servico.getEstado());
+                        startActivity(it);
                     }
-                    arrayAdapterServico = new ArrayAdapter<Servico>(getActivity(),R.layout.fragment_servicos_pessoais,listServico);
-                    lDados.setAdapter(arrayAdapterServico);
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                });
+                return viewHolder;
+            }
 
-                }
-            });
-        } catch (NullPointerException e){
-            Log.e("ServicosPessoaisFragment","Tabela serviços não possui elementos");
-        }
+        };
+
+        mRecyclerView.setAdapter(adapter);
     }
-
-    public void preencheDados(){
-        databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                tDonoServicoID.setText(usuario.getNome());
-                tNotaDonoServicoID.setText(usuario.getNota());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }*/
-
 }
