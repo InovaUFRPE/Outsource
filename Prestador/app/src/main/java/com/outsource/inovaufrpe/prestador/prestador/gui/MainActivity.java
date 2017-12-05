@@ -1,6 +1,5 @@
 package com.outsource.inovaufrpe.prestador.prestador.gui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,14 +8,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.outsource.inovaufrpe.prestador.carteira.gui.MainCarteiraFragment;
 import com.outsource.inovaufrpe.prestador.R;
-import com.outsource.inovaufrpe.prestador.servico.gui.CadastroServicoActivity;
 import com.outsource.inovaufrpe.prestador.servico.gui.MainServicosFragment;
 
 public class MainActivity extends AppCompatActivity {

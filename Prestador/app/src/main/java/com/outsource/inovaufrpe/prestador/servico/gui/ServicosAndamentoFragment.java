@@ -9,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,12 +31,18 @@ import java.text.DecimalFormat;
  */
 public class ServicosAndamentoFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private FirebaseRecyclerAdapter adapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView mRecyclerViewNegociacao;
+    private RecyclerView mRecyclerViewAndamento;
 
+    private FirebaseRecyclerAdapter adapter1;
+    private FirebaseRecyclerAdapter adapter2;
+    private RecyclerView.LayoutManager mLayoutManager1;
+    private RecyclerView.LayoutManager mLayoutManager2;
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private ToggleButton btRecycleNegociacao;
+    private ToggleButton btRecycleAndamento;
+
 
     public ServicosAndamentoFragment() {
         // Required empty public constructor
@@ -45,23 +53,54 @@ public class ServicosAndamentoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_servicos_andamento, container, false);
+        View view = inflater.inflate(R.layout.fragment_servicos_andamento, container, false);
 
-        mRecyclerView = (RecyclerView) layout.findViewById(R.id.recycleID);
+        mRecyclerViewNegociacao = view.findViewById(R.id.RecycleID);
+        mRecyclerViewAndamento = view.findViewById(R.id.Recycle2ID);
 
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mLayoutManager1 = new LinearLayoutManager(getActivity());
+        mLayoutManager2 = new LinearLayoutManager(getActivity());
+        mRecyclerViewNegociacao.setLayoutManager(mLayoutManager1);
+        mRecyclerViewAndamento.setLayoutManager(mLayoutManager2);
+        btRecycleNegociacao = view.findViewById(R.id.btRecycleID);
+        btRecycleAndamento = view.findViewById(R.id.btRecycle2ID);
+
+        mRecyclerViewNegociacao.setVisibility(View.GONE);
+        mRecyclerViewAndamento.setVisibility(View.GONE);
+
+
+        btRecycleNegociacao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    mRecyclerViewNegociacao.setVisibility(View.VISIBLE);
+                }else{
+                    mRecyclerViewNegociacao.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        btRecycleAndamento.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    mRecyclerViewAndamento.setVisibility(View.VISIBLE);
+                }else{
+                    mRecyclerViewAndamento.setVisibility(View.GONE);
+                }
+            }
+        });
 
         adaptador();
 
-        return layout;
+        return view;
     }
 
     private void adaptador(){
-        databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("andamento");
-        Query query = databaseReference.orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        Query queryNegociacao = databaseReference.child("servico").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryAndamento = databaseReference.child("servico").child("andamento").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        adapter1 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
 
             @Override
             protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
@@ -70,7 +109,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getOferta())));
+                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getOferta())));
 
             }
 
@@ -81,9 +120,9 @@ public class ServicosAndamentoFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                        Servico servico = (Servico) adapter.getItem(position);
+                        Servico servico = (Servico) adapter1.getItem(position);
                         it.putExtra("servicoID", servico.getId());
-                        it.putExtra("estado",servico.getEstado());
+                        it.putExtra("estado", servico.getEstado());
                         startActivity(it);
                     }
 
@@ -93,7 +132,40 @@ public class ServicosAndamentoFragment extends Fragment {
 
         };
 
-        mRecyclerView.setAdapter(adapter);
+        adapter2 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryAndamento) {
+
+            @Override
+            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+                viewHolder.mainLayout.setVisibility(View.VISIBLE);
+                viewHolder.linearLayout.setVisibility(View.VISIBLE);
+                viewHolder.titulo.setText(model.getNome());
+                viewHolder.status.setText(model.getEstado());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getOferta())));
+
+            }
+
+            @Override
+            public ServicoListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+                final ServicoListHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+                viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
+                        Servico servico = (Servico) adapter2.getItem(position);
+                        it.putExtra("servicoID", servico.getId());
+                        it.putExtra("estado", servico.getEstado());
+                        startActivity(it);
+                    }
+
+                });
+                return viewHolder;
+            }
+
+        };
+
+        mRecyclerViewNegociacao.setAdapter(adapter1);
+        mRecyclerViewAndamento.setAdapter(adapter2);
     }
 
 

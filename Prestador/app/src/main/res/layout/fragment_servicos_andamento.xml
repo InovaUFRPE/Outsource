@@ -1,18 +1,46 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/DefaultActivities"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
     android:background="@color/colorWhite"
+    android:elevation="7dp"
     tools:context=".servico.gui.ServicosAndamentoFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleID"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="173dp" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <ToggleButton
+            android:id="@+id/btRecycleID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Negociacao"
+            android:textOff="Serviços em Negociação >"
+            android:textOn="Serviços em Negociação \\/" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RecycleID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <ToggleButton
+            android:id="@+id/btRecycle2ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Andamento"
+            android:textOff="Serviços em Andamento >"
+            android:textOn="Serviços em Andamento \\/" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/Recycle2ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
+
+
+</ScrollView>

@@ -14,7 +14,7 @@ import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 public class FirebaseUtil {
 
 
-    public void moverServico(final DatabaseReference fromPath, final DatabaseReference toPath, final EstadoServico estadoServico) throws DatabaseException {
+    public void moverServico(final DatabaseReference fromPath, final DatabaseReference toPath, final String estadoServico) throws DatabaseException {
         fromPath.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -24,7 +24,7 @@ public class FirebaseUtil {
                         if (firebaseError != null) {
                             throw new DatabaseException(firebaseError.getMessage());
                         } else {
-                            toPath.child("estado").setValue(estadoServico.getValue());
+                            toPath.child("estado").setValue(estadoServico);
                             fromPath.removeValue();
                             System.out.println("Success");
 
