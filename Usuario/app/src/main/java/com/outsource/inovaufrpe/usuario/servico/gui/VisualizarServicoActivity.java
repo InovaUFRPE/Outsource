@@ -22,9 +22,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
+import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
 import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
+import com.outsource.inovaufrpe.usuario.utils.DinheiroFormat;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
+
+import java.text.DecimalFormat;
 
 public class VisualizarServicoActivity extends AppCompatActivity {
 
@@ -51,6 +56,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     Servico servico;
     DatabaseReference databaseReference;
+    DinheiroFormat dinheiroFormat;
 
 
     @Override
@@ -90,13 +96,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 criarDialogPersonalizado();
-
-                precoServico.setText(servico.getOferta());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                precoServico.setText("R$ "+ df.format(Float.parseFloat(servico.getOferta().toString())).replace(".",","));
 
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (precoServico.getText().toString().equals(servico.getOferta())) {
+                        if (precoServico.getText().toString().equals(servico.getOferta().toString())) {
                             if(!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())){
                                 atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO);
                             }else{
@@ -118,7 +124,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                transacao();
                 atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA);
             }
         });
@@ -151,7 +157,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void negociar() throws DatabaseException {
-        servico.setOferta(precoServico.getText().toString());
+        servico.setOferta(Double.valueOf(precoServico.getText().toString()));
         databaseReference.child("servico").child(estadoTemp).child(servicoId).child("oferta").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -177,7 +183,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 servico = dataSnapshot.getValue(Servico.class);
                 tituloID.setText(servico.getNome());
-                valorID.setText(servico.getPreco());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                valorID.setText("R$ "+ df.format(Float.parseFloat(servico.getPreco().toString())).replace(".",","));
                 descricaoID.setText(servico.getDescricao());
                 dadosUsuario();
             }
@@ -216,7 +223,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         } else {
             tvNomeOfertante.setText(tvNomePrestador.getText());
         }
-        tvOferta.setText(servico.getOferta());
+        DecimalFormat df = new DecimalFormat("####0.00");
+        tvOferta.setText("R$ "+ df.format(Float.parseFloat(servico.getOferta().toString())).replace(".",","));
     }
 
     //TIRAR GAMBIARRA DESSE METODO
@@ -264,5 +272,34 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         dialog = mBuilder.create();
         dialog.show();
 
+    }
+
+    private void transacao(){
+        databaseReference.child("usuario").child(servico.getIdCriador()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                usuario.setCarteira(usuario.getCarteira()-servico.getOferta());
+                databaseReference.child("usuario").child(servico.getIdCriador()).setValue(usuario);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("god").child("gods").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                God god = dataSnapshot.getValue(God.class);
+                god.setFundos(servico.getOferta());
+                databaseReference.child("god").child("gods").setValue(god);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

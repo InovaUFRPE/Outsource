@@ -21,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
 
+import java.text.DecimalFormat;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,7 +66,8 @@ public class MainCarteiraFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                tvMoedaCarteiraID.setText(String.valueOf(usuario.getCarteira()));
+                DecimalFormat df = new DecimalFormat("####0.00");
+                tvMoedaCarteiraID.setText(df.format(Float.parseFloat(String.valueOf(usuario.getCarteira()))).replace(".",","));
             }
 
             @Override

@@ -89,11 +89,11 @@ public class Usuario {
         this.listaServicos = listaServicos;
     }
 
-    public Long getCarteira() {
+    public Double getCarteira() {
         return carteira.getMoeda();
     }
 
-    public void setCarteira(Long carteira) {
+    public void setCarteira(Double carteira) {
         this.carteira = new God(carteira);
     }
 }

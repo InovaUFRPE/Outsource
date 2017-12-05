@@ -18,9 +18,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.utils.DinheiroFormat;
 import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 /**
@@ -32,6 +36,7 @@ public class ServicosConcluidosFragment extends Fragment {
     private FloatingActionButton bCriarServico;
     FirebaseDatabase firebaseDatabase;
     private RecyclerView mRecyclerView;
+    DinheiroFormat dinheiroFormat;
 
     private FirebaseRecyclerAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -72,8 +77,15 @@ public class ServicosConcluidosFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
+                try {
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+                    viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
+
+                }catch (ParseException e){
+                }
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getOferta())));
+                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getPreco().toString())).replace(".",","));
 
             }
 

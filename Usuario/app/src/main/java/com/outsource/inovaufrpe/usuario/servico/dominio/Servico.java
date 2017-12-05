@@ -1,5 +1,7 @@
 package com.outsource.inovaufrpe.usuario.servico.dominio;
 
+import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
+
 /**
  * Created by Pichau on 21/11/2017.
  */
@@ -10,8 +12,8 @@ public class Servico {
     private String idPrestador;
     private String nome;
     private String descricao;
-    private String preco;
-    private String oferta;
+    private God preco;
+    private God oferta;
     private String ofertante;
     private String data;
     private String estado;
@@ -59,20 +61,20 @@ public class Servico {
         this.descricao = descricao;
     }
 
-    public String getPreco() {
-        return preco;
+    public Double getPreco() {
+        return preco.getMoeda();
     }
 
-    public void setPreco(String preco) {
-        this.preco = preco;
+    public void setPreco(Double preco) {
+        this.preco = new God(preco);
     }
 
-    public String getOferta() {
-        return oferta;
+    public Double getOferta() {
+        return oferta.getMoeda();
     }
 
-    public void setOferta(String oferta) {
-        this.oferta = oferta;
+    public void setOferta(Double oferta) {
+        this.oferta = new God(oferta);
     }
 
     public String getOfertante() {

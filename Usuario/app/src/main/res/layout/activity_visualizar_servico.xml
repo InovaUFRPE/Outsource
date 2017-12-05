@@ -31,7 +31,6 @@
             android:layout_alignBottom="@+id/tvPrecoServico"
             android:layout_toLeftOf="@+id/tvPrecoServico"
             android:layout_toStartOf="@+id/tvPrecoServico"
-            android:text="R$"
             android:textSize="22sp" />
 
         <TextView
@@ -53,7 +52,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text=",00"
             android:textAlignment="textEnd"
             android:textSize="20sp" />
 

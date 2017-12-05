@@ -7,30 +7,48 @@ import java.math.BigDecimal;
  */
 
 public class God {
-    private Long gods;
+    private Double gods;
+    private final Double taxa = Double.valueOf("0.1");
+    private Double fundos;
 
-    public God(Long moeda) {
+    public God(Double moeda) {
         this.gods = moeda;
+        this.fundos = 0.0;
+
     }
 
-    public Long getMoeda() {
-        return gods;
+    public Double getMoeda() {
+        return this.gods;
     }
 
-    private void setMoeda(Long moeda) {
-        this.gods = moeda;
+    private Double getTaxa() {
+        return taxa;
     }
 
-    public void adicionar(Long mais){
+    public void adicionar(Double mais){
         this.gods = this.gods + mais;
     }
-    public void subtrair(Long menos){
+    public void subtrair(Double menos){
         this.gods = this.gods - menos;
     }
-    public void multiplicar(Long vezes){
+    public void multiplicar(Double vezes){
         this.gods = this.gods * vezes;
     }
-    public void dividir(Long divisor){
+    public void dividir(Double divisor){
         this.gods = this.gods / divisor;
+    }
+
+    public Double aplicarTaxa(String valor){
+        Double novoValor = Double.valueOf(valor);
+        return novoValor + (novoValor * this.getTaxa());
+    }
+
+    public Double getFundos() {
+        return fundos;
+    }
+
+    public Double setFundos(Double fundos) {
+        this.fundos += (fundos * this.getTaxa());
+        return getFundos();
     }
 }

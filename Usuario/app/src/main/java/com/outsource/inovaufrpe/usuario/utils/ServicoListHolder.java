@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import com.outsource.inovaufrpe.usuario.R;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by Pichau on 21/11/2017.
  */
@@ -18,6 +20,7 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
     public TextView valor;
     public TextView status;
     public TextView solicitante;
+    public TextView data;
 
     View view;
 
@@ -28,6 +31,7 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
         titulo = (TextView) itemView.findViewById(R.id.tituloID);
         status = (TextView) itemView.findViewById(R.id.statusID);
         valor = (TextView) itemView.findViewById(R.id.valorID);
+        data = (TextView) itemView.findViewById(R.id.tDataServicoID);
 //        solicitante = (TextView) itemView.findViewById(R.id.solicitanteID);
         mainLayout = itemView.findViewById(R.id.card_view);
         linearLayout = itemView.findViewById(R.id.servico_card);

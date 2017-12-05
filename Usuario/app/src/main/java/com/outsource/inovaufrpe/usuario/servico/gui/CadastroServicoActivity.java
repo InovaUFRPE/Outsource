@@ -94,8 +94,8 @@ public class CadastroServicoActivity extends AppCompatActivity {
         servico.setId(servicoId);
         servico.setNome(etNomeServicoID.getText().toString().trim());
         servico.setDescricao(etDescricaoServicoID.getText().toString().trim());
-        servico.setPreco(etPrecoServicoID.getText().toString().trim());
-        servico.setOferta(etPrecoServicoID.getText().toString().trim());
+        servico.setPreco(Double.valueOf(etPrecoServicoID.getText().toString().trim()));
+        servico.setOferta(Double.valueOf(etPrecoServicoID.getText().toString().trim()));
         servico.setData(new Timestamp(data.getTime()).toString());
         servico.setEstado(EstadoServico.ABERTA.getValue());
         servico.setIdCriador(firebaseAuth.getCurrentUser().getUid());

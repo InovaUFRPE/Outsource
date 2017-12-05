@@ -10,9 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,11 +18,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.utils.DinheiroFormat;
 import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 /**
@@ -41,6 +40,8 @@ public class ServicosPessoaisFragment extends Fragment {
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+    DinheiroFormat dinheiroFormat;
 
     public ServicosPessoaisFragment() {
         // Required empty public constructor
@@ -83,8 +84,15 @@ public class ServicosPessoaisFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
+                try {
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+                    viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
+
+                }catch (ParseException e){
+                }
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getPreco())));
+                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getPreco().toString())).replace(".",","));
 
             }
 

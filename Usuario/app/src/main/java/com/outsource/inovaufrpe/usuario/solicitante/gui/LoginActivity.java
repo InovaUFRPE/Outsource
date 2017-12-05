@@ -135,7 +135,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             @Override
             public void onVerificationFailed(FirebaseException e) {
                 // This callback is invoked in an invalid request for verification is made,
-                // for instance if the the phone number format is not valid.
+                // for instance if the the phone number dinheiroformat is not valid.
                 Log.w("TAG", "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {

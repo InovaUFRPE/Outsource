@@ -103,7 +103,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                     firebase.getUsuarioReference().child(user.getUid()).child("carteira").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Long moeda = dataSnapshot.getValue(Long.class);
+                            Double moeda = dataSnapshot.getValue(Double.class);
                             usuario.setCarteira(moeda);
                             firebase.getUsuarioReference().child(usuario.getId()).setValue(usuario);
                         }
@@ -112,6 +112,8 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                         public void onCancelled(DatabaseError databaseError) {
                         }
                     });
+                    finish();
+                    startActivity(new Intent(ConfiguracoesActivity.this, MainActivity.class));
                 }
             }});
     }
@@ -122,6 +124,8 @@ public class ConfiguracoesActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(ConfiguracoesActivity.this,"Conta desativada com sucesso.",Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(ConfiguracoesActivity.this, LoginActivity.class));
                 }
             }
         });

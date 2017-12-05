@@ -57,7 +57,7 @@ public class AdicionarMoedaActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
                 God moeda = new God(usuario.getCarteira());
-                moeda.adicionar(Long.valueOf(etAdicionarMoedaID.getText().toString()));
+                moeda.adicionar(Double.valueOf(etAdicionarMoedaID.getText().toString()));
                 usuario.setCarteira(moeda.getMoeda());
                 databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).setValue(usuario);
             }
