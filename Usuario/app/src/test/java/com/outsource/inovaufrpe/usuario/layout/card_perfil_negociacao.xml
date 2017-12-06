@@ -42,7 +42,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/tvCentavos"
             android:layout_toStartOf="@+id/tvCentavos"
-            android:text="100"
+            android:text="R$ 100,00"
             android:textAlignment="textEnd"
             android:textSize="24sp" />
 

@@ -26,6 +26,8 @@ import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
 
+import java.text.DecimalFormat;
+
 public class VisualizarServicoActivity extends AppCompatActivity {
 
     AlertDialog dialog;
@@ -86,8 +88,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 criarDialogPersonalizado();
-
-                precoServico.setText(servico.getOferta());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                precoServico.setText(df.format(Float.parseFloat(servico.getOferta().toString())).replace(".",","));
 
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -126,8 +128,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 criarDialogPersonalizado();
-
-                precoServico.setText(servico.getPreco());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                precoServico.setText(df.format(Float.parseFloat(servico.getPreco().toString())).replace(".",","));
 
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -197,11 +199,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         }else{
             tvNomeOfertante.setText(tvNomeSolicitante.getText());
         }
-        tvOferta.setText(servico.getOferta());
+        DecimalFormat df = new DecimalFormat("####0.00");
+        tvOferta.setText("R$ "+ df.format(Float.parseFloat(servico.getOferta().toString())).replace(".",","));
     }
 
     private void negociar() throws DatabaseException {
-        servico.setOferta(precoServico.getText().toString());
+        servico.setOferta(Double.valueOf(precoServico.getText().toString().replace(",",".")));
         databaseReferenceServico.child(estadoId).child(servicoId).child("oferta").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -227,7 +230,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 servico = dataSnapshot.getValue(Servico.class);
                 tituloID.setText(servico.getNome());
-                valorID.setText(servico.getPreco());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                valorID.setText("R$ "+ df.format(Float.parseFloat(servico.getPreco().toString())).replace(".",","));
                 descricaoID.setText(servico.getDescricao());
                 dadosUsuario();
             }

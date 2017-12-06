@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.outsource.inovaufrpe.prestador.servico.gui.VisualizarServicoActivity">
+    tools:context="com.outsource.inovaufrpe.usuario.servico.gui.VisualizarServicoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -91,12 +91,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSolicitarOrcamento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Solicitar Orçamento" />
-
     <!--<com.outsource.inovaufrpe.usuario.utils.SwipeButton-->
     <!--android:id="@+id/swipe_btn"-->
     <!--android:layout_width="match_parent"-->
@@ -176,7 +170,6 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/tvTituloNegociacaoID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

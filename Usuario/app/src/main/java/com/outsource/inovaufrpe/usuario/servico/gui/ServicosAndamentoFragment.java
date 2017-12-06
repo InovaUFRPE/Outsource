@@ -107,7 +107,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getOferta())));
+                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getOferta().toString())).replace(".",","));
 
             }
 
@@ -139,7 +139,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getOferta())));
+                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getOferta().toString())).replace(".",","));
 
             }
 

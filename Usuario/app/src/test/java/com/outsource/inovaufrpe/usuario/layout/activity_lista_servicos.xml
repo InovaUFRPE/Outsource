@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.outsource.inovaufrpe.usuario.servico.gui.ListaServicosActivity">
+
+
+    <EditText
+        android:id="@+id/etAtualizaNomeServicoID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/nome" />
+
+    <EditText
+        android:id="@+id/etAtualizaDescricaoServicoID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/descricao" />
+
+    <EditText
+        android:id="@+id/etAtualizaPrecoServicoID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/preco" />
+
+    <ListView
+        android:id="@+id/lServicos"
+        android:layout_width="match_parent"
+        android:layout_height="372dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btDeletarID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/deletar" />
+
+        <Button
+            android:id="@+id/btConfirmarID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/confirmar" />
+    </LinearLayout>
+</LinearLayout>

@@ -23,7 +23,10 @@ import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 /**
@@ -66,8 +69,15 @@ public class ServicosNovosFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
+                try {
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+                    viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
+
+                }catch (ParseException e){
+                }
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getPreco())));
+                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getPreco().toString())).replace(".",","));
 
             }
 

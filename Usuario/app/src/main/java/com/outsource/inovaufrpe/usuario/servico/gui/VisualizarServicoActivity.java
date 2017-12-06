@@ -26,6 +26,8 @@ import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
 
+import java.text.DecimalFormat;
+
 public class VisualizarServicoActivity extends AppCompatActivity {
 
     AlertDialog dialog;
@@ -83,7 +85,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 criarDialogPersonalizado();
 
-                precoServico.setText(servico.getOferta());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                precoServico.setText("R$ "+ df.format(Float.parseFloat(servico.getOferta().toString())).replace(".",","));
 
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -156,7 +159,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void negociar() {
-        servico.setOferta(precoServico.getText().toString());
+        servico.setOferta(Double.valueOf(precoServico.getText().toString()));
         databaseReferenceServico.child(estadoId).child(servicoId).child("oferta").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -182,7 +185,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 servico = dataSnapshot.getValue(Servico.class);
                 tituloID.setText(servico.getNome());
-                valorID.setText(servico.getPreco());
+                DecimalFormat df = new DecimalFormat("####0.00");
+                valorID.setText("R$ "+ df.format(Float.parseFloat(servico.getPreco().toString())).replace(".",","));
                 descricaoID.setText(servico.getDescricao());
                 if(servico.getIdPrestador() != null) {
                     dadosUsuario();
@@ -223,7 +227,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         } else {
             tvNomeOfertante.setText(tvNomePrestador.getText());
         }
-        tvOferta.setText(servico.getOferta());
+        DecimalFormat df = new DecimalFormat("####0.00");
+        tvOferta.setText("R$ "+ df.format(Float.parseFloat(servico.getOferta().toString())).replace(".",","));
     }
 
     private void atualizarEstadoServico(String estadoAtual, String estadoDestino) {
