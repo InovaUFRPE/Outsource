@@ -13,17 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".solicitante.gui.LoginActivity"
+        <activity
+            android:name=".utils.gui.SplashScreenActivity"
             android:theme="@style/FullScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".solicitante.gui.CadastroActivity"
+        <activity
+            android:name=".solicitante.gui.LoginActivity"
             android:theme="@style/FullScreenTheme"/>
-
+        <activity
+            android:name=".solicitante.gui.CadastroActivity"
+            android:theme="@style/FullScreenTheme" />
         <activity android:name=".solicitante.gui.MainActivity" />
 
         <meta-data
@@ -36,7 +41,7 @@
                 android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
         </activity>
         <activity android:name=".servico.gui.CadastroServicoActivity" />
-        <activity android:name=".carteira.gui.AdicionarMoedaActivity"/>
+        <activity android:name=".carteira.gui.AdicionarMoedaActivity" />
         <activity android:name=".servico.gui.VisualizarServicoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
