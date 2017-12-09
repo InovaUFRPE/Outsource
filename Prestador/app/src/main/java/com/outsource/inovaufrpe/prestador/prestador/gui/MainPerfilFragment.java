@@ -76,7 +76,7 @@ public class MainPerfilFragment extends Fragment {
         btnConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ConfiguracoesActivity.class));
+                startActivity(new Intent(getActivity(), EditarPerfilActivity.class));
             }
         });
     }

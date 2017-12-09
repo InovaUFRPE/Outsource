@@ -64,7 +64,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
         btDeletarID.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Deletar();
             }
         });

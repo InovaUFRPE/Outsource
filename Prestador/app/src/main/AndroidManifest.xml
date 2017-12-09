@@ -33,7 +33,7 @@
         </activity>
 
 
-        <activity android:name=".prestador.gui.ConfiguracoesActivity">
+        <activity android:name=".prestador.gui.EditarPerfilActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
