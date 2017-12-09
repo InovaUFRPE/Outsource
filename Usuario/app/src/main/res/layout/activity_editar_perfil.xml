@@ -5,7 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context="com.outsource.inovaufrpe.usuario.solicitante.gui.ConfiguracoesActivity">
+    tools:context="com.outsource.inovaufrpe.usuario.solicitante.gui.EditarPerfilActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Primeiro nome" />
 
     <EditText
         android:id="@+id/etAtualizaNomeID"
@@ -15,6 +20,11 @@
         android:hint="Nome"
         android:inputType="textPersonName" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ultimo nome" />
+
     <EditText
         android:id="@+id/etAtualizaSobrenomeID"
         android:layout_width="match_parent"
@@ -22,6 +32,11 @@
         android:layout_marginBottom="8dp"
         android:hint="Sobrenome"
         android:inputType="textPersonName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E-mail" />
 
     <EditText
         android:id="@+id/etAtualizaEmailID"
@@ -31,6 +46,11 @@
         android:hint="E-mail"
         android:inputType="textEmailAddress" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Número do telefone" />
+
     <EditText
         android:id="@+id/etAtualizaTelefoneID"
         android:layout_width="match_parent"
@@ -39,40 +59,27 @@
         android:hint="Celular"
         android:inputType="phone" />
 
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-
-    <LinearLayout
+    <Button
+        android:id="@+id/btSair"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginTop="16dp"
+        android:background="@color/colorTransparent"
+        android:text="Fazer logout"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/btAtualizarID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:text="Atualizar" />
-
-        <Button
-            android:id="@+id/btDeletarID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/colorDanger"
-            android:text="Deletar" />
-
-        <Button
-            android:id="@+id/btSair"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/cardview_light_background"
-            android:text="Sair" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/btDeletarID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorTransparent"
+        android:text="Excluir minha conta"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        android:textColor="@color/colorDanger"
+        android:textSize="16sp" />
 
 </LinearLayout>
