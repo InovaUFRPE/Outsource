@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -304,7 +305,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo para chamar dialog de perfil
+     * Método para chamar dialog de perfil
      */
     private void criarDialogVisualizarPerfil() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
@@ -346,5 +347,29 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         mBuilder.setView(v1);
         dialog = mBuilder.create();
         dialog.show();
+    }
+
+    /**
+     * Método para chamar dialog de avaliação pós-servico
+     */
+    private void criarDialogAvaliarUsuario() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
+        View v1 = getLayoutInflater().inflate(R.layout.dialog_avaliacao_usuario,null);
+
+        Button btnConcluir = v1.findViewById(R.id.btnAvaliarConcluir);
+        final EditText edComentarioAvaliacao = v1.findViewById(R.id.etComentarios);
+        final RatingBar ratingBar = v1.findViewById(R.id.rbAvaliarServico);
+        btnConcluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //get comentario: edComentarioAvaliacao.getText() retorna string;
+                //get quantidade estrelas: ratingBar.getRating() retorna float;
+            }
+        });
+
+        mBuilder.setView(v1);
+        dialog = mBuilder.create();
+        dialog.show();
+
     }
 }
