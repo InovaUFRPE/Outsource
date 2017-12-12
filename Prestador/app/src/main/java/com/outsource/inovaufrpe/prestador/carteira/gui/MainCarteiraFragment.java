@@ -64,7 +64,7 @@ public class MainCarteiraFragment extends Fragment {
 
     public void preencheDados(){
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        DatabaseReference usuarioreference = databaseReference.child("usuario");
+        DatabaseReference usuarioreference = databaseReference.child("prestador");
         final DatabaseReference firebasereference = usuarioreference.child(user.getUid());
         firebasereference.addValueEventListener(new ValueEventListener() {
             @Override

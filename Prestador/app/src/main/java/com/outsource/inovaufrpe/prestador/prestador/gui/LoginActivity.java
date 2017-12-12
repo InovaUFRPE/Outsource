@@ -34,6 +34,7 @@ package com.outsource.inovaufrpe.prestador.prestador.gui;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.ValueEventListener;
         import com.outsource.inovaufrpe.prestador.R;
+        import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 
         import java.util.concurrent.TimeUnit;
 
@@ -41,14 +42,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText etTelefone;
     private EditText etCodigo;
-    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    //private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private LoginButton loginButton;
     private Button login;
     private CallbackManager callbackManager;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
-    DatabaseReference root;
+    private FirebaseAux firebase = FirebaseAux.getInstancia();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +66,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         etCodigo.setVisibility(View.INVISIBLE);
         login.setOnClickListener(this);
         loginButton.setOnClickListener(this);
-        root = FirebaseDatabase.getInstance().getReference();
+
 
     }
 
     private void checaSessao() {
-        if(firebaseAuth.getCurrentUser() != null){
+        if(firebase.getUser() != null){
             finish();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
@@ -112,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void LoginFacebook(AccessToken token){
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        firebaseAuth.signInWithCredential(credential)
+        firebase.getFirebaseAuth().signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -210,7 +211,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginCelular(PhoneAuthCredential credential) {
-        firebaseAuth.signInWithCredential(credential)
+        firebase.getFirebaseAuth().signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -235,12 +236,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void usuarioLogado(){
-        String usuarioId = firebaseAuth.getCurrentUser().getUid();
-        DatabaseReference users = root.child("prestador");
+        String usuarioId = firebase.getUser().getUid();
+        DatabaseReference users = firebase.getPrestadorReference();
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(firebaseAuth.getCurrentUser().getUid())) {
+                if (snapshot.hasChild(firebase.getUser().getUid())) {
                     finish();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }else{
