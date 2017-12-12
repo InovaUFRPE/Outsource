@@ -10,14 +10,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/tvNomeServico"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Nome do Serviço"
@@ -25,42 +24,23 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvPrecoServico"
-            android:layout_alignBottom="@+id/tvPrecoServico"
-            android:layout_toLeftOf="@+id/tvPrecoServico"
-            android:layout_toStartOf="@+id/tvPrecoServico"
-            android:textSize="22sp" />
-
-        <TextView
             android:id="@+id/tvPrecoServico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView6"
-            android:layout_alignBottom="@+id/textView6"
-            android:layout_toLeftOf="@+id/textView6"
-            android:layout_toStartOf="@+id/textView6"
-            android:text="100"
-            android:textAlignment="textEnd"
-            android:textSize="28sp" />
-
-        <TextView
-            android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:text="R$ 410,00"
             android:textAlignment="textEnd"
-            android:textSize="20sp" />
+            android:textSize="28sp" />
 
         <TextView
             android:id="@+id/tvEstadoServicoID"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvNomeServico"
             android:text="Estado"
             android:textSize="20sp" />
     </RelativeLayout>
