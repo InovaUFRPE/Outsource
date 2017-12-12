@@ -200,7 +200,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(firebase.getFirebaseAuth().getCurrentUser().getUid())) {
+                if (snapshot.hasChild(firebase.getUser().getUid())) {
                     finish();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }else{

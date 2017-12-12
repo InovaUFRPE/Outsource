@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
+import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 
 public class CadastroActivity extends AppCompatActivity {
     private EditText etNome;
@@ -25,14 +26,15 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText etEmail;
     private EditText etTelefone;
     private Button btCadastrar;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private DatabaseReference usuarioReference = databaseReference.child("prestador");
+    private FirebaseAux firebase;
+    private FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+        firebase = FirebaseAux.getInstancia();
         etNome = (EditText) findViewById(R.id.etNomeID);
         etSobrenome = (EditText) findViewById(R.id.etSobrenomeID);
         etEmail = (EditText) findViewById(R.id.etEmailID);
@@ -50,7 +52,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void cadastrar() {
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        user = firebase.getUser();
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(etNome.getText().toString()).build();
         user.updateProfile(profileUpdates)
@@ -64,8 +66,8 @@ public class CadastroActivity extends AppCompatActivity {
                             prestador.setUsername(etSobrenome.getText().toString());
                             prestador.setEmail(etEmail.getText().toString());
                             prestador.setTelefone(etTelefone.getText().toString().trim());
-
-                            usuarioReference.child(user.getUid()).setValue(prestador);
+                            prestador.setCarteira(Double.valueOf("0"));
+                            firebase.getPrestadorReference().child(user.getUid()).setValue(prestador);
                             startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                             finish();
                         } else {

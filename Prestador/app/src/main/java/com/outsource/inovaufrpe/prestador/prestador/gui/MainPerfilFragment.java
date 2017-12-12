@@ -47,7 +47,7 @@ public class MainPerfilFragment extends Fragment {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference usuarioReference = databaseReference.child("usuario").child(usuarioAtual.getUid());
+        DatabaseReference usuarioReference = databaseReference.child("prestador").child(usuarioAtual.getUid());
         usuarioReference.addValueEventListener(
                 new ValueEventListener() {
                     @Override

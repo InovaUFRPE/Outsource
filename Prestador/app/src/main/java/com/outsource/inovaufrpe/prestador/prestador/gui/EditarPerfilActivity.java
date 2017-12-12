@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
+import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 
 public class EditarPerfilActivity extends AppCompatActivity {
     private EditText etAtualizaNome;
@@ -30,17 +31,24 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private EditText etAtualizaEmail;
     private EditText etAtualizaTelefone;
 
+    private FirebaseAux firebase;
+    private FirebaseUser user;
+
+    /*
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference usuarioReference = databaseReference.child("prestador");
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
         setTitle("Configurações");
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
-        DatabaseReference firebasereference = usuarioReference.child(user.getUid());
+        firebase = FirebaseAux.getInstancia();
+
+
+        DatabaseReference firebasereference = firebase.getPrestadorReference().child(firebase.getUser().getUid());
         firebasereference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -79,24 +87,18 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     public void Atualizar(){
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
-        user.updateEmail(etAtualizaEmail.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Prestador usuario = new Prestador();
-                    usuario.setId(firebaseAuth.getCurrentUser().getUid());
-                    usuario.setNome(etAtualizaNome.getText().toString().trim());
-                    usuario.setUsername(etAtualizaSobrenome.getText().toString().trim());
-                    usuario.setEmail(etAtualizaEmail.getText().toString().trim());
-                    usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
-                    databaseReference.child("usuario").child(usuario.getId()).setValue(usuario);
-                }
-            }});
+        user = firebase.getUser();
+        Prestador usuario = new Prestador();
+        usuario.setId(user.getUid());
+        usuario.setNome(etAtualizaNome.getText().toString().trim());
+        usuario.setUsername(etAtualizaSobrenome.getText().toString().trim());
+        usuario.setEmail(etAtualizaEmail.getText().toString().trim());
+        usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
+        firebase.getPrestadorReference().child(usuario.getId()).setValue(usuario);
     }
 
     public void Deletar(){
-        firebaseAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        firebase.getUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
@@ -108,7 +110,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
     public void Logout(){
         Toast.makeText(EditarPerfilActivity.this, "Saiu com sucesso.", Toast.LENGTH_SHORT).show();
-        firebaseAuth.signOut();
+        firebase.getFirebaseAuth().signOut();
         LoginManager.getInstance().logOut();
         finish();
         startActivity(new Intent(EditarPerfilActivity.this, LoginActivity.class));

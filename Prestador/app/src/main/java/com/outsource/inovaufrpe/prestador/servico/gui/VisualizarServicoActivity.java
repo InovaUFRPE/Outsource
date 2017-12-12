@@ -49,7 +49,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     Button btConcluir;
     String servicoId;
     String estadoId;
-    //Remover gambiarra dps
     FirebaseAuth firebaseAuth;
     Servico servico;
     DatabaseReference databaseReferenceServico;
