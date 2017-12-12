@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:hint="100,00"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:textSize="70sp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />

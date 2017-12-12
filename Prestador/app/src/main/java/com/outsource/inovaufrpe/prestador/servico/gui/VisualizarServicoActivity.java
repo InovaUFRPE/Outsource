@@ -6,12 +6,17 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -19,11 +24,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.google.firebase.database.DatabaseReference;
+import com.outsource.inovaufrpe.prestador.prestador.dominio.Critica;
 import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
+import com.outsource.inovaufrpe.prestador.utils.CriticaViewHolder;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
 
 import java.text.DecimalFormat;
@@ -46,12 +54,14 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     EditText precoServico;
     Button cancelarNegociacao;
     Button btNegociar;
+    Button btAceitarOferta;
     Button btConcluir;
     String servicoId;
     String estadoId;
     FirebaseAuth firebaseAuth;
     Servico servico;
     DatabaseReference databaseReferenceServico;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +87,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tvTituloNegociacao = findViewById(R.id.tvTituloNegociacaoID);
         btNegociar = findViewById(R.id.btnNegociar);
         btConcluir = findViewById(R.id.btnConcluirServico);
-
+        btAceitarOferta = findViewById(R.id.btAceitarNegociacao);
+        LinearLayout solicitanteLayout = findViewById(R.id.layoutPessoa);
 
         tituloLayoutPessoa.setText("Solicitado por");
 
@@ -135,6 +146,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         if(precoServico.getText().toString().equals(servico.getPreco())){
                             descontar();
+                            databaseReferenceServico.child(servico.getEstado()).child("preco").setValue(servico.getOferta());
                             atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
                         }else{
                             try {
@@ -146,6 +158,25 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        btAceitarOferta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
+                    databaseReferenceServico.child(servico.getEstado()).child("preco").setValue(servico.getOferta());
+                    atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
+                }else{
+                    Toast.makeText(VisualizarServicoActivity.this, "Você quem realizou a ultima oferta!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        solicitanteLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                criarDialogVisualizarPerfil();
             }
         });
 
@@ -167,7 +198,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
             findViewById(R.id.btnSolicitarOrcamento).setVisibility(View.GONE);
-
+            findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
 
         }else{
             tvEstadoServicoID.setText("Finalizada");
@@ -228,11 +259,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 servico = dataSnapshot.getValue(Servico.class);
-                tituloID.setText(servico.getNome());
-                DecimalFormat df = new DecimalFormat("####0.00");
-                valorID.setText("R$ "+ df.format(Float.parseFloat(servico.getPreco().toString())).replace(".",","));
-                descricaoID.setText(servico.getDescricao());
-                dadosUsuario();
+                if (servico != null) {
+                    tituloID.setText(servico.getNome());
+                    DecimalFormat df = new DecimalFormat("####0.00");
+                    valorID.setText("R$ " + df.format(Float.parseFloat(servico.getPreco().toString())).replace(".", ","));
+                    descricaoID.setText(servico.getDescricao());
+                    dadosUsuario();
+                }else{
+                    finish();
+                }
             }
 
             @Override
@@ -301,9 +336,39 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     private void criarDialogVisualizarPerfil() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
         View v1 = getLayoutInflater().inflate(R.layout.dialog_visualizar_perfil,null);
+        FirebaseRecyclerAdapter adapter;
 
         TextView nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
+        RecyclerView mRecyclerView = (RecyclerView) v1.findViewById(R.id.RecycleComentarioID);
+        ImageButton closeBtn = v1.findViewById(R.id.closeBtn);
 
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        mRecyclerView.setFocusable(false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(VisualizarServicoActivity.this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Query query = databaseReference.child("feedback").child(servico.getIdCriador()).orderByChild("data");
+
+        adapter = new FirebaseRecyclerAdapter<Critica, CriticaViewHolder>(Critica.class, R.layout.card_critica, CriticaViewHolder.class, query) {
+
+            @Override
+            protected void populateViewHolder(CriticaViewHolder viewHolder, Critica model, int position) {
+                viewHolder.mainLayout.setVisibility(View.VISIBLE);
+                viewHolder.linearLayout.setVisibility(View.VISIBLE);
+                viewHolder.tvComentador.setText(model.getComentadorNome());
+                viewHolder.tvNota.setText(String.valueOf(model.getNota()));
+                viewHolder.tvComentario.setText(model.getComentario());
+
+            }
+        };
+
+        mRecyclerView.setAdapter(adapter);
         mBuilder.setView(v1);
         dialog = mBuilder.create();
         dialog.show();

@@ -232,6 +232,24 @@
                 android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/layoutBtnAceitarOferta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/layoutBtnNegociar"
+            android:orientation="horizontal"
+            android:background="@color/colorGreen">
+
+            <Button
+                android:id="@+id/btAceitarNegociacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:layout_centerHorizontal="true"
+                android:text="Aceitar Oferta"
+                android:textColor="@color/colorPrimaryDark"/>
+        </LinearLayout>
+
         <View
             android:id="@+id/screenEnd"
             android:layout_width="match_parent"
