@@ -295,4 +295,18 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+    /**
+     * Metodo para chamar dialog de perfil
+     */
+    private void criarDialogVisualizarPerfil() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
+        View v1 = getLayoutInflater().inflate(R.layout.dialog_visualizar_perfil,null);
+
+        TextView nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
+
+        mBuilder.setView(v1);
+        dialog = mBuilder.create();
+        dialog.show();
+    }
 }
