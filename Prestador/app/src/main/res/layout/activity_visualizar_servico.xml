@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.outsource.inovaufrpe.usuario.servico.gui.VisualizarServicoActivity">
+    tools:context="com.outsource.inovaufrpe.prestador.servico.gui.VisualizarServicoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -70,6 +70,12 @@
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultrices rutrum blandit. Vestibulum scelerisque ornare purus, sed mollis metus tempor sed." />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSolicitarOrcamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Solicitar Orçamento" />
 
     <!--<com.outsource.inovaufrpe.usuario.utils.SwipeButton-->
     <!--android:id="@+id/swipe_btn"-->

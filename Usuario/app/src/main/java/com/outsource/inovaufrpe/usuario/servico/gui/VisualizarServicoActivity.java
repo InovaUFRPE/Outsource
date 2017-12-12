@@ -33,6 +33,7 @@ import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Critica;
 import com.outsource.inovaufrpe.usuario.utils.CriticaViewHolder;
+import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
 
 import java.text.DateFormat;
@@ -110,7 +111,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         if (df.format(Float.parseFloat(precoServico.getText().toString())).replace(",", ".").equals(servico.getOferta())) {
                             if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                                databaseReferenceServico.child(servico.getEstado()).child("preco").setValue(servico.getOferta());
+                                databaseReferenceServico.child(servico.getEstado()).child(servicoId).child("preco").setValue(servico.getOferta());
                                 atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
                             } else {
                                 encerraDialog();
@@ -132,7 +133,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                    databaseReferenceServico.child(servico.getEstado()).child("preco").setValue(servico.getOferta());
+                    databaseReferenceServico.child(servico.getEstado()).child(servicoId).child("preco").setValue(servico.getOferta());
                     atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
                 }else{
                     Toast.makeText(VisualizarServicoActivity.this, "Você quem realizou a ultima oferta!", Toast.LENGTH_SHORT).show();
@@ -143,8 +144,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
+                concluir();
             }
         });
 
@@ -177,6 +177,31 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
         }
 
+    }
+
+    private void concluir() {
+        //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIA
+        databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("concluido")){
+                    if(dataSnapshot.child("concluido").equals(firebaseAuth.getCurrentUser().getUid())){
+                        Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
+                    }else{
+                        criarDialogAvaliarUsuario();
+                        atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
+                    }
+                }else{
+                    criarDialogAvaliarUsuario();
+                    databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -362,10 +387,14 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btnConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //get comentario: edComentarioAvaliacao.getText() retorna string;
-                //get quantidade estrelas: ratingBar.getRating() retorna float;
+                Critica critica = new Critica();
+                critica.setComentario(edComentarioAvaliacao.getText().toString());
+                critica.setNota((int) ratingBar.getRating());
+                DatabaseReference databaseReference = FirebaseAux.getInstancia().getDatabaseReference();
+                databaseReference.child("feedback").child(servico.getIdPrestador()).child(databaseReference.child("feedback").child(servico.getIdPrestador()).push().getKey()).setValue(critica);
             }
         });
+
 
         mBuilder.setView(v1);
         dialog = mBuilder.create();

@@ -42,6 +42,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
         </activity>
+        <activity android:name=".carteira.gui.AdicionarMoedaActivity"></activity>
     </application>
 
 </manifest>
