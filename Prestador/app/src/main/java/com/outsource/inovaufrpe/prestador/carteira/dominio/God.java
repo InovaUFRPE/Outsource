@@ -25,20 +25,23 @@ public class God {
         return taxa;
     }
 
-    public void adicionar(Double mais){
+    public void adicionar(Double mais) {
         this.gods = this.gods + mais;
     }
-    public void subtrair(Double menos){
+
+    public void subtrair(Double menos) {
         this.gods = this.gods - menos;
     }
-    public void multiplicar(Double vezes){
+
+    public void multiplicar(Double vezes) {
         this.gods = this.gods * vezes;
     }
-    public void dividir(Double divisor){
+
+    public void dividir(Double divisor) {
         this.gods = this.gods / divisor;
     }
 
-    public Double aplicarTaxa(String valor){
+    public Double aplicarTaxa(String valor) {
         Double novoValor = Double.valueOf(valor);
         return novoValor + (novoValor * this.getTaxa());
     }

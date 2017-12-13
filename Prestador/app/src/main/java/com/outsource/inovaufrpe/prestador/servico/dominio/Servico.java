@@ -1,8 +1,11 @@
 package com.outsource.inovaufrpe.prestador.servico.dominio;
 
 import com.outsource.inovaufrpe.prestador.carteira.dominio.God;
+import com.outsource.inovaufrpe.prestador.prestador.dominio.Comentario;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +23,7 @@ public class Servico {
     private String ofertante;
     private String data;
     private String estado;
+    private List<Comentario> comentario = new ArrayList<>();
 
     public Servico() {
     }
@@ -102,6 +106,14 @@ public class Servico {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public List<Comentario> getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(List<Comentario> comentario) {
+        this.comentario = comentario;
     }
 }
 

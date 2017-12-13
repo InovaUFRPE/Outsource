@@ -150,6 +150,13 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
+                try {
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+                    viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
+
+                }catch (ParseException e){
+                }
                 DecimalFormat df = new DecimalFormat("####0.00");
                 viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getOferta().toString())).replace(".",","));
 

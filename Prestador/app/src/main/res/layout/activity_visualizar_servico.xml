@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:text="Nome do Serviço"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -38,6 +39,7 @@
             android:id="@+id/tvEstadoServicoID"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tvNomeServico"

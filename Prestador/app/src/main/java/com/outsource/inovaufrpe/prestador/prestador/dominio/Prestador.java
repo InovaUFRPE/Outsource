@@ -17,7 +17,6 @@ public class Prestador {
     private String email;
     private String telefone;
     private String nascimento;
-    private float dinheiro;
     private List<Servico> listaServicos = new ArrayList<Servico>();
     private God carteira;
 
@@ -78,14 +77,6 @@ public class Prestador {
 
     public void setListaServicos(List<Servico> listaServicos) {
         this.listaServicos = listaServicos;
-    }
-
-    public float getDinheiro() {
-        return dinheiro;
-    }
-
-    public void setDinheiro(float dinheiro) {
-        this.dinheiro = dinheiro;
     }
 
     public Double getCarteira() {

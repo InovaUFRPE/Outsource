@@ -43,9 +43,10 @@ public class ServicosNovosFragment extends Fragment {
     public ServicosNovosFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) throws NullPointerException{
+                             Bundle savedInstanceState) throws NullPointerException {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_servicos_novos, container, false);
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.recycleID);
@@ -59,7 +60,7 @@ public class ServicosNovosFragment extends Fragment {
         return layout;
     }
 
-    private void adaptador(){
+    private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("aberto");
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, databaseReference.orderByChild("ordem-ref")) {
 
@@ -74,10 +75,10 @@ public class ServicosNovosFragment extends Fragment {
                     DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
                     viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
 
-                }catch (ParseException e){
+                } catch (ParseException e) {
                 }
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getPreco().toString())).replace(".",","));
+                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getPreco().toString())).replace(".", ","));
 
             }
 
@@ -90,7 +91,7 @@ public class ServicosNovosFragment extends Fragment {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
                         Servico servico = (Servico) adapter.getItem(position);
                         it.putExtra("servicoID", servico.getId());
-                        it.putExtra("estado",servico.getEstado());
+                        it.putExtra("estado", servico.getEstado());
                         startActivity(it);
                     }
 
@@ -98,7 +99,7 @@ public class ServicosNovosFragment extends Fragment {
                 return viewHolder;
             }
 
-            };
+        };
 
         mRecyclerView.setAdapter(adapter);
     }

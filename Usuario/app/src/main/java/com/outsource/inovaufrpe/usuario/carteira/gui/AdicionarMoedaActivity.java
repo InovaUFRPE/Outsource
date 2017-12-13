@@ -34,8 +34,8 @@ public class AdicionarMoedaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_moeda);
-        etAdicionarMoedaID = (EditText)findViewById(R.id.etAdicionarMoedaID);
-        btConfirmarID = (Button)findViewById(R.id.btConfirmarID);
+        etAdicionarMoedaID = (EditText) findViewById(R.id.etAdicionarMoedaID);
+        btConfirmarID = (Button) findViewById(R.id.btConfirmarID);
 
         btConfirmarID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +45,13 @@ public class AdicionarMoedaActivity extends AppCompatActivity {
         });
     }
 
-    public void confirmar(){
+    public void confirmar() {
         adicionaMoeda();
         finish();
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    public void adicionaMoeda(){
+    public void adicionaMoeda() {
         databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

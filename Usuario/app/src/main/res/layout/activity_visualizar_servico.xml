@@ -139,9 +139,9 @@
 
         </RelativeLayout>
     </LinearLayout>
-    <!--Fim Layout Prestador-->
+    <!--Fim Layout Solicitante-->
 
-    <!-- Layout solicitante -->
+    <!-- Layout Prestador -->
     <LinearLayout
         android:id="@+id/layoutNegociacoes"
         android:layout_width="match_parent"
@@ -163,7 +163,7 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-    <!-- Fim Layout Solicitante -->
+    <!-- Fim Layout Prestador -->
 
 
     <RelativeLayout

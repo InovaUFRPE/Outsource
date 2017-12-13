@@ -40,11 +40,11 @@ public class CadastroServicoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_servico);
 
-        etNomeServicoID = (EditText)findViewById(R.id.etNomeServicoID);
-        etDescricaoServicoID = (EditText)findViewById(R.id.etDescricaoServicoID);
-        etPrecoServicoID = (EditText)findViewById(R.id.etPrecoServicoID);
-        btVoltarID = (Button)findViewById(R.id.btVoltarID);
-        btConfirmarID = (Button)findViewById(R.id.btConfirmarID);
+        etNomeServicoID = (EditText) findViewById(R.id.etNomeServicoID);
+        etDescricaoServicoID = (EditText) findViewById(R.id.etDescricaoServicoID);
+        etPrecoServicoID = (EditText) findViewById(R.id.etPrecoServicoID);
+        btVoltarID = (Button) findViewById(R.id.btVoltarID);
+        btConfirmarID = (Button) findViewById(R.id.btConfirmarID);
 
         btVoltarID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,23 +71,24 @@ public class CadastroServicoActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference();
     }
 
-    public void voltar(){
+    public void voltar() {
         finish();
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
     }
 
-    public void confirmar(){
+    public void confirmar() {
         Servico servico = criaServico();
         adicionaServicoUsuario(servico);
         finish();
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
     }
 
-    private void adicionaServicoUsuario(Servico servico){
+    private void adicionaServicoUsuario(Servico servico) {
         databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).child("servicos").child(servico.getId()).setValue(servico.getEstado());
 
     }
-    private Servico criaServico(){
+
+    private Servico criaServico() {
         String servicoId = databaseReference.child("servico").child("aberto").push().getKey();
         Date data = new Date();
         Servico servico = new Servico();
