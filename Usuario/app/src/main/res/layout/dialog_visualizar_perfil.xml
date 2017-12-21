@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/purple_background"
         android:orientation="vertical">
 
-
-
         <android.support.constraint.ConstraintLayout
             android:id="@+id/ConstraintFotoID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/LinearNotaID">
+            android:layout_height="wrap_content">
 
             <ImageButton
                 android:id="@+id/closeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@color/colorTransparent"
+                android:contentDescription="@string/fechar"
                 android:tint="@color/colorWhite"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -36,9 +34,11 @@
                 android:id="@+id/chatButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@color/colorTransparent"
+                android:contentDescription="@string/iniciar_chat"
                 android:tint="@color/colorWhite"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -50,6 +50,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:contentDescription="@string/foto_do_solicitante"
                 android:src="@drawable/me1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,42 +64,19 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                app:srcCompat="@drawable/ic_star_black_24dp" />
+            <RatingBar
+                android:id="@+id/rbAvaliarServico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1.0" />
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                app:srcCompat="@drawable/ic_star_black_24dp" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                app:srcCompat="@drawable/ic_star_black_24dp" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                app:srcCompat="@drawable/ic_star_black_24dp" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                app:srcCompat="@drawable/ic_star_black_24dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearNomeID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tvNomePerfil"
@@ -106,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:paddingBottom="10dp"
-                android:text="Gabriel Lourenço"
+                android:text="@string/user_prestador_exemplo"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="26sp" />
@@ -118,6 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
             android:background="@color/colorWhite">
 
             <LinearLayout
@@ -136,7 +115,6 @@
             </LinearLayout>
 
         </RelativeLayout>
-
 
     </LinearLayout>
 </ScrollView>

@@ -4,12 +4,13 @@
     style="@style/DefaultActivities"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_above="@+id/navigation"
     tools:context="com.outsource.inovaufrpe.usuario.servico.gui.ServicosPessoaisFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/RecycleID"
         android:layout_width="match_parent"
-        android:layout_height="489dp" />
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/inserirBtn"

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     tools:context="com.outsource.inovaufrpe.usuario.solicitante.gui.CadastroActivity">
 
@@ -24,49 +24,49 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cadastre-se no Outsource"
-                android:textSize="18sp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/cadastro_header"
                 android:textColor="@color/colorBlack"
-                android:layout_marginBottom="20dp"/>
+                android:textSize="18sp" />
 
 
             <EditText
                 android:id="@+id/etNomeID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorBlack"
-                android:hint="Primeiro nome"
-                android:inputType="textPersonName" />
+                android:hint="@string/primeiro_nome"
+                android:inputType="textPersonName"
+                android:textColor="@color/colorBlack" />
 
             <EditText
                 android:id="@+id/etSobrenomeID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorBlack"
-                android:hint="Último nome"
-                android:inputType="textPersonName" />
+                android:hint="@string/ultimo_nome"
+                android:inputType="textPersonName"
+                android:textColor="@color/colorBlack" />
 
             <EditText
                 android:id="@+id/etEmailID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="E-mail"
-                android:textColor="@color/colorBlack"
-                android:inputType="textEmailAddress" />
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorBlack" />
 
             <EditText
                 android:id="@+id/etTelefoneID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorBlack"
-                android:hint="Celular"
-                android:inputType="phone" />
+                android:hint="@string/celular"
+                android:inputType="phone"
+                android:textColor="@color/colorBlack" />
 
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint="Aceito os termos de uso e a política de privacidade"/>
+                android:hint="@string/checkbox_termos_uso" />
 
             <Button
                 android:id="@+id/btCadastrarID"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:background="@color/colorAccent"
-                android:text="Cadastrar" />
+                android:text="@string/cadastrar" />
 
         </LinearLayout>
 

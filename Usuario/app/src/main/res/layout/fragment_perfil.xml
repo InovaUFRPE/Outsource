@@ -19,53 +19,16 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
+            android:contentDescription="@string/foto_do_solicitante"
             android:src="@drawable/me1" />
 
-        <LinearLayout
+        <RatingBar
+            android:id="@+id/rbAvaliarServico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                color:srcCompat="@drawable/ic_star_black_24dp" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                color:srcCompat="@drawable/ic_star_black_24dp" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                color:srcCompat="@drawable/ic_star_black_24dp" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                color:srcCompat="@drawable/ic_star_black_24dp" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/colorWhite"
-                color:srcCompat="@drawable/ic_star_black_24dp" />
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            android:numStars="5"
+            android:stepSize="1.0" />
 
         <TextView
             android:id="@+id/tvNomePerfil"
@@ -73,7 +36,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:paddingBottom="10dp"
-            android:text="Gabriel Lourenço"
+            android:text="@string/user_usuario_exemplo"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textSize="26sp" />
@@ -98,12 +61,12 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:text="250"
+                android:text="@string/numero_exemplo"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -111,7 +74,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/textView4"
                 android:layout_toRightOf="@+id/textView4"
-                android:text="Serviços atendidos"
+                android:text="@string/servicos_atendidos"
                 android:textColor="@color/colorWhite" />
         </RelativeLayout>
 
@@ -128,8 +91,9 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:text="10"
+                android:text="@string/numero_exemplo"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -140,7 +104,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/textView5"
                 android:layout_toRightOf="@+id/textView5"
-                android:text="Avaliações"
+                android:text="@string/avaliacoes"
                 android:textColor="@color/colorWhite" />
         </RelativeLayout>
 
@@ -161,10 +125,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="Meus dados"
+            android:text="@string/meus_dados"
             android:textColor="@color/colorObscurePrimary"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,RelativeOverlap" />
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -174,6 +139,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:background="@color/colorTransparent"
+            android:contentDescription="@string/botao_editar"
             android:padding="8dp"
             color:srcCompat="@drawable/ic_edit_black_24dp" />
 
@@ -191,7 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="E-mail"
+            android:text="@string/email"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />
 
@@ -200,14 +166,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text=""
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Telefone"
+            android:text="@string/numero_do_telefone"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />
 
@@ -216,8 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text=""
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

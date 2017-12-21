@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.outsource.inovaufrpe.usuario.servico.gui.MainServicosFragment"
-    android:layout_above="@id/navigation">
+    android:layout_above="@id/navigation"
+    tools:context="com.outsource.inovaufrpe.usuario.servico.gui.MainServicosFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

@@ -33,8 +33,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText"
+        android:layout_above="@+id/etAdicionarMoedaID"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="62dp"
-        android:text="Adicione um valor para adicionar a sua carteira" />
+        android:text="@string/adicionar_moeda_header" />
 </RelativeLayout>

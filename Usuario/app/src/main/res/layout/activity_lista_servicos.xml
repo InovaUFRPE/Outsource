@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--Em desuso, senhores?-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.outsource.inovaufrpe.usuario.servico.gui.ListaServicosActivity">
+    android:orientation="vertical">
 
 
     <EditText
@@ -12,24 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/nome" />
+        android:hint="@string/nome"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etAtualizaDescricaoServicoID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/descricao" />
+        android:hint="@string/descricao"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etAtualizaPrecoServicoID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/preco" />
+        android:hint="@string/preco"
+        android:inputType="textPersonName" />
 
     <ListView
         android:id="@+id/lServicos"
