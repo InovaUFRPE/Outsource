@@ -5,7 +5,7 @@
 
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="notificacoes">Notificações</string>
     <string name="nome">Nome</string>
     <string name="descricao">Descrição</string>
     <string name="voltar">Voltar</string>
@@ -58,4 +58,12 @@
     <string name="avaliacoes">Avaliações</string>
     <string name="meus_dados">Meus dados</string>
     <string name="botao_editar">Botão editar</string>
+    <string name="meus">Meus</string>
+    <string name="em_andamento">Em Andamento</string>
+    <string name="concluidos">Concluídos</string>
+    <string name="visualizar_servico">Visualizar serviço</string>
+    <string name="aberta">Aberta</string>
+    <string name="em_negociacao">Em negociação</string>
+    <string name="executado_por">Executado por</string>
+    <string name="editar_perfil">Editar Perfil</string>
 </resources>

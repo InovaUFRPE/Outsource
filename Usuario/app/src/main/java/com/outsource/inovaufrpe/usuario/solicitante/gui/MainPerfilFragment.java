@@ -23,12 +23,8 @@ public class MainPerfilFragment extends Fragment {
     TextView nomeUsuario;
     TextView emailUsuario;
     TextView telefoneUsuario;
-    private FirebaseAux firebase;
 
-
-    public MainPerfilFragment() {
-        // Required empty public constructor
-    }
+    public MainPerfilFragment() {}
 
 
     @Override
@@ -39,14 +35,15 @@ public class MainPerfilFragment extends Fragment {
         nomeUsuario = view.findViewById(R.id.tvNomePerfil);
         emailUsuario = view.findViewById(R.id.tvEmailPerfil);
         telefoneUsuario = view.findViewById(R.id.tvTelefonePerfil);
-        firebase = FirebaseAux.getInstancia();
+        FirebaseAux firebase = FirebaseAux.getInstancia();
         DatabaseReference usuarioReference = firebase.getUsuarioReference().child(firebase.getUser().getUid());
-                usuarioReference.addValueEventListener(
+        usuarioReference.addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Usuario user = dataSnapshot.getValue(Usuario.class);
-                        nomeUsuario.setText(user.getNome()+ " " +user.getSobrenome());
+                        String nomeCompleto = user.getNome() + " " + user.getSobrenome();
+                        nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(user.getEmail());
                         telefoneUsuario.setText(user.getTelefone());
                     }

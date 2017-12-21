@@ -5,11 +5,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 
-/**
- * Created by Pichau on 26/11/2017.
- */
 
 public class FirebaseUtil {
 

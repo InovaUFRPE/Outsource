@@ -1,9 +1,9 @@
 package com.outsource.inovaufrpe.usuario.utils.gui;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.solicitante.gui.LoginActivity;

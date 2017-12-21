@@ -2,10 +2,6 @@ package com.outsource.inovaufrpe.usuario.servico.dominio;
 
 import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
 
-/**
- * Created by Pichau on 21/11/2017.
- */
-
 public class Servico {
     private String id;
     private String idCriador;

@@ -3,6 +3,7 @@ package com.outsource.inovaufrpe.usuario.servico.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
-import com.outsource.inovaufrpe.usuario.utils.DinheiroFormat;
 import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
 
 import java.text.DateFormat;
@@ -27,43 +27,37 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ServicosPessoaisFragment extends Fragment {
-    private FloatingActionButton bCriarServico;
-    FirebaseDatabase firebaseDatabase;
+//    FirebaseDatabase firebaseDatabase;
 
     private RecyclerView mRecyclerView;
     private FirebaseRecyclerAdapter adapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    DinheiroFormat dinheiroFormat;
+//    DinheiroFormat dinheiroFormat;
 
-    public ServicosPessoaisFragment() {
-        // Required empty public constructor
-    }
+    public ServicosPessoaisFragment() {}
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) throws NullPointerException {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_servicos_pessoais, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.RecycleID);
+        mRecyclerView = view.findViewById(R.id.RecycleID);
 
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        bCriarServico = view.findViewById(R.id.inserirBtn);
+        FloatingActionButton bCriarServico = view.findViewById(R.id.inserirBtn);
 
         bCriarServico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext() ,CadastroServicoActivity.class));
+                startActivity(new Intent(view.getContext(), CadastroServicoActivity.class));
             }
         });
 
@@ -73,7 +67,7 @@ public class ServicosPessoaisFragment extends Fragment {
 
     }
 
-    private void adaptador(){
+    private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("servico").child("aberto");
         Query query = databaseReference.orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
@@ -89,10 +83,11 @@ public class ServicosPessoaisFragment extends Fragment {
                     DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
                     viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
 
-                }catch (ParseException e){
+                } catch (ParseException e) {
                 }
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ "+ df.format(Float.parseFloat(model.getPreco().toString())).replace(".",","));
+                String s = "R$ " + df.format(Float.parseFloat(model.getPreco().toString())).replace(".", ",");
+                viewHolder.valor.setText(s);
 
             }
 
@@ -105,7 +100,7 @@ public class ServicosPessoaisFragment extends Fragment {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
                         Servico servico = (Servico) adapter.getItem(position);
                         it.putExtra("servicoID", servico.getId());
-                        it.putExtra("estado",servico.getEstado());
+                        it.putExtra("estado", servico.getEstado());
                         startActivity(it);
                     }
 

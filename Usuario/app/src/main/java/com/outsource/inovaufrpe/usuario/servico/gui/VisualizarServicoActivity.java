@@ -1,5 +1,6 @@
 package com.outsource.inovaufrpe.usuario.servico.gui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -55,8 +56,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     TextView tvNomeSolicitante;
     TextView tvNotaSolicitante;
     TextView tvNomePrestador;
-    TextView tvNotaPrestador;
-    TextView tvNomeOfertante;
     TextView tvEstadoServicoID;
     TextView tvOferta;
     Button solicNovoOrca;
@@ -75,11 +74,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     ValueEventListener listenerServico;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_servico);
-        setTitle("Visualizar serviço");
+        setTitle(getString(R.string.visualizar_servico));
         view = findViewById(R.id.ly);
         Intent intent = getIntent();
         servicoId = intent.getStringExtra("servicoID");
@@ -165,22 +165,22 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
 
         if (estadoId.equals(EstadoServico.ABERTA.getValue())) {
-            tvEstadoServicoID.setText("Aberta");
+            tvEstadoServicoID.setText(R.string.aberta);
             prestadorLayout.setVisibility(View.GONE);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
-            tvEstadoServicoID.setText("Em negociacao");
-            tituloLayoutPessoa.setText("Executado por");
+            tvEstadoServicoID.setText(R.string.em_negociacao);
+            tituloLayoutPessoa.setText(R.string.executado_por);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
-            tvEstadoServicoID.setText("Em andamento");
-            tituloLayoutPessoa.setText("Executado por");
+            tvEstadoServicoID.setText(R.string.em_andamento);
+            tituloLayoutPessoa.setText(R.string.executado_por);
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
         } else {
-            tituloLayoutPessoa.setText("Executado por");
+            tituloLayoutPessoa.setText(R.string.executado_por);
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
         }
@@ -188,7 +188,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void concluir() {
-        //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIA
+        //TODO: CORRIGIR A AVALIAÇÃO DE USUARIO TARDIA
         databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -214,7 +214,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
         super.onResume();
         dadosServico();
 
@@ -275,7 +274,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 if (servico != null) {
                     tituloID.setText(servico.getNome());
                     DecimalFormat df = new DecimalFormat("####0.00");
-                    valorID.setText("R$ " + df.format(Float.parseFloat(servico.getPreco().toString())).replace(".", ","));
+                    String s = "R$ " + df.format(Float.parseFloat(servico.getPreco().toString())).replace(".", ",");
+                    valorID.setText(s);
                     descricaoID.setText(servico.getDescricao());
                     if (servico.getIdPrestador() != null) {
                         dadosUsuario();
@@ -298,7 +298,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         databaseReferenceSolicitante.child(servico.getIdCriador()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                tvNomeSolicitante.setText(dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class));
+                String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
+                tvNomeSolicitante.setText(s);
                 tvNotaSolicitante.setText(String.valueOf(dataSnapshot.child("nota").getValue(Integer.class)));
                 if (servico.getOfertante() != null) {
                     dadosNegociacao();
@@ -313,14 +314,14 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void dadosNegociacao() {
-
         if (servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
             tvNomePrestador.setText(firebaseAuth.getCurrentUser().getDisplayName());
         } else {
             tvNomePrestador.setText(tvNomeSolicitante.getText());
         }
         DecimalFormat df = new DecimalFormat("####0.00");
-        tvOferta.setText("R$ " + df.format(Float.parseFloat(servico.getOferta().toString())).replace(".", ","));
+        String s = "R$ " + df.format(Float.parseFloat(servico.getOferta().toString())).replace(".", ",");
+        tvOferta.setText(s);
     }
 
     private void atualizarEstadoServico(String estadoAtual, String estadoDestino) {
@@ -341,7 +342,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void criarDialogNegociacao() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
-        View view1 = getLayoutInflater().inflate(R.layout.dialog_negociacao_servico, null);
+        @SuppressLint("InflateParams") View view1 = getLayoutInflater().inflate(R.layout.dialog_negociacao_servico, null);
 
         precoServico = view1.findViewById(R.id.etPrecoServico);
         comentario = view1.findViewById(R.id.etComentarios);
@@ -358,7 +359,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
      */
     private void criarDialogVisualizarPerfil() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
-        View v1 = getLayoutInflater().inflate(R.layout.dialog_visualizar_perfil, null);
+        @SuppressLint("InflateParams") View v1 = getLayoutInflater().inflate(R.layout.dialog_visualizar_perfil, null);
         FirebaseRecyclerAdapter adapter;
 
         ImageButton closeBtn = v1.findViewById(R.id.closeBtn);
@@ -371,7 +372,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         });
 
         nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
-        RecyclerView mRecyclerView = (RecyclerView) v1.findViewById(R.id.RecycleComentarioID);
+        RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
 
         mRecyclerView.setFocusable(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(VisualizarServicoActivity.this);
@@ -403,7 +404,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
      */
     private void criarDialogAvaliarUsuario() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
-        View v1 = getLayoutInflater().inflate(R.layout.dialog_avaliacao_usuario, null);
+        @SuppressLint("InflateParams") View v1 = getLayoutInflater().inflate(R.layout.dialog_avaliacao_usuario, null);
 
         Button btnConcluir = v1.findViewById(R.id.btnAvaliarConcluir);
         final EditText edComentarioAvaliacao = v1.findViewById(R.id.etComentarios);
@@ -423,7 +424,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         mBuilder.setView(v1);
         dialog = mBuilder.create();
         dialog.show();
-
     }
 
     private void adicionarComentario(String texto) {

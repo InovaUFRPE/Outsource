@@ -5,11 +5,6 @@ import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Nicollas on 05/11/2017.
- */
-
-//Classe representando um usuario do tipo cliente no sistema
 
 public class Usuario {
     private String id;
@@ -19,7 +14,7 @@ public class Usuario {
     private String telefone;
     private String nascimento;
     private int nota;
-    private List<String> listaServicos = new ArrayList<String>();
+    private List<String> listaServicos = new ArrayList<>();
     private God carteira;
 
     public Usuario() {

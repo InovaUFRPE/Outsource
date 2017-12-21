@@ -3,6 +3,7 @@ package com.outsource.inovaufrpe.usuario.servico.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,43 +28,32 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ServicosAndamentoFragment extends Fragment {
-
 
     private RecyclerView mRecyclerViewNegociacao;
     private RecyclerView mRecyclerViewAndamento;
-
     private FirebaseRecyclerAdapter adapter1;
     private FirebaseRecyclerAdapter adapter2;
-    private RecyclerView.LayoutManager mLayoutManager1;
-    private RecyclerView.LayoutManager mLayoutManager2;
+
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private ToggleButton btRecycleNegociacao;
-    private ToggleButton btRecycleAndamento;
 
-    public ServicosAndamentoFragment() {
-        // Required empty public constructor
-    }
+    public ServicosAndamentoFragment() {}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) throws NullPointerException {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_servicos_andamento, container, false);
 
         mRecyclerViewNegociacao = view.findViewById(R.id.RecycleID);
         mRecyclerViewAndamento = view.findViewById(R.id.Recycle2ID);
 
-        mLayoutManager1 = new LinearLayoutManager(getActivity());
-        mLayoutManager2 = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getActivity());
         mRecyclerViewNegociacao.setLayoutManager(mLayoutManager1);
         mRecyclerViewAndamento.setLayoutManager(mLayoutManager2);
-        btRecycleNegociacao = view.findViewById(R.id.btRecycleID);
-        btRecycleAndamento = view.findViewById(R.id.btRecycle2ID);
+        ToggleButton btRecycleNegociacao = view.findViewById(R.id.btRecycleID);
+        ToggleButton btRecycleAndamento = view.findViewById(R.id.btRecycle2ID);
 
         mRecyclerViewNegociacao.setVisibility(View.GONE);
         mRecyclerViewAndamento.setVisibility(View.GONE);
@@ -72,9 +62,9 @@ public class ServicosAndamentoFragment extends Fragment {
         btRecycleNegociacao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
+                if (b) {
                     mRecyclerViewNegociacao.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mRecyclerViewNegociacao.setVisibility(View.GONE);
                 }
             }
@@ -83,9 +73,9 @@ public class ServicosAndamentoFragment extends Fragment {
         btRecycleAndamento.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
+                if (b) {
                     mRecyclerViewAndamento.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mRecyclerViewAndamento.setVisibility(View.GONE);
                 }
             }
@@ -114,10 +104,11 @@ public class ServicosAndamentoFragment extends Fragment {
                     DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
                     viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
 
-                }catch (ParseException e){
+                } catch (ParseException e) {
                 }
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getOferta().toString())).replace(".",","));
+                String s = "R$ " + df.format(Float.parseFloat(model.getOferta().toString())).replace(".", ",");
+                viewHolder.valor.setText(s);
 
             }
 
@@ -153,10 +144,11 @@ public class ServicosAndamentoFragment extends Fragment {
                     DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
                     viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
 
-                }catch (ParseException e){
+                } catch (ParseException e) {
                 }
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getOferta().toString())).replace(".",","));
+                String s = "R$ " + df.format(Float.parseFloat(model.getOferta().toString())).replace(".", ",");
+                viewHolder.valor.setText(s);
 
             }
 

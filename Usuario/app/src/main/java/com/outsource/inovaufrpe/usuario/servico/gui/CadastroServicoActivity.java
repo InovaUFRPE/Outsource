@@ -1,28 +1,23 @@
 package com.outsource.inovaufrpe.usuario.servico.gui;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
-import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
 import com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.UUID;
 
 public class CadastroServicoActivity extends AppCompatActivity {
     EditText etNomeServicoID;
@@ -40,11 +35,11 @@ public class CadastroServicoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_servico);
 
-        etNomeServicoID = (EditText) findViewById(R.id.etNomeServicoID);
-        etDescricaoServicoID = (EditText) findViewById(R.id.etDescricaoServicoID);
-        etPrecoServicoID = (EditText) findViewById(R.id.etPrecoServicoID);
-        btVoltarID = (Button) findViewById(R.id.btVoltarID);
-        btConfirmarID = (Button) findViewById(R.id.btConfirmarID);
+        etNomeServicoID = findViewById(R.id.etNomeServicoID);
+        etDescricaoServicoID = findViewById(R.id.etDescricaoServicoID);
+        etPrecoServicoID = findViewById(R.id.etPrecoServicoID);
+        btVoltarID = findViewById(R.id.btVoltarID);
+        btConfirmarID = findViewById(R.id.btConfirmarID);
 
         btVoltarID.setOnClickListener(new View.OnClickListener() {
             @Override

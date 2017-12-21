@@ -59,6 +59,7 @@ public class SwipeButton extends RelativeLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs, defStyleAttr, defStyleRes);
     }
+
     @SuppressLint("ResourceAsColor")
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         RelativeLayout background = new RelativeLayout(context);
@@ -130,12 +131,12 @@ public class SwipeButton extends RelativeLayout {
                             centerText.setAlpha(1 - 1.3f * (slidingButton.getX() + slidingButton.getWidth()) / getWidth());
                         }
 
-                        if  (event.getX() + slidingButton.getWidth() / 2 > getWidth() &&
+                        if (event.getX() + slidingButton.getWidth() / 2 > getWidth() &&
                                 slidingButton.getX() + slidingButton.getWidth() / 2 < getWidth()) {
                             slidingButton.setX(getWidth() - slidingButton.getWidth());
                         }
 
-                        if  (event.getX() < slidingButton.getWidth() / 2 &&
+                        if (event.getX() < slidingButton.getWidth() / 2 &&
                                 slidingButton.getX() > 0) {
                             slidingButton.setX(0);
                         }
@@ -182,7 +183,7 @@ public class SwipeButton extends RelativeLayout {
                 ViewGroup.LayoutParams params = slidingButton.getLayoutParams();
                 params.width = (Integer) widthAnimator.getAnimatedValue();
                 slidingButton.setLayoutParams(params);
-                Toast.makeText(getContext(), "collapseButton",Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), "collapseButton", Toast.LENGTH_SHORT);
             }
         });
 
@@ -210,10 +211,10 @@ public class SwipeButton extends RelativeLayout {
         widthAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                ViewGroup.LayoutParams params =  slidingButton.getLayoutParams();
+                ViewGroup.LayoutParams params = slidingButton.getLayoutParams();
                 params.width = (Integer) widthAnimator.getAnimatedValue();
                 slidingButton.setLayoutParams(params);
-                Toast.makeText(getContext(), "ola",Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), "ola", Toast.LENGTH_SHORT);
             }
         });
 
@@ -236,7 +237,7 @@ public class SwipeButton extends RelativeLayout {
     }
 
     private void moveButtonBack() {
-        Toast.makeText(getContext(), "moveButtonBack",Toast.LENGTH_SHORT);
+        Toast.makeText(getContext(), "moveButtonBack", Toast.LENGTH_SHORT);
         final ValueAnimator positionAnimator =
                 ValueAnimator.ofFloat(slidingButton.getX(), 0);
         positionAnimator.setInterpolator(new AccelerateDecelerateInterpolator());

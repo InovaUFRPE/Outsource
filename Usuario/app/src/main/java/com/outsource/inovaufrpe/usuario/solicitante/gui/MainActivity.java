@@ -104,9 +104,11 @@ public class MainActivity extends AppCompatActivity {
     private MainServicosFragment getServicosFragment() {
         return new MainServicosFragment();
     }
+
     private MainCarteiraFragment getCarteiraFragment() {
         return new MainCarteiraFragment();
     }
+
     private MainPerfilFragment getPerfilFragment() {
         return new MainPerfilFragment();
     }
@@ -116,15 +118,16 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.notificacoesBtn) {
-            Toast.makeText(MainActivity.this, "Notificações", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.notificacoes, Toast.LENGTH_SHORT).show();
         }
-        if (id == R.id.inserirBtn){
-            startActivity(new Intent(this,CadastroServicoActivity.class));
+        if (id == R.id.inserirBtn) {
+            startActivity(new Intent(this, CadastroServicoActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

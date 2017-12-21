@@ -5,9 +5,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-/**
- * Created by Heitor on 05/12/2017.
- */
+//TODO: se tiver em desuso, excluir esta classe....
 
 public class DinheiroFormat {
 

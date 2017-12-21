@@ -5,20 +5,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-/**
- * Created by Nicolas on 27/11/2017.
- */
-
 public final class FirebaseAux {
     private static FirebaseAux instancia;
-    private String codigo;
     private final FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private DatabaseReference usuarioReference;
 
     /**
      * Gets instancia.
-     *
      *
      * @return the instancia
      */

@@ -35,7 +35,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
-        setTitle("Editar Perfil");
+        setTitle(getString(R.string.editar_perfil));
         firebase = FirebaseAux.getInstancia();
 
         DatabaseReference firebasereference = firebase.getUsuarioReference().child(firebase.getUser().getUid());

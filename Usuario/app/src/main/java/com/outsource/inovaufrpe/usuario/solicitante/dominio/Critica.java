@@ -1,8 +1,5 @@
 package com.outsource.inovaufrpe.usuario.solicitante.dominio;
 
-/**
- * Created by Pichau on 11/12/2017.
- */
 
 public class Critica {
     private int nota;

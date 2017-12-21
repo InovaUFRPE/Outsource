@@ -1,8 +1,5 @@
 package com.outsource.inovaufrpe.usuario.solicitante.dominio;
 
-/**
- * Created by Heitor on 12/12/2017.
- */
 
 public class Comentario {
     private String texto;

@@ -24,26 +24,23 @@ import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
 
 import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends Activity implements View.OnClickListener{
+public class LoginActivity extends Activity implements View.OnClickListener {
 
     private Button login;
     private EditText etCodigo;
     private EditText etTelefone;
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private String mVerificationId;
@@ -70,13 +67,13 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     }
 
     private void checaSessao() {
-        if(firebase.getFirebaseAuth().getCurrentUser() != null){
+        if (firebase.getFirebaseAuth().getCurrentUser() != null) {
             finish();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
     }
 
-    private void LoginFacebook(AccessToken token){
+    private void LoginFacebook(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         firebase.getFirebaseAuth().signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -105,19 +102,18 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     }
 
     private void logar() {
-        if(etTelefone.getText().toString().trim().length() != 0){
+        if (etTelefone.getText().toString().trim().length() != 0) {
             String numero = "+55" + etTelefone.getText().toString();
             cadastrartelefone(numero);
-        }else{
+        } else {
             etTelefone.setError("Número inválido");
         }
     }
 
 
-
     private void cadastrartelefone(String phoneNumber) {
 
-        mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
@@ -163,7 +159,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 mResendToken = token;
                 etCodigo.setVisibility(View.VISIBLE);
                 etTelefone.setVisibility(View.INVISIBLE);
-                login.setText("Confirmar Codigo");
+                login.setText(R.string.confirmar_codigo);
             }
 
         };
@@ -195,7 +191,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 });
     }
 
-    private void usuarioLogado(){
+    private void usuarioLogado() {
         DatabaseReference users = firebase.getUsuarioReference().child("usuario");
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -203,7 +199,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 if (snapshot.hasChild(firebase.getUser().getUid())) {
                     finish();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }else{
+                } else {
                     finish();
                     startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
                 }
@@ -226,9 +222,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         switch (view.getId()) {
             case R.id.btLogarID:
                 Toast.makeText(LoginActivity.this, "ADLE", Toast.LENGTH_SHORT).show();
-                if(etCodigo.getVisibility() == View.VISIBLE){
+                if (etCodigo.getVisibility() == View.VISIBLE) {
                     logarComCredential();
-                }else {
+                } else {
                     logar();
                 }
                 break;
@@ -248,7 +244,6 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                     @Override
                     public void onError(FacebookException error) {
                         Toast.makeText(LoginActivity.this, "Falha ao logar", Toast.LENGTH_SHORT).show();
-
                     }
                 });
                 break;
