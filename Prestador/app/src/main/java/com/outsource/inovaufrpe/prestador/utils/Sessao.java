@@ -1,14 +1,10 @@
 package com.outsource.inovaufrpe.prestador.utils;
 
-/**
- * Created by Pichau on 22/11/2017.
- */
-
 final class Sessao {
     static String idUsuarioConectado;
     static String nomeUsuarioConectado;
 
-    private Sessao(){
+    private Sessao() {
 
     }
 

@@ -6,10 +6,6 @@ import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Pichau on 19/11/2017.
- */
-
 public class Prestador {
     private String id;
     private String nome;

@@ -101,9 +101,11 @@ public class MainActivity extends AppCompatActivity {
     private MainServicosFragment getServicosFragment() {
         return new MainServicosFragment();
     }
+
     private MainCarteiraFragment getCarteiraFragment() {
         return new MainCarteiraFragment();
     }
+
     private MainPerfilFragment getPerfilFragment() {
         return new MainPerfilFragment();
     }
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

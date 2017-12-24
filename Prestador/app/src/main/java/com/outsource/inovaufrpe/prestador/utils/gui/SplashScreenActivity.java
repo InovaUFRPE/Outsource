@@ -1,9 +1,9 @@
 package com.outsource.inovaufrpe.prestador.utils.gui;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.gui.LoginActivity;

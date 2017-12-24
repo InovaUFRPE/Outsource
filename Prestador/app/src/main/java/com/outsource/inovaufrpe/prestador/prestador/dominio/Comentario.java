@@ -1,11 +1,5 @@
 package com.outsource.inovaufrpe.prestador.prestador.dominio;
 
-import java.util.Date;
-
-/**
- * Created by Heitor on 12/12/2017.
- */
-
 public class Comentario {
     private String texto;
     private String data;

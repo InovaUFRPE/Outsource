@@ -2,15 +2,10 @@ package com.outsource.inovaufrpe.prestador.utils;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
-
-/**
- * Created by Pichau on 21/11/2017.
- */
 
 public class ServicoListHolder extends RecyclerView.ViewHolder {
     public View mainLayout;
@@ -23,16 +18,15 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
     public TextView solicitante;
     public TextView data;
 
-    View view;
 
     public ServicoListHolder(final View itemView) {
         super(itemView);
         mView = itemView;
 
-        titulo = (TextView) itemView.findViewById(R.id.tituloID);
-        status = (TextView) itemView.findViewById(R.id.statusID);
-        valor = (TextView) itemView.findViewById(R.id.valorID);
-        data = (TextView) itemView.findViewById(R.id.tDataServicoID);
+        titulo = itemView.findViewById(R.id.tituloID);
+        status = itemView.findViewById(R.id.statusID);
+        valor = itemView.findViewById(R.id.valorID);
+        data = itemView.findViewById(R.id.tDataServicoID);
 //        solicitante = (TextView) itemView.findViewById(R.id.solicitanteID);
         mainLayout = itemView.findViewById(R.id.card_view);
         linearLayout = itemView.findViewById(R.id.servico_card);
@@ -45,16 +39,16 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        view = itemView.findViewById(R.id.servico_card);
+        mView = itemView.findViewById(R.id.servico_card);
     }
 
     private ServicoListHolder.ClickListener mClickListener;
 
-    public interface ClickListener{
+    public interface ClickListener {
         public void onItemClick(View view, int position);
     }
 
-    public void setOnClickListener(ServicoListHolder.ClickListener clickListener){
+    public void setOnClickListener(ServicoListHolder.ClickListener clickListener) {
         mClickListener = clickListener;
     }
 }

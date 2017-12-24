@@ -1,49 +1,46 @@
 package com.outsource.inovaufrpe.prestador.prestador.gui;
 
-        import android.content.Intent;
-        import android.support.annotation.NonNull;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-        import com.facebook.AccessToken;
-        import com.facebook.CallbackManager;
-        import com.facebook.FacebookCallback;
-        import com.facebook.FacebookException;
-        import com.facebook.FacebookSdk;
-        import com.facebook.login.LoginResult;
-        import com.facebook.login.widget.LoginButton;
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.Task;
-        import com.google.firebase.FirebaseException;
-        import com.google.firebase.FirebaseTooManyRequestsException;
-        import com.google.firebase.auth.AuthCredential;
-        import com.google.firebase.auth.AuthResult;
-        import com.google.firebase.auth.FacebookAuthProvider;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-        import com.google.firebase.auth.PhoneAuthCredential;
-        import com.google.firebase.auth.PhoneAuthProvider;
-        import com.google.firebase.database.DataSnapshot;
-        import com.google.firebase.database.DatabaseError;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.database.ValueEventListener;
-        import com.outsource.inovaufrpe.prestador.R;
-        import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.outsource.inovaufrpe.prestador.R;
+import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 
-        import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText etTelefone;
     private EditText etCodigo;
     //private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private LoginButton loginButton;
     private Button login;
     private CallbackManager callbackManager;
@@ -71,20 +68,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void checaSessao() {
-        if(firebase.getUser() != null){
+        if (firebase.getUser() != null) {
             finish();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
     }
 
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btLogarID:
                 Toast.makeText(LoginActivity.this, "ADLE", Toast.LENGTH_SHORT).show();
-                if(etCodigo.getVisibility() == View.VISIBLE){
+                if (etCodigo.getVisibility() == View.VISIBLE) {
                     logarComCredential();
-                }else {
+                } else {
                     logar();
                 }
                 break;
@@ -111,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void LoginFacebook(AccessToken token){
+    private void LoginFacebook(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         firebase.getFirebaseAuth().signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -141,17 +138,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void logar() {
-        if(etTelefone.getText().toString().trim().length() != 0){
+        if (etTelefone.getText().toString().trim().length() != 0) {
             String numero = "+55" + etTelefone.getText().toString();
             cadastrartelefone(numero);
-        }else{
+        } else {
             etTelefone.setError("Número inválido");
         }
     }
 
     private void cadastrartelefone(String phoneNumber) {
 
-        mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
@@ -197,7 +194,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mResendToken = token;
                 etCodigo.setVisibility(View.VISIBLE);
                 etTelefone.setVisibility(View.INVISIBLE);
-                login.setText("Confirmar Codigo");
+                login.setText(R.string.confirmar_codigo);
             }
 
         };
@@ -235,7 +232,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void usuarioLogado(){
+    private void usuarioLogado() {
         String usuarioId = firebase.getUser().getUid();
         DatabaseReference users = firebase.getPrestadorReference();
         users.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -244,7 +241,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (snapshot.hasChild(firebase.getUser().getUid())) {
                     finish();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }else{
+                } else {
                     finish();
                     startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
                 }

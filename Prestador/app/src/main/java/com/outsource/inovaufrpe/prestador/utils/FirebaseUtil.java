@@ -1,22 +1,15 @@
 package com.outsource.inovaufrpe.prestador.utils;
 
-import com.google.firebase.FirebaseException;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseException;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
-import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
-
-/**
- * Created by Pichau on 26/11/2017.
- */
+import com.google.firebase.database.ValueEventListener;
 
 public class FirebaseUtil {
 
 
-    public void moverServico(final DatabaseReference fromPath, final DatabaseReference toPath, final String estadoServico) throws DatabaseException{
+    public void moverServico(final DatabaseReference fromPath, final DatabaseReference toPath, final String estadoServico) throws DatabaseException {
         fromPath.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

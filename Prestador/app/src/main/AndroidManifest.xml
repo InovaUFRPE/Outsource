@@ -14,7 +14,8 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".utils.gui.SplashScreenActivity"
+        <activity
+            android:name=".utils.gui.SplashScreenActivity"
             android:theme="@style/FullScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +27,7 @@
 
         <activity
             android:name=".prestador.gui.LoginActivity"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenTheme" />
 
         <activity
             android:name=".prestador.gui.CadastroActivity"

@@ -64,4 +64,14 @@
     <string name="descricao_servico">Descrição Serviço</string>
     <string name="aceitar">Aceitar</string>
     <string name="negociar">Negociar</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="confirmar_codigo">Confirmar Codigo</string>
+    <string name="novos">Novos</string>
+    <string name="em_andamento">Em Andamento</string>
+    <string name="concluidos">Concluídos</string>
+    <string name="visualizar_servico">Visualizar serviço</string>
+    <string name="solicitado_por">Solicitado por</string>
+    <string name="aberta">Aberta</string>
+    <string name="em_negociacao">Em negociacao</string>
+    <string name="finalizada">Finalizada</string>
 </resources>

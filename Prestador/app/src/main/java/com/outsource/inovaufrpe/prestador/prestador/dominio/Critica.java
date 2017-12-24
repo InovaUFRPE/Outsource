@@ -1,9 +1,5 @@
 package com.outsource.inovaufrpe.prestador.prestador.dominio;
 
-/**
- * Created by Pichau on 11/12/2017.
- */
-
 public class Critica {
     private int nota;
     private String comentadorUID;

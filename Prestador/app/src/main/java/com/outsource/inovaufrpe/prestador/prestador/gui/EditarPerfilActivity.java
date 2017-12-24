@@ -14,12 +14,10 @@ import android.widget.Toast;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
@@ -32,7 +30,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private EditText etAtualizaTelefone;
 
     private FirebaseAux firebase;
-    private FirebaseUser user;
 
     /*
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -44,7 +41,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
-        setTitle("Configurações");
+        setTitle(getString(R.string.configuracoes));
         firebase = FirebaseAux.getInstancia();
 
 
@@ -86,8 +83,8 @@ public class EditarPerfilActivity extends AppCompatActivity {
         });
     }
 
-    public void Atualizar(){
-        user = firebase.getUser();
+    public void Atualizar() {
+        FirebaseUser user = firebase.getUser();
         Prestador usuario = new Prestador();
         usuario.setId(user.getUid());
         usuario.setNome(etAtualizaNome.getText().toString().trim());
@@ -97,18 +94,18 @@ public class EditarPerfilActivity extends AppCompatActivity {
         firebase.getPrestadorReference().child(usuario.getId()).setValue(usuario);
     }
 
-    public void Deletar(){
+    public void Deletar() {
         firebase.getUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(EditarPerfilActivity.this,"Conta desativada com sucesso.",Toast.LENGTH_SHORT).show();
+                if (task.isSuccessful()) {
+                    Toast.makeText(EditarPerfilActivity.this, "Conta desativada com sucesso.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    public void Logout(){
+    public void Logout() {
         Toast.makeText(EditarPerfilActivity.this, "Saiu com sucesso.", Toast.LENGTH_SHORT).show();
         firebase.getFirebaseAuth().signOut();
         LoginManager.getInstance().logOut();

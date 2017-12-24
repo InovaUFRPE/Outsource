@@ -4,13 +4,7 @@ import com.outsource.inovaufrpe.prestador.carteira.dominio.God;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Comentario;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-/**
- * Created by Pichau on 21/11/2017.
- */
 
 public class Servico {
     private String id;

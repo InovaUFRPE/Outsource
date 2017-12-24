@@ -79,7 +79,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         servicoId = intent.getStringExtra("servicoID");
         estadoId = intent.getStringExtra("estado");
-        setTitle("Visualizar serviço");
+        setTitle(getString(R.string.visualizar_servico));
         view = findViewById(R.id.ly);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReferenceServico = FirebaseDatabase.getInstance().getReference().child("servico");
@@ -98,7 +98,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btAceitarOferta = findViewById(R.id.btAceitarNegociacao);
         LinearLayout solicitanteLayout = findViewById(R.id.layoutPessoa);
 
-        tituloLayoutPessoa.setText("Solicitado por");
+        tituloLayoutPessoa.setText(R.string.solicitado_por);
 
         dadosServico();
 
@@ -185,24 +185,24 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
 
         if (estadoId.equals(EstadoServico.ABERTA.getValue())) {
-            tvEstadoServicoID.setText("Aberta");
+            tvEstadoServicoID.setText(R.string.aberta);
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
-            tvEstadoServicoID.setText("Em negociacao");
+            tvEstadoServicoID.setText(R.string.em_negociacao);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
             findViewById(R.id.btnSolicitarOrcamento).setVisibility(View.GONE);
 
         } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
-            tvEstadoServicoID.setText("Em andamento");
+            tvEstadoServicoID.setText(R.string.em_andamento);
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
             findViewById(R.id.btnSolicitarOrcamento).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
 
         } else {
-            tvEstadoServicoID.setText("Finalizada");
+            tvEstadoServicoID.setText(R.string.finalizada);
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
             findViewById(R.id.btnSolicitarOrcamento).setVisibility(View.GONE);
@@ -263,7 +263,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             tvNomeOfertante.setText(tvNomeSolicitante.getText());
         }
         DecimalFormat df = new DecimalFormat("####0.00");
-        tvOferta.setText("R$ " + df.format(Float.parseFloat(servico.getOferta().toString())).replace(".", ","));
+        String s = "R$ " + df.format(Float.parseFloat(servico.getOferta().toString())).replace(".", ",");
+        tvOferta.setText(s);
     }
 
     private void negociar() throws DatabaseException {
@@ -295,7 +296,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 if (servico != null) {
                     tituloID.setText(servico.getNome());
                     DecimalFormat df = new DecimalFormat("####0.00");
-                    valorID.setText("R$ " + df.format(Float.parseFloat(servico.getPreco().toString())).replace(".", ","));
+                    String s = "R$ " + df.format(Float.parseFloat(servico.getPreco().toString())).replace(".", ",");
+                    valorID.setText(s);
                     descricaoID.setText(servico.getDescricao());
                     dadosUsuario();
                 } else {
@@ -372,7 +374,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter adapter;
 
         TextView nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
-        RecyclerView mRecyclerView = (RecyclerView) v1.findViewById(R.id.RecycleComentarioID);
+        RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
         ImageButton closeBtn = v1.findViewById(R.id.closeBtn);
 
         closeBtn.setOnClickListener(new View.OnClickListener() {

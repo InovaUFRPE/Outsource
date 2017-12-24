@@ -3,22 +3,17 @@ package com.outsource.inovaufrpe.prestador.servico.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
@@ -28,31 +23,22 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ServicosNovosFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private FirebaseRecyclerAdapter adapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     DatabaseReference databaseReference;
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    public ServicosNovosFragment() {
-        // Required empty public constructor
-    }
+    public ServicosNovosFragment() {}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) throws NullPointerException {
-        // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_servicos_novos, container, false);
-        mRecyclerView = (RecyclerView) layout.findViewById(R.id.recycleID);
+        mRecyclerView = layout.findViewById(R.id.recycleID);
 
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         adaptador();
@@ -78,7 +64,8 @@ public class ServicosNovosFragment extends Fragment {
                 } catch (ParseException e) {
                 }
                 DecimalFormat df = new DecimalFormat("####0.00");
-                viewHolder.valor.setText("R$ " + df.format(Float.parseFloat(model.getPreco().toString())).replace(".", ","));
+                String s = "R$ " + df.format(Float.parseFloat(model.getPreco().toString())).replace(".", ",");
+                viewHolder.valor.setText(s);
 
             }
 

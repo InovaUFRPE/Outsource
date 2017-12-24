@@ -11,11 +11,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
@@ -25,7 +22,6 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText etSobrenome;
     private EditText etEmail;
     private EditText etTelefone;
-    private Button btCadastrar;
     private FirebaseAux firebase;
     private FirebaseUser user;
 
@@ -35,11 +31,11 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
         firebase = FirebaseAux.getInstancia();
-        etNome = (EditText) findViewById(R.id.etNomeID);
-        etSobrenome = (EditText) findViewById(R.id.etSobrenomeID);
-        etEmail = (EditText) findViewById(R.id.etEmailID);
-        etTelefone = (EditText) findViewById(R.id.etTelefoneID);
-        btCadastrar = (Button) findViewById(R.id.btCadastrarID);
+        etNome = findViewById(R.id.etNomeID);
+        etSobrenome = findViewById(R.id.etSobrenomeID);
+        etEmail = findViewById(R.id.etEmailID);
+        etTelefone = findViewById(R.id.etTelefoneID);
+        Button btCadastrar = findViewById(R.id.btCadastrarID);
 
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override

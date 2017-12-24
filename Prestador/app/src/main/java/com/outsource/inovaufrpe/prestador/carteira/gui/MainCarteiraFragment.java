@@ -3,6 +3,7 @@ package com.outsource.inovaufrpe.prestador.carteira.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +23,6 @@ import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
 
 import java.text.DecimalFormat;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MainCarteiraFragment extends Fragment {
     TextView tvMoedaCarteiraID;
     Button btAdicionarMoedaID;
@@ -34,19 +31,17 @@ public class MainCarteiraFragment extends Fragment {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
 
-    public MainCarteiraFragment() {
-        // Required empty public constructor
-    }
+    public MainCarteiraFragment() {}
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_carteira, container, false);
         preencheDados();
-        tvMoedaCarteiraID = (TextView)view.findViewById(R.id.tvMoedaCarteiraID);
-        btAdicionarMoedaID = (Button) view.findViewById(R.id.btAdicionarMoedaID);
+        tvMoedaCarteiraID = view.findViewById(R.id.tvMoedaCarteiraID);
+        btAdicionarMoedaID = view.findViewById(R.id.btAdicionarMoedaID);
         btAdicionarMoedaID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +57,7 @@ public class MainCarteiraFragment extends Fragment {
 
     }
 
-    public void preencheDados(){
+    public void preencheDados() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         DatabaseReference usuarioreference = databaseReference.child("prestador");
         final DatabaseReference firebasereference = usuarioreference.child(user.getUid());
@@ -71,7 +66,7 @@ public class MainCarteiraFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Prestador prestador = dataSnapshot.getValue(Prestador.class);
                 DecimalFormat df = new DecimalFormat("####0.00");
-                tvMoedaCarteiraID.setText(df.format(Float.parseFloat(String.valueOf(prestador.getCarteira()))).replace(".",","));
+                tvMoedaCarteiraID.setText(df.format(Float.parseFloat(String.valueOf(prestador.getCarteira()))).replace(".", ","));
             }
 
             @Override

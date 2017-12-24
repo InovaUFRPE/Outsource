@@ -1,11 +1,5 @@
 package com.outsource.inovaufrpe.prestador.carteira.dominio;
 
-import java.math.BigDecimal;
-
-/**
- * Created by Heitor on 23/11/2017.
- */
-
 public class God {
     private Double gods;
     private final Double taxa = Double.valueOf("0.1");
@@ -46,7 +40,7 @@ public class God {
         return novoValor + (novoValor * this.getTaxa());
     }
 
-    public Double getFundos() {
+    private Double getFundos() {
         return fundos;
     }
 

@@ -1,6 +1,7 @@
 package com.outsource.inovaufrpe.prestador.servico.gui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -13,19 +14,18 @@ import com.outsource.inovaufrpe.prestador.prestador.adapter.TabAdapter;
 
 public class MainServicosFragment extends android.support.v4.app.Fragment {
 
-    public MainServicosFragment() {
-        // Required empty public constructor
-    }
+    public MainServicosFragment() {}
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_servicos, container, false);
 
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+        ViewPager viewPager = view.findViewById(R.id.pager);
         setupViewPager(viewPager);
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         return view;
@@ -33,9 +33,9 @@ public class MainServicosFragment extends android.support.v4.app.Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapter adapter = new TabAdapter(getChildFragmentManager());
-        adapter.addFragment(new ServicosNovosFragment(), "Novos");
-        adapter.addFragment(new ServicosAndamentoFragment(), "Em Andamento");
-        adapter.addFragment(new ServicosConcluidosFragment(), "Concluídos");
+        adapter.addFragment(new ServicosNovosFragment(), getString(R.string.novos));
+        adapter.addFragment(new ServicosAndamentoFragment(), getString(R.string.em_andamento));
+        adapter.addFragment(new ServicosConcluidosFragment(), getString(R.string.concluidos));
         viewPager.setAdapter(adapter);
     }
 }
