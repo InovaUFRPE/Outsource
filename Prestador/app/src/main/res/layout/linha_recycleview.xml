@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="5dp"
     android:orientation="vertical"
     android:visibility="visible"
     app:cardBackgroundColor="#ffffff"
@@ -38,8 +38,7 @@
                     android:id="@+id/tituloID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/row_lname"
-                    android:text="Titulo Servico"
+                    android:text="@string/titulo_servico"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -50,8 +49,7 @@
                 android:id="@+id/descricaoID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Descricao Servico"
+                android:text="@string/descricao_servico"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="12sp" />
 
@@ -78,14 +76,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Aceitar" />
+            android:text="@string/aceitar"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/negociarID"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Negociar" />
+            android:text="@string/negociar"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
 </LinearLayout>

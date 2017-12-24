@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".servico.gui.MainServicosFragment"
-    android:layout_below="@+id/toolbar">
+    android:layout_below="@+id/toolbar"
+    tools:context=".servico.gui.MainServicosFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

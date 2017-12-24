@@ -3,9 +3,8 @@
     style="@style/DefaultActivities"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:fillViewport="true"
     android:background="@color/colorWhite"
-    android:elevation="7dp"
+    android:fillViewport="true"
     tools:context=".servico.gui.ServicosAndamentoFragment">
 
     <LinearLayout
@@ -17,30 +16,25 @@
             android:id="@+id/btRecycleID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Negociacao"
             android:textOff="Serviços em Negociação >"
             android:textOn="Serviços em Negociação \\/" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/RecycleID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_height="wrap_content" />
 
         <ToggleButton
             android:id="@+id/btRecycle2ID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Andamento"
             android:textOff="Serviços em Andamento >"
             android:textOn="Serviços em Andamento \\/" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/Recycle2ID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
-
 
 </ScrollView>

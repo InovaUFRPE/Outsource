@@ -8,10 +8,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Avaliar usuário"
+        android:layout_marginBottom="20dp"
+        android:text="@string/header_avaliar_usuario"
         android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"/>
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,17 +34,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="28dp"
-        android:hint="Comentários....."
+        android:hint="@string/comentarios"
         android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/btnAvaliarConcluir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="28dp"
         android:background="@color/colorGreen"
-        android:text="Concluir serviço"
+        android:text="@string/concluir_servico"
         android:textColor="@color/colorPrimaryDark" />
 
 </LinearLayout>

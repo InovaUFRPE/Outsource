@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.outsource.inovaufrpe.prestador.carteira.gui.AdicionarMoedaActivity">
 
-
     <EditText
         android:id="@+id/etAdicionarMoedaID"
         android:layout_width="wrap_content"
@@ -17,8 +16,8 @@
         android:layout_marginEnd="19dp"
         android:layout_marginRight="19dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/preco" />
+        android:hint="@string/preco"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/btConfirmarID"
@@ -33,8 +32,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="62dp"
-        android:text="Adicione um valor para adicionar a sua carteira" />
+        android:text="@string/placeholder_insira_valor_carteira" />
 </RelativeLayout>

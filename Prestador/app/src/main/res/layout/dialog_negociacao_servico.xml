@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:hint="100,00"
+        android:hint="@string/dinheiro_exemplo"
         android:inputType="number"
         android:textSize="70sp"
         tools:layout_editor_absoluteX="16dp"
@@ -25,18 +24,18 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="28dp"
-        android:hint="Comentários....."
+        android:hint="@string/comentarios"
         android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/btnSolicitarNovoOrcamento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-
         android:layout_marginBottom="8dp"
+
+        android:layout_marginTop="28dp"
         android:background="@color/colorPrimaryDark"
-        android:text="Solicitar novo orçamento"
+        android:text="@string/solicitar_novo_orcamento"
         android:textColor="@color/colorWhite" />
 
     <Button
@@ -44,8 +43,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorTransparent"
-        android:text="Cancelar negociação"
+        android:text="@string/cancelar_negociacao"
         android:textColor="@color/colorDanger" />
-
-
 </LinearLayout>

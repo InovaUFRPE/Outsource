@@ -20,7 +20,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="Nome do Serviço"
+            android:text="@string/nome_do_servico"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -31,9 +31,11 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="R$ 410,00"
+            android:gravity="end"
+            android:text="@string/dinheiro_exemplo"
             android:textAlignment="textEnd"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             android:id="@+id/tvEstadoServicoID"
@@ -43,7 +45,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tvNomeServico"
-            android:text="Estado"
+            android:text="@string/estado"
             android:textSize="20sp" />
     </RelativeLayout>
 
@@ -61,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Descrição"
+            android:text="@string/descricao"
             android:textAllCaps="true"
             android:textStyle="bold" />
 
@@ -69,7 +71,7 @@
             android:id="@+id/tvDescricaoServico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultrices rutrum blandit. Vestibulum scelerisque ornare purus, sed mollis metus tempor sed." />
+            android:text="@string/lorem_ipsum" />
 
     </LinearLayout>
 
@@ -77,7 +79,7 @@
         android:id="@+id/btnSolicitarOrcamento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Solicitar Orçamento" />
+        android:text="@string/solicitar_orcamento" />
 
     <!--<com.outsource.inovaufrpe.usuario.utils.SwipeButton-->
     <!--android:id="@+id/swipe_btn"-->
@@ -112,7 +114,7 @@
                 android:id="@+id/tvNomePessoa"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:text="Gabriel Morais"
+                android:text="@string/prestador_nome_exemplo"
                 android:textSize="20sp" />
 
             <ImageView
@@ -122,7 +124,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tvNomePessoa"
-                app:srcCompat="@drawable/ic_star_black_24dp" />
+                app:srcCompat="@drawable/ic_star_black_24dp"
+                tools:ignore="ContentDescription,VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/tvNotaPessoa"
@@ -133,7 +136,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_toRightOf="@+id/imageView"
-                android:text="5,0"
+                android:text="@string/nota_exemplo"
                 android:textSize="16sp" />
 
             <ImageView
@@ -143,6 +146,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:contentDescription="@string/foto_do_solicitante"
                 android:src="@drawable/me1" />
 
         </RelativeLayout>
@@ -161,7 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Negociações"
+            android:text="@string/negociacoes"
             android:textAllCaps="true"
             android:textStyle="bold" />
 
@@ -193,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorTransparent"
-                android:text="Negociar"
+                android:text="@string/negociar"
                 android:textColor="@color/colorWhite" />
         </LinearLayout>
 
@@ -209,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorTransparent"
-                android:text="Concluir Serviço"
+                android:text="@string/concluir_servico"
                 android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
@@ -218,17 +222,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/layoutBtnNegociar"
-            android:orientation="horizontal"
-            android:background="@color/colorGreen">
+            android:background="@color/colorGreen"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btAceitarNegociacao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorTransparent"
-                android:layout_centerHorizontal="true"
-                android:text="Aceitar Oferta"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:text="@string/aceitar_oferta"
+                android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
         <View

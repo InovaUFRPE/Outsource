@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,9 +14,9 @@
         android:padding="8dp" />
 
     <RelativeLayout
+        android:id="@+id/servico_card"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/servico_card">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -72,7 +73,8 @@
                 android:text="@+id/valorID"
                 android:textColor="@color/colorGreen"
                 android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="RelativeOverlap" />
         </RelativeLayout>
 
         <!--<RelativeLayout
