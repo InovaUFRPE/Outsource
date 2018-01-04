@@ -34,6 +34,7 @@ import com.outsource.inovaufrpe.prestador.prestador.dominio.Comentario;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Critica;
 import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
+import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.CriticaViewHolder;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
@@ -70,6 +71,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     Servico servico;
     DatabaseReference databaseReferenceServico;
+    CardFormat cardFormat = new CardFormat();
 
 
     @Override
@@ -113,7 +115,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         adicionarComentario(comentario.getText().toString());
-                        if ((df.format(Float.parseFloat(precoServico.getText().toString())).replace(".", ",")).toString().equals(servico.getOferta())) {
+                        if ((df.format(Float.parseFloat(precoServico.getText().toString().replace(",", ".")))).equals(servico.getOferta())) {
                             if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
                                 atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
                             } else {
@@ -219,7 +221,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
                         criarDialogAvaliarUsuario();
-                        atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                     }
                 } else {
                     criarDialogAvaliarUsuario();
@@ -245,6 +246,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 God carteira = new God(dataSnapshot.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").getValue(Double.class));
                 carteira.adicionar(dataSnapshot.child("servico").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
+                God.setFundos(dataSnapshot.child("servico").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
                 databaseReference.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
             }
 
@@ -262,9 +264,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         } else {
             tvNomeOfertante.setText(tvNomeSolicitante.getText());
         }
-        DecimalFormat df = new DecimalFormat("####0.00");
-        String s = "R$ " + df.format(Float.parseFloat(servico.getOferta().toString())).replace(".", ",");
-        tvOferta.setText(s);
+        tvOferta.setText(cardFormat.dinheiroFormat(servico.getOferta().toString()));
     }
 
     private void negociar() throws DatabaseException {
@@ -295,9 +295,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 servico = dataSnapshot.getValue(Servico.class);
                 if (servico != null) {
                     tituloID.setText(servico.getNome());
-                    DecimalFormat df = new DecimalFormat("####0.00");
-                    String s = "R$ " + df.format(Float.parseFloat(servico.getPreco().toString())).replace(".", ",");
-                    valorID.setText(s);
+                    valorID.setText(cardFormat.dinheiroFormat(servico.getPreco().toString()));
                     descricaoID.setText(servico.getDescricao());
                     dadosUsuario();
                 } else {
@@ -318,7 +316,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         databaseReferenceUsuario.child(servico.getIdCriador()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                tvNomeSolicitante.setText(dataSnapshot.child("nome").getValue(String.class));
+                String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
+                tvNomeSolicitante.setText(s);
                 tvNotaSolicitante.setText(String.valueOf(dataSnapshot.child("nota").getValue(Integer.class)));
                 if (servico.getOfertante() != null) {
                     dadosNegociacao();
@@ -427,6 +426,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 critica.setNota((int) ratingBar.getRating());
                 DatabaseReference databaseReference = FirebaseAux.getInstancia().getDatabaseReference();
                 databaseReference.child("feedback").child(servico.getIdCriador()).child(databaseReference.child("feedback").child(servico.getIdCriador()).push().getKey()).setValue(critica);
+                atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
+                finish();
             }
         });
 
@@ -437,17 +438,10 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void adicionarComentario(String texto) {
-        Toast.makeText(VisualizarServicoActivity.this, "sim", Toast.LENGTH_LONG).show();
         Comentario comentario = new Comentario();
         Date data = new Date();
         String novaData = new Timestamp(data.getTime()).toString();
-        try {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss.S");
-            DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-            comentario.setData(dateFormat.format(dateFormat2.parse(novaData)));
-
-        } catch (ParseException e) {
-        }
+        comentario.setData(cardFormat.dataFormat(novaData));
         comentario.setTexto(texto);
         comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
         comentario.setServico(servicoId);

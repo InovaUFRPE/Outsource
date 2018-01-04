@@ -54,7 +54,8 @@ public class MainPerfilFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Prestador prestador = dataSnapshot.getValue(Prestador.class);
-                        nomeUsuario.setText(prestador.getNome());
+                        String nomeCompleto = prestador.getNome()+" "+prestador.getSobrenome();
+                        nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(prestador.getEmail());
                         telefoneUsuario.setText(prestador.getTelefone());
                     }

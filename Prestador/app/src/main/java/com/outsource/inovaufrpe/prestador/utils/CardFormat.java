@@ -1,17 +1,24 @@
-package com.outsource.inovaufrpe.usuario.utils;
+package com.outsource.inovaufrpe.prestador.utils;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-//TODO: se tiver em desuso, excluir esta classe....
+/**
+ * Created by Heitor on 29/12/2017.
+ */
 
-public class DinheiroFormat {
+public class CardFormat {
 
-    /*public String format(String dinheiro){
+    public String dinheiroFormat(String dinheiro){
         DecimalFormat df = new DecimalFormat("####0.00");
         return "R$ "+ df.format(Float.parseFloat(dinheiro)).replace(".",",");
+    }
+
+    public String dinheiroRefactor(String dinheiro){
+        DecimalFormat df = new DecimalFormat("####0.00");
+        return "R$ "+ df.format(Float.parseFloat(dinheiro)).replace(",",".");
     }
 
     public String dataFormat(String data){
@@ -26,5 +33,5 @@ public class DinheiroFormat {
         }
         return nData;
 
-    }*/
+    }
 }

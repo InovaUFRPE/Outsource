@@ -51,7 +51,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Prestador usuario = dataSnapshot.getValue(Prestador.class);
                 etAtualizaNome.setText(usuario.getNome());
-                etAtualizaSobrenome.setText(usuario.getUsername());
+                etAtualizaSobrenome.setText(usuario.getSobrenome());
                 etAtualizaEmail.setText(usuario.getEmail());
                 etAtualizaTelefone.setText(usuario.getTelefone());
             }
@@ -88,7 +88,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         Prestador usuario = new Prestador();
         usuario.setId(user.getUid());
         usuario.setNome(etAtualizaNome.getText().toString().trim());
-        usuario.setUsername(etAtualizaSobrenome.getText().toString().trim());
+        usuario.setSobrenome(etAtualizaSobrenome.getText().toString().trim());
         usuario.setEmail(etAtualizaEmail.getText().toString().trim());
         usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
         firebase.getPrestadorReference().child(usuario.getId()).setValue(usuario);

@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
 
 import java.text.DateFormat;
@@ -28,9 +29,8 @@ import java.text.SimpleDateFormat;
 
 public class ServicosConcluidosFragment extends Fragment {
 
-//  DinheiroFormat dinheiroFormat;
-//  FirebaseDatabase firebaseDatabase;
     private RecyclerView mRecyclerView;
+    CardFormat cardFormat = new CardFormat();
 
     private FirebaseRecyclerAdapter adapter;
     DatabaseReference databaseReference;
@@ -66,16 +66,8 @@ public class ServicosConcluidosFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                try {
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-                    viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
-
-                } catch (ParseException e) {
-                }
-                DecimalFormat df = new DecimalFormat("####0.00");
-                String s = "R$ " + df.format(Float.parseFloat(model.getPreco().toString())).replace(".", ",");
-                viewHolder.valor.setText(s);
+                viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
+                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
             }
 

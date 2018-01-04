@@ -6,8 +6,6 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="nome">Nome</string>
-    <string name="descricao">Descrição</string>
     <string name="voltar">Voltar</string>
     <string name="confirmar">Confirmar</string>
     <string name="preco">Preço</string>
@@ -63,7 +61,6 @@
     <string name="titulo_servico">Titulo Serviço</string>
     <string name="descricao_servico">Descrição Serviço</string>
     <string name="aceitar">Aceitar</string>
-    <string name="negociar">Negociar</string>
     <string name="configuracoes">Configurações</string>
     <string name="confirmar_codigo">Confirmar Codigo</string>
     <string name="novos">Novos</string>

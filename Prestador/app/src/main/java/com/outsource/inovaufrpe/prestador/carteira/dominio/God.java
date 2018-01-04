@@ -2,12 +2,14 @@ package com.outsource.inovaufrpe.prestador.carteira.dominio;
 
 public class God {
     private Double gods;
-    private final Double taxa = Double.valueOf("0.1");
-    private Double fundos;
+    private static final Double TAXA = Double.valueOf("0.1");
+    private static Double fundos;
 
     public God(Double moeda) {
         this.gods = moeda;
-        this.fundos = 0.0;
+        if (fundos == null){
+            fundos = Double.valueOf(0);
+        }
 
     }
 
@@ -15,37 +17,28 @@ public class God {
         return this.gods;
     }
 
-    private Double getTaxa() {
-        return taxa;
+    private static Double getTAXA() {
+        return TAXA;
     }
 
     public void adicionar(Double mais) {
         this.gods = this.gods + mais;
     }
-
     public void subtrair(Double menos) {
         this.gods = this.gods - menos;
     }
-
     public void multiplicar(Double vezes) {
         this.gods = this.gods * vezes;
     }
-
     public void dividir(Double divisor) {
         this.gods = this.gods / divisor;
     }
 
-    public Double aplicarTaxa(String valor) {
-        Double novoValor = Double.valueOf(valor);
-        return novoValor + (novoValor * this.getTaxa());
-    }
-
-    private Double getFundos() {
+    public Double getFundos() {
         return fundos;
     }
 
-    public Double setFundos(Double fundos) {
-        this.fundos += (fundos * this.getTaxa());
-        return getFundos();
+    public static void setFundos(Double fundos) {
+        fundos += (fundos * getTAXA());
     }
 }

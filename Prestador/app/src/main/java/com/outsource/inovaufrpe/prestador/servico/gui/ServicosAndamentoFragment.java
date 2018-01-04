@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
+import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
 
 import java.text.DateFormat;
@@ -36,6 +37,8 @@ public class ServicosAndamentoFragment extends Fragment {
     private FirebaseRecyclerAdapter adapter2;
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+    CardFormat cardFormat = new CardFormat();
 
 
     public ServicosAndamentoFragment() {}
@@ -99,16 +102,8 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                try {
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-                    viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
-
-                } catch (ParseException e) {
-                }
-                DecimalFormat df = new DecimalFormat("####0.00");
-                String s = "R$ " + df.format(Float.parseFloat(model.getOferta().toString())).replace(".", ",");
-                viewHolder.valor.setText(s);
+                viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
+                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
 
             }
 
@@ -139,16 +134,8 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                try {
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-                    viewHolder.data.setText(dateFormat.format(dateFormat2.parse(model.getData())));
-
-                } catch (ParseException e) {
-                }
-                DecimalFormat df = new DecimalFormat("####0.00");
-                String s = "R$ " + df.format(Float.parseFloat(model.getOferta().toString())).replace(".", ",");
-                viewHolder.valor.setText(s);
+                viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
+                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
 
             }
 

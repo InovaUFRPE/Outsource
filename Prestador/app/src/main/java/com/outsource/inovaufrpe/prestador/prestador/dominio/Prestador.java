@@ -51,11 +51,11 @@ public class Prestador {
         this.nome = nome;
     }
 
-    public String getUsername() {
+    public String getSobrenome() {
         return sobrenome;
     }
 
-    public void setUsername(String sobrenome) {
+    public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
     }
 

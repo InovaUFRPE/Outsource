@@ -59,7 +59,7 @@ public class CadastroActivity extends AppCompatActivity {
                             Prestador prestador = new Prestador();
                             prestador.setId(user.getUid());
                             prestador.setNome(etNome.getText().toString());
-                            prestador.setUsername(etSobrenome.getText().toString());
+                            prestador.setSobrenome(etSobrenome.getText().toString());
                             prestador.setEmail(etEmail.getText().toString());
                             prestador.setTelefone(etTelefone.getText().toString().trim());
                             prestador.setCarteira(Double.valueOf("0"));
