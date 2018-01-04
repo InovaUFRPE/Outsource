@@ -12,6 +12,8 @@ public class Servico {
     private God oferta;
     private String ofertante;
     private String data;
+    private Double latitude;
+    private Double longitude;
     private String estado;
 
     public Servico() {
@@ -87,6 +89,22 @@ public class Servico {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public String getEstado() {

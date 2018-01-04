@@ -212,7 +212,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void concluir() {
-        //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIA
+        //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIAgh
         databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

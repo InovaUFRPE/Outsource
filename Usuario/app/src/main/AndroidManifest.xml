@@ -34,6 +34,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB2QHvUCHL8DUYcd1xk9taRRv5QrsXSa68"/>
 
         <activity android:name=".solicitante.gui.EditarPerfilActivity">
             <meta-data

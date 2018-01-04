@@ -45,9 +45,59 @@
         android:layout_height="30dp" />
 
     <RelativeLayout
+        android:id="@+id/rlPlaceID"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/placePickerID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvLocalID"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:text="Selecionar Local" />
+
+        <TextView
+            android:id="@+id/tvLocalSelecionadoID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Local Selecionado:"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvLocalID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvLocalSelecionadoID"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/rlPlaceID">
+
+        <Button
+            android:id="@+id/btVoltarID"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="36dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="18dp"
+            android:layout_weight="1"
+            android:text="@string/voltar" />
 
         <Button
             android:id="@+id/btConfirmarID"
@@ -57,23 +107,10 @@
             android:layout_alignBottom="@+id/btVoltarID"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="51dp"
-            android:layout_marginRight="51dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginRight="38dp"
             android:layout_weight="1"
             android:text="@string/confirmar" />
-
-        <Button
-            android:id="@+id/btVoltarID"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="84dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_weight="1"
-            android:text="@string/voltar" />
     </RelativeLayout>
 
 </LinearLayout>
