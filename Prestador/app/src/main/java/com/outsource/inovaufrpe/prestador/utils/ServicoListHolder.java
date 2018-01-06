@@ -44,11 +44,13 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
 
     private ServicoListHolder.ClickListener mClickListener;
 
+    public void setOnClickListener(ClickListener clickListener) {
+        mClickListener = clickListener;
+
+    }
+
     public interface ClickListener {
         public void onItemClick(View view, int position);
     }
 
-    public void setOnClickListener(ServicoListHolder.ClickListener clickListener) {
-        mClickListener = clickListener;
-    }
 }

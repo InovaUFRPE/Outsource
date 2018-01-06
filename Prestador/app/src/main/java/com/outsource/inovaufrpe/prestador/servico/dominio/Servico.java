@@ -16,8 +16,9 @@ public class Servico {
     private God oferta;
     private String ofertante;
     private String data;
+    private double latitude;
+    private double longitude;
     private String estado;
-    private List<Comentario> comentario = new ArrayList<>();
 
     public Servico() {
     }
@@ -94,20 +95,28 @@ public class Servico {
         this.data = data;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     public String getEstado() {
         return estado;
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public List<Comentario> getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(List<Comentario> comentario) {
-        this.comentario = comentario;
     }
 }
 

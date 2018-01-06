@@ -1,48 +1,93 @@
 package com.outsource.inovaufrpe.prestador.servico.gui;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
+import com.outsource.inovaufrpe.prestador.utils.ServicoDistanciaAdapter;
 import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.concurrent.Executor;
 
-public class ServicosNovosFragment extends Fragment {
+public class ServicosNovosFragment extends Fragment implements ServicoDistanciaAdapter.OnItemClicked {
     private RecyclerView mRecyclerView;
-    private FirebaseRecyclerAdapter adapter;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private ValueEventListener valueEventListener;
+    private Location locationUsuario;
+    private List<Servico> servicos;
 
     DatabaseReference databaseReference;
 
     CardFormat cardFormat = new CardFormat();
 
-    public ServicosNovosFragment() {}
+    public ServicosNovosFragment() {
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) throws NullPointerException {
         View layout = inflater.inflate(R.layout.fragment_servicos_novos, container, false);
+        servicos = new ArrayList<Servico>();
         mRecyclerView = layout.findViewById(R.id.recycleID);
-
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("aberto");
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                servicos.clear();
+                for (DataSnapshot dados : dataSnapshot.getChildren()) {
+                    Servico servico = dados.getValue(Servico.class);
+                    float[] result = new float[2];
+                    Location.distanceBetween(servico.getLatitude(), servico.getLongitude(), locationUsuario.getLatitude(),locationUsuario.getLongitude(), result);
+                    if (result[0] < 1000 ){
+                        servicos.add(servico);
+                    }
+                }
+                mRecyclerView.setAdapter(new ServicoDistanciaAdapter(servicos,getContext(),ServicosNovosFragment.this));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getActivity(), "Erro ao carregar dados", Toast.LENGTH_SHORT).show();
+            }
+        };
 
         adaptador();
 
@@ -50,40 +95,41 @@ public class ServicosNovosFragment extends Fragment {
     }
 
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("aberto");
-        adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, databaseReference.orderByChild("ordem-ref")) {
 
-            @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
-                viewHolder.mainLayout.setVisibility(View.VISIBLE);
-                viewHolder.linearLayout.setVisibility(View.VISIBLE);
-                viewHolder.titulo.setText(model.getNome());
-                viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
-
-            }
-
-            @Override
-            public ServicoListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-                final ServicoListHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                     @Override
-                    public void onItemClick(View view, int position) {
-                        Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                        Servico servico = (Servico) adapter.getItem(position);
-                        it.putExtra("servicoID", servico.getId());
-                        it.putExtra("estado", servico.getEstado());
-                        startActivity(it);
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            locationUsuario = location;
+                            databaseReference.addValueEventListener(valueEventListener);
+                        }
                     }
-
                 });
-                return viewHolder;
-            }
 
-        };
 
-        mRecyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public void onItemClick(int position) {
+                Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
+                Servico servico = (Servico) servicos.get(position);
+                it.putExtra("servicoID", servico.getId());
+                it.putExtra("estado", servico.getEstado());
+                startActivity(it);
+    }
+
+
+
 
 }

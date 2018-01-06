@@ -4,6 +4,7 @@ final class Sessao {
     static String idUsuarioConectado;
     static String nomeUsuarioConectado;
 
+
     private Sessao() {
 
     }
