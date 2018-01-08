@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/toolbar"
+    android:layout_above="@id/navigation"
     tools:context=".servico.gui.MainServicosFragment">
 
     <android.support.design.widget.AppBarLayout
@@ -15,7 +15,6 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
             app:tabGravity="center"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorAccent"
