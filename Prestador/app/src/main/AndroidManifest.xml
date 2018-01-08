@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.outsource.inovaufrpe.prestador">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".utils.FirebaseApp"
@@ -25,12 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".prestador.gui.LoginActivity"
             android:theme="@style/FullScreenTheme" />
-
         <activity
             android:name=".prestador.gui.CadastroActivity"
             android:theme="@style/FullScreenTheme" />
@@ -46,7 +43,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
         </activity>
-        <activity android:name=".carteira.gui.AdicionarMoedaActivity"></activity>
+        <activity android:name=".servico.gui.HistoricoServicoActivity">
+            <meta-data
+                android:name="ndroid.support.PARENT_ACTIVITY"
+                android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

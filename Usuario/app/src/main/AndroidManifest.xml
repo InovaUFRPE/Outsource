@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".utils.gui.SplashScreenActivity"
             android:theme="@style/FullScreenTheme">
@@ -22,10 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".solicitante.gui.LoginActivity"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".solicitante.gui.CadastroActivity"
             android:theme="@style/FullScreenTheme" />
@@ -36,7 +34,7 @@
             android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB2QHvUCHL8DUYcd1xk9taRRv5QrsXSa68"/>
+            android:value="AIzaSyB2QHvUCHL8DUYcd1xk9taRRv5QrsXSa68" />
 
         <activity android:name=".solicitante.gui.EditarPerfilActivity">
             <meta-data
@@ -46,6 +44,11 @@
         <activity android:name=".servico.gui.CadastroServicoActivity" />
         <activity android:name=".carteira.gui.AdicionarMoedaActivity" />
         <activity android:name=".servico.gui.VisualizarServicoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
+        </activity>
+        <activity android:name=".servico.gui.HistoricoServicoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />

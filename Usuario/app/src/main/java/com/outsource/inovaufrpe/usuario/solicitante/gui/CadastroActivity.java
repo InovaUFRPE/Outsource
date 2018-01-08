@@ -64,6 +64,7 @@ public class CadastroActivity extends Activity {
                             usuario.setEmail(etEmail.getText().toString());
                             usuario.setTelefone(etTelefone.getText().toString().trim());
                             usuario.setCarteira(Double.valueOf("0"));
+                            usuario.setNota(0);
                             firebase.getUsuarioReference().child(user.getUid()).setValue(usuario);
                             startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                             finish();

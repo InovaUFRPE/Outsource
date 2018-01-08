@@ -13,7 +13,7 @@ public class Usuario {
     private String email;
     private String telefone;
     private String nascimento;
-    private int nota;
+    private float nota;
     private List<String> listaServicos = new ArrayList<>();
     private God carteira;
 
@@ -68,11 +68,11 @@ public class Usuario {
         this.nascimento = nascimento;
     }
 
-    public int getNota() {
+    public float getNota() {
         return nota;
     }
 
-    public void setNota(int nota) {
+    public void setNota(float nota) {
         this.nota = nota;
     }
 

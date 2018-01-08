@@ -39,12 +39,10 @@ import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.CriticaViewHolder;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
+import com.outsource.inovaufrpe.usuario.utils.NotaMedia;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class VisualizarServicoActivity extends AppCompatActivity {
@@ -54,8 +52,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     TextView tituloID;
     TextView valorID;
     TextView descricaoID;
-    TextView tvNomeSolicitante;
-    TextView tvNotaSolicitante;
+    TextView tvNomePessoa;
+    TextView tvNotaPessoa;
     TextView tvNomePrestador;
     TextView tvEstadoServicoID;
     TextView tvOferta;
@@ -73,6 +71,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     Servico servico;
     DatabaseReference databaseReferenceServico;
     ValueEventListener listenerServico;
+    String nomeSolicitante;
+    NotaMedia notaMedia = new NotaMedia();
     CardFormat cardFormat = new CardFormat();
 
 
@@ -89,8 +89,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tituloID = findViewById(R.id.tvNomeServico);
         valorID = findViewById(R.id.tvPrecoServico);
         descricaoID = findViewById(R.id.tvDescricaoServico);
-        tvNomeSolicitante = findViewById(R.id.tvNomePessoa);
-        tvNotaSolicitante = findViewById(R.id.tvNotaPessoa);
+        tvNomePessoa = findViewById(R.id.tvNomePessoa);
+        tvNotaPessoa = findViewById(R.id.tvNotaPessoa);
         tvEstadoServicoID = findViewById(R.id.tvEstadoServicoID);
         databaseReferenceServico = FirebaseDatabase.getInstance().getReference().child("servico");
         tvNomePrestador = findViewById(R.id.tvNomePrestador);
@@ -166,6 +166,17 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         });
 
+        FirebaseDatabase.getInstance().getReference().child("usuario").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nomeSolicitante = dataSnapshot.child("nome").getValue(String.class)+" "+dataSnapshot.child("sobrenome").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         if (estadoId.equals(EstadoServico.ABERTA.getValue())) {
             tvEstadoServicoID.setText(R.string.aberta);
@@ -174,6 +185,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_negociacao);
+            prestadorLayout.setVisibility(View.GONE);
             tituloLayoutPessoa.setText(R.string.executado_por);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
@@ -290,6 +302,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 if (servico != null) {
                     tituloID.setText(servico.getNome());
                     valorID.setText(cardFormat.dinheiroFormat(servico.getPreco().toString()));
+                    tvEstadoServicoID.setText(servico.getEstado());
                     descricaoID.setText(servico.getDescricao());
                     if (servico.getIdPrestador() != null) {
                         dadosUsuario();
@@ -308,13 +321,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void dadosUsuario() {
-        DatabaseReference databaseReferenceSolicitante = FirebaseDatabase.getInstance().getReference().child("usuario");
-        databaseReferenceSolicitante.child(servico.getIdCriador()).addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference databaseReferenceSolicitante = FirebaseDatabase.getInstance().getReference().child("prestador");
+        databaseReferenceSolicitante.child(servico.getIdPrestador()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
-                tvNomeSolicitante.setText(s);
-                tvNotaSolicitante.setText(String.valueOf(dataSnapshot.child("nota").getValue(Integer.class)));
+                tvNomePessoa.setText(s);
+                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(Integer.class)));
                 if (servico.getOfertante() != null) {
                     dadosNegociacao();
                 }
@@ -328,22 +341,19 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void dadosNegociacao() {
-        if (servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-            tvNomePrestador.setText(firebaseAuth.getCurrentUser().getDisplayName());
-        } else {
-            DatabaseReference databaseReferencePrestador = FirebaseDatabase.getInstance().getReference().child("prestador").child(servico.getIdPrestador());
-            databaseReferencePrestador.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    tvNomePrestador.setText(dataSnapshot.child("nome").getValue(String.class)+" "+dataSnapshot.child("sobrenome").getValue(String.class));
-                }
+        DatabaseReference databaseReferencePrestador = FirebaseDatabase.getInstance().getReference().child("prestador").child(servico.getIdPrestador());
+        databaseReferencePrestador.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String s = dataSnapshot.child("nome").getValue(String.class)+" "+dataSnapshot.child("sobrenome").getValue(String.class);
+                tvNomePrestador.setText(s);
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
-        }
+            }
+        });
         tvOferta.setText(cardFormat.dinheiroFormat(servico.getOferta().toString()));
     }
 
@@ -386,6 +396,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter adapter;
 
         ImageButton closeBtn = v1.findViewById(R.id.closeBtn);
+        ImageButton chatBtn = v1.findViewById(R.id.chatButton);
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -393,8 +404,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(VisualizarServicoActivity.this ,HistoricoServicoActivity.class));
+            }
+        });
 
         nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
+        nomeUsuario.setText(tvNomePrestador.getText().toString());
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
 
         mRecyclerView.setFocusable(false);
@@ -410,7 +428,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.tvComentador.setText(model.getComentadorNome());
-                viewHolder.tvNota.setText(model.getNota());
+                viewHolder.tvNota.setText(String.valueOf(model.getNota()));
                 viewHolder.tvComentario.setText(model.getComentario());
 
             }
@@ -436,9 +454,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Critica critica = new Critica();
+                critica.setComentadorNome(nomeSolicitante);
                 critica.setComentario(edComentarioAvaliacao.getText().toString());
                 critica.setNota((int) ratingBar.getRating());
                 DatabaseReference databaseReference = FirebaseAux.getInstancia().getDatabaseReference();
+                databaseReference.child("prestador").child(servico.getIdPrestador()).child("nota").setValue(notaMedia.mediaNotas(critica.getNota()));
                 databaseReference.child("feedback").child(servico.getIdPrestador()).child(databaseReference.child("feedback").child(servico.getIdPrestador()).push().getKey()).setValue(critica);
                 atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                 finish();

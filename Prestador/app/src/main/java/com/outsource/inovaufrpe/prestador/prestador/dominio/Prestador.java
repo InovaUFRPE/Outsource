@@ -13,6 +13,7 @@ public class Prestador {
     private String email;
     private String telefone;
     private String nascimento;
+    private float nota;
     private List<Servico> listaServicos = new ArrayList<Servico>();
     private God carteira;
 
@@ -83,4 +84,11 @@ public class Prestador {
         this.carteira = new God(carteira);
     }
 
+    public float getNota() {
+        return nota;
+    }
+
+    public void setNota(float nota) {
+        this.nota = nota;
+    }
 }
