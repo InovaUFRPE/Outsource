@@ -46,7 +46,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                card_view:srcCompat="@drawable/ic_star_black_24dp" />
+                card_view:srcCompat="@drawable/ic_star_black_24dp"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <TextView

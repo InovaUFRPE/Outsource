@@ -71,4 +71,5 @@
     <string name="aberta">Aberta</string>
     <string name="em_negociacao">Em negociacao</string>
     <string name="finalizada">Finalizada</string>
+    <string name="comentario">Comentário</string>
 </resources>
