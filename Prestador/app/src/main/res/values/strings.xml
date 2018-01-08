@@ -72,4 +72,10 @@
     <string name="em_negociacao">Em negociacao</string>
     <string name="finalizada">Finalizada</string>
     <string name="comentario">Comentário</string>
+    <string name="spinner_estado_servico_header">Selecione o estado do serviço</string>
+    <string name="nenhum_servico">Nenhum serviço</string>
+    <string-array name="tipos_servicos_andamento">
+        <item>Em Execução</item>
+        <item>Em Negociação</item>
+    </string-array>
 </resources>

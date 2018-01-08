@@ -1,6 +1,5 @@
 package com.outsource.inovaufrpe.prestador.servico.gui;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,8 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
+import android.widget.AdapterView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,31 +23,30 @@ import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
 
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public class ServicosAndamentoFragment extends Fragment {
 
     private RecyclerView mRecyclerViewNegociacao;
     private RecyclerView mRecyclerViewAndamento;
+    CardFormat cardFormat = new CardFormat();
 
     private FirebaseRecyclerAdapter adapter1;
     private FirebaseRecyclerAdapter adapter2;
+
+    private TextView tvNenhumServico;
+
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    CardFormat cardFormat = new CardFormat();
-
-
     public ServicosAndamentoFragment() {}
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState) throws NullPointerException {
         View view = inflater.inflate(R.layout.fragment_servicos_andamento, container, false);
+
+        tvNenhumServico = view.findViewById(R.id.nenhum_servico);
+        tvNenhumServico.setVisibility(View.GONE);
 
         mRecyclerViewNegociacao = view.findViewById(R.id.RecycleID);
         mRecyclerViewAndamento = view.findViewById(R.id.Recycle2ID);
@@ -56,48 +55,48 @@ public class ServicosAndamentoFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getActivity());
         mRecyclerViewNegociacao.setLayoutManager(mLayoutManager1);
         mRecyclerViewAndamento.setLayoutManager(mLayoutManager2);
-        ToggleButton btRecycleNegociacao = view.findViewById(R.id.btRecycleID);
-        ToggleButton btRecycleAndamento = view.findViewById(R.id.btRecycle2ID);
-
-        mRecyclerViewNegociacao.setVisibility(View.GONE);
-        mRecyclerViewAndamento.setVisibility(View.GONE);
-
-
-        btRecycleNegociacao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    mRecyclerViewNegociacao.setVisibility(View.VISIBLE);
-                } else {
-                    mRecyclerViewNegociacao.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        btRecycleAndamento.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    mRecyclerViewAndamento.setVisibility(View.VISIBLE);
-                } else {
-                    mRecyclerViewAndamento.setVisibility(View.GONE);
-                }
-            }
-        });
 
         adaptador();
 
+        Spinner spinner1 = view.findViewById(R.id.spinner1);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                switch (pos) {
+                    case 0:
+                        mRecyclerViewNegociacao.setVisibility(View.GONE);
+                        mRecyclerViewAndamento.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        mRecyclerViewNegociacao.setVisibility(View.VISIBLE);
+                        mRecyclerViewAndamento.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                mRecyclerViewNegociacao.setVisibility(View.GONE);
+                mRecyclerViewAndamento.setVisibility(View.GONE);
+            }
+        });
+
         return view;
+
     }
 
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query queryNegociacao = databaseReference.child("servico").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        Query queryAndamento = databaseReference.child("servico").child("andamento").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryNegociacao = databaseReference.child("servico").child("negociacao").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryAndamento = databaseReference.child("servico").child("andamento").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter1 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
 
             @Override
             protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+                if (this.getItemCount() < 0) {
+                    tvNenhumServico.setVisibility(View.VISIBLE);
+                    return;
+                }
                 viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
@@ -130,6 +129,10 @@ public class ServicosAndamentoFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+                if (this.getItemCount() < 0) {
+                    tvNenhumServico.setVisibility(View.VISIBLE);
+                    return;
+                }
                 viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
