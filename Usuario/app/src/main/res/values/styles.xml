@@ -14,7 +14,6 @@
     </style>
 
     <style name="DefaultActivities">
-        <item name="android:padding">16dp</item>
         <item name="android:background">@color/colorWhite</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
