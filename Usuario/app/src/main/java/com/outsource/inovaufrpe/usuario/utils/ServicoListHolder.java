@@ -2,6 +2,7 @@ package com.outsource.inovaufrpe.usuario.utils;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.outsource.inovaufrpe.usuario.R;
@@ -14,6 +15,7 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
     public TextView status;
     public TextView solicitante;
     public TextView data;
+    public RelativeLayout barraTipoServico;
 
     public ServicoListHolder(final View itemView) {
         super(itemView);
@@ -24,6 +26,7 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
 //        solicitante = (TextView) itemView.findViewById(R.id.solicitanteID);
         mainLayout = itemView.findViewById(R.id.card_view);
         linearLayout = itemView.findViewById(R.id.servico_card);
+        barraTipoServico = itemView.findViewById(R.id.tipo_servico_bar);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,13 +36,12 @@ public class ServicoListHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        View view = itemView.findViewById(R.id.servico_card);
     }
 
     private ServicoListHolder.ClickListener mClickListener;
 
     public interface ClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     public void setOnClickListener(ServicoListHolder.ClickListener clickListener) {

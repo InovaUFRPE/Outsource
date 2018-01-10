@@ -41,7 +41,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
         </activity>
-        <activity android:name=".servico.gui.CadastroServicoActivity" />
+        <activity android:name=".servico.gui.CadastroServicoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
+        </activity>
         <activity android:name=".carteira.gui.AdicionarMoedaActivity" />
         <activity android:name=".servico.gui.VisualizarServicoActivity">
             <meta-data

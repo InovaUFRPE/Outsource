@@ -68,6 +68,9 @@
     <string name="editar_perfil">Editar Perfil</string>
     <string name="spinner_estado_servico_header">Selecione o estado do serviço</string>
     <string name="nenhum_servico">Nenhum serviço</string>
+    <string name="selecionar_local_allCaps">SELECIONAR LOCAL</string>
+    <string name="question_servico_urgencia">É um serviço de urgência?</string>
+    <string name="descricao_servico_urgencia">Um serviço de urgência é um serviço de maior necessidade de execução que expira em 24 horas após criado. Ele fica destacado a fim de ser visualizado mais facilmente</string>
     <string-array name="tipos_servicos_andamento">
         <item>Em Execução</item>
         <item>Em Negociação</item>

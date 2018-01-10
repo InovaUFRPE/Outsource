@@ -1,116 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:focusable="true"
+    android:scrollbars="vertical"
     tools:context="com.outsource.inovaufrpe.usuario.servico.gui.CadastroServicoActivity">
 
-    <EditText
-        android:textColor="@color/colorBlack"
-        android:id="@+id/etNomeServicoID"
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/nome" />
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="8dp"
+        tools:targetApi="o">
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="30dp" />
-
-    <EditText
-        android:id="@+id/etDescricaoServicoID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/descricao" />
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="30dp" />
-
-
-    <EditText
-        android:id="@+id/etPrecoServicoID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/preco"
-        android:ems="10"
-        android:inputType="numberDecimal" />
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="30dp" />
-
-    <RelativeLayout
-        android:id="@+id/rlPlaceID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/placePickerID"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/tipo_servico_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvLocalID"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:text="Selecionar Local" />
+            android:background="@color/colorGreen"
+            android:padding="8dp" />
 
-        <TextView
-            android:id="@+id/tvLocalSelecionadoID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="Local Selecionado:"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
+        <RelativeLayout
+            android:id="@+id/servico_card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvLocalID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvLocalSelecionadoID"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
-    </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/nomeServico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/rlPlaceID">
+                <EditText
+                    android:id="@+id/etNomeServicoID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gray_field"
+                    android:hint="@string/nome"
+                    android:inputType="textCapSentences"
+                    android:padding="8dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btVoltarID"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="36dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="18dp"
-            android:layout_weight="1"
-            android:text="@string/voltar" />
+                <EditText
+                    android:id="@+id/etDescricaoServicoID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/gray_field"
+                    android:hint="@string/descricao"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/btConfirmarID"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/btVoltarID"
-            android:layout_alignBottom="@+id/btVoltarID"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="38dp"
-            android:layout_marginRight="38dp"
-            android:layout_weight="1"
-            android:text="@string/confirmar" />
-    </RelativeLayout>
+            </LinearLayout>
 
-</LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rlPlaceID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nomeServico">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_place_black_24dp"
+                    tools:ignore="ContentDescription" />
+
+                <Button
+                    android:id="@+id/placePickerID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/imageView3"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:background="@color/colorTransparent"
+                    android:text="@string/selecionar_local_allCaps"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/service_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rlPlaceID"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/tDataServicoID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etPrecoServicoID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/gray_field"
+                    android:digits="0123456789"
+                    android:hint="@string/preco"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"
+                    android:padding="8dp"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCifrao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/etPrecoServicoID"
+                    android:layout_toStartOf="@+id/etPrecoServicoID"
+                    android:alpha="0.5"
+                    android:text="@string/cifrao"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:ignore="RelativeOverlap" />
+            </RelativeLayout>
+
+            <Switch
+                android:id="@+id/switchTipoServico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/service_info"
+                android:padding="16dp"
+                android:text="@string/question_servico_urgencia" />
+
+            <RelativeLayout
+                android:id="@+id/info_servico_urgencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/switchTipoServico"
+                android:layout_margin="16dp"
+                android:background="@color/colorGray"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/descricao_servico_urgencia" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

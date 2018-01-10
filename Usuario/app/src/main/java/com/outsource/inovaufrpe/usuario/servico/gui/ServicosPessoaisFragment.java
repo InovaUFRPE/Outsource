@@ -22,11 +22,6 @@ import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
 
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +37,8 @@ public class ServicosPessoaisFragment extends Fragment {
 
     CardFormat cardFormat = new CardFormat();
 
-    public ServicosPessoaisFragment() {}
+    public ServicosPessoaisFragment() {
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -77,14 +73,18 @@ public class ServicosPessoaisFragment extends Fragment {
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
             @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+            protected void populateViewHolder(final ServicoListHolder viewHolder, Servico model, int position) {
                 viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
-
+                if (model.isUrgente()) {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
+                } else {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                }
             }
 
             @Override
