@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/excluirServicoBtn"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:title="Excluir serviço"
+        app:showAsAction="ifRoom|collapseActionView" />
+    <item
+        android:id="@+id/editarServicoBtn"
+        android:icon="@drawable/ic_edit_white_24dp"
+        android:title="Editar serviço"
+        app:showAsAction="ifRoom|collapseActionView" />
+</menu>
