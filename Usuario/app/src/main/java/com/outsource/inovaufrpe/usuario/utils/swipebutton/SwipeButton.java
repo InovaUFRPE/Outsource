@@ -1,4 +1,4 @@
-package com.outsource.inovaufrpe.usuario.utils;
+package com.outsource.inovaufrpe.usuario.utils.swipebutton;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -19,10 +20,10 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.outsource.inovaufrpe.usuario.R;
-import com.outsource.inovaufrpe.usuario.utils.interfaces.OnStateChangeListener;
+import com.outsource.inovaufrpe.usuario.utils.swipebutton.interfaces.OnActiveListener;
+import com.outsource.inovaufrpe.usuario.utils.swipebutton.interfaces.OnStateChangeListener;
 
 public class SwipeButton extends RelativeLayout {
     private ImageView slidingButton;
@@ -35,6 +36,8 @@ public class SwipeButton extends RelativeLayout {
     private Drawable enabledDrawable;
 
     private OnStateChangeListener onStateChangeListener;
+    private OnActiveListener onActiveListener;
+
 
     public SwipeButton(Context context) {
         super(context);
@@ -82,24 +85,29 @@ public class SwipeButton extends RelativeLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-        centerText.setText("NEGOCIAR SERVIÇO"); //add any text you need
+
+        centerText.setText(R.string.negociar_servico);
         centerText.setTextColor(Color.BLACK);
+        centerText.setAllCaps(true);
+        centerText.setTypeface(null, Typeface.BOLD);
+        centerText.setAlpha((float) 0.75);
         centerText.setPadding(35, 35, 35, 35);
+
         background.addView(centerText, layoutParams);
 
         final ImageView swipeButton = new ImageView(context);
         this.slidingButton = swipeButton;
 
-        Drawable iconSend = context.getResources().getDrawable(R.drawable.ic_forward_black_24dp);
+        Drawable iconSend = context.getResources().getDrawable(R.drawable.ic_done_black_36dp);
         iconSend.setAlpha(89);
         disabledDrawable = iconSend;
 
-        Drawable iconCancel = context.getResources().getDrawable(R.drawable.ic_close_black_24dp);
+        Drawable iconCancel = context.getResources().getDrawable(R.drawable.ic_done_all_black_36dp);
         iconCancel.setAlpha(89);
         enabledDrawable = iconCancel;
 
         slidingButton.setImageDrawable(disabledDrawable);
-        slidingButton.setPadding(40, 40, 40, 40);
+        slidingButton.setPadding(20, 20, 20, 20);
 
         LayoutParams layoutParamsButton = new LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -149,6 +157,7 @@ public class SwipeButton extends RelativeLayout {
 
                             if (slidingButton.getX() + slidingButton.getWidth() > getWidth() * 0.85) {
                                 expandButton();
+                                onActiveListener.onActive();
                             } else {
                                 moveButtonBack();
                             }
@@ -183,7 +192,6 @@ public class SwipeButton extends RelativeLayout {
                 ViewGroup.LayoutParams params = slidingButton.getLayoutParams();
                 params.width = (Integer) widthAnimator.getAnimatedValue();
                 slidingButton.setLayoutParams(params);
-                Toast.makeText(getContext(), "collapseButton", Toast.LENGTH_SHORT);
             }
         });
 
@@ -196,6 +204,14 @@ public class SwipeButton extends RelativeLayout {
 
                 active = true;
                 slidingButton.setImageDrawable(enabledDrawable);
+
+                if (onStateChangeListener != null) {
+                    onStateChangeListener.onStateChange(active);
+                }
+
+                if (onActiveListener != null) {
+                    onActiveListener.onActive();
+                }
             }
         });
 
@@ -214,7 +230,6 @@ public class SwipeButton extends RelativeLayout {
                 ViewGroup.LayoutParams params = slidingButton.getLayoutParams();
                 params.width = (Integer) widthAnimator.getAnimatedValue();
                 slidingButton.setLayoutParams(params);
-                Toast.makeText(getContext(), "ola", Toast.LENGTH_SHORT);
             }
         });
 
@@ -224,6 +239,10 @@ public class SwipeButton extends RelativeLayout {
                 super.onAnimationEnd(animation);
                 active = false;
                 slidingButton.setImageDrawable(disabledDrawable);
+
+                if (onStateChangeListener != null) {
+                    onStateChangeListener.onStateChange(active);
+                }
             }
         });
 
@@ -237,7 +256,6 @@ public class SwipeButton extends RelativeLayout {
     }
 
     private void moveButtonBack() {
-        Toast.makeText(getContext(), "moveButtonBack", Toast.LENGTH_SHORT);
         final ValueAnimator positionAnimator =
                 ValueAnimator.ofFloat(slidingButton.getX(), 0);
         positionAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -260,6 +278,9 @@ public class SwipeButton extends RelativeLayout {
 
     public void setOnStateChangeListener(OnStateChangeListener onStateChangeListener) {
         this.onStateChangeListener = onStateChangeListener;
+    }
+    public void setOnActiveListener(OnActiveListener onActiveListener) {
+        this.onActiveListener = onActiveListener;
     }
 
 }
