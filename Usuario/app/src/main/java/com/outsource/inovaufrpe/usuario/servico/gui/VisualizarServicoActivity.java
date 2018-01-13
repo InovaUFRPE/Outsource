@@ -77,7 +77,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     NotaMedia notaMedia = new NotaMedia();
     CardFormat cardFormat = new CardFormat();
 
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +100,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         TextView tituloLayoutPessoa = findViewById(R.id.tvTituloLayout);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
-        /* ****************/
 
         btNegociar = findViewById(R.id.btnNegociar);
         btConcluir = findViewById(R.id.btnConcluirServico);

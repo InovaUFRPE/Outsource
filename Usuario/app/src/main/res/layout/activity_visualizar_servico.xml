@@ -73,14 +73,6 @@
 
     </LinearLayout>
 
-    <!--<com.outsource.inovaufrpe.usuario.utils.SwipeButton-->
-    <!--android:id="@+id/swipe_btn"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="90dp"-->
-    <!--android:layout_marginStart="16dp"-->
-    <!--android:layout_marginEnd="16dp"-->
-    <!--/>-->
-
     <!--Layout p/ exibir Quem Solicita ou Executado por-->
     <LinearLayout
         android:id="@+id/layoutPessoa"
@@ -230,8 +222,7 @@
             android:id="@+id/screenEnd"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimaryDark" />
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
 
