@@ -243,7 +243,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                     @Override
                     public void onError(FacebookException error) {
-                        Toast.makeText(LoginActivity.this, "Falha ao logar", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Falha ao logar: " + error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
                 break;
