@@ -83,7 +83,6 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     tvNenhumServico.setVisibility(View.VISIBLE);
                 } else {
                     tvNenhumServico.setVisibility(View.GONE);
-                    adaptador();
                     mRecyclerView.setAdapter(new ServicoDistanciaAdapter(servicos, getContext(), ServicosNovosFragment.this));
                 }
             }
@@ -95,6 +94,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
             }
         };
 
+        adaptador();
         return layout;
     }
 
