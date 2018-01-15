@@ -25,6 +25,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.outsource.inovaufrpe.usuario.R;
@@ -188,7 +189,12 @@ public class CadastroServicoActivity extends AppCompatActivity {
             servico.setUrgente(false);
         }
 
-        databaseReference.child("servico").child("aberto").child(servicoId).setValue(servico);
+        databaseReference.child("servico").child("aberto").child(servicoId).setValue(servico, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+            }
+        });
         databaseReference.child("servico").child("aberto").child(servicoId).child("ordem-ref").setValue(gambi + new Timestamp(-1 * data.getTime()).toString());
         return servico;
     }

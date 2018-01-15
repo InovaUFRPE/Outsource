@@ -138,14 +138,18 @@ public class ServicosAndamentoFragment extends Fragment {
                 return viewHolder;
             }
 
+            @Override
+            public int getItemCount(){
+                if (super.getItemCount() < 1) {
+                    tvNenhumServico.setVisibility(View.VISIBLE);
+                }else{
+                    tvNenhumServico.setVisibility(View.GONE);
+                }
+                return super.getItemCount();
+            }
+
         };
 
-        //verifica se tem algum servico em negociacao
-        if (adapter1.getItemCount() > 0) {
-            tvNenhumServico.setVisibility(View.GONE);
-        } else {
-            tvNenhumServico.setVisibility(View.VISIBLE);
-        }
 
         adapter2 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryAndamento) {
 
@@ -187,14 +191,18 @@ public class ServicosAndamentoFragment extends Fragment {
                 return viewHolder;
             }
 
+            @Override
+            public int getItemCount(){
+                if (super.getItemCount() < 1) {
+                    tvNenhumServico.setVisibility(View.VISIBLE);
+                }else{
+                    tvNenhumServico.setVisibility(View.GONE);
+                }
+                return super.getItemCount();
+            }
+
         };
 
-        //verifica se tem algum servico em andamento
-        if (adapter2.getItemCount() > 0) {
-            tvNenhumServico.setVisibility(View.GONE);
-        } else {
-            tvNenhumServico.setVisibility(View.VISIBLE);
-        }
 
         mRecyclerViewNegociacao.setAdapter(adapter1);
         mRecyclerViewAndamento.setAdapter(adapter2);

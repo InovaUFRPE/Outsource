@@ -23,6 +23,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -52,6 +53,7 @@ public class EditarServicoActivity extends AppCompatActivity {
     Switch switchTipoServico;
     String servicoId;
     String estadoId;
+    LatLng latLngInicial;
 
     Button placePickerID;
     LatLng latLng = null;
@@ -85,15 +87,22 @@ public class EditarServicoActivity extends AppCompatActivity {
         databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                etNomeServicoID.setText(dataSnapshot.child("nome").getValue(String.class));
-                etDescricaoServicoID.setText(dataSnapshot.child("descricao").getValue(String.class));
-                etPrecoServicoID.setText(dataSnapshot.child("preco").getValue(Double.class).toString());
+                Servico servico = dataSnapshot.getValue(Servico.class);
+                etNomeServicoID.setText(servico.getNome());
+                etDescricaoServicoID.setText(servico.getDescricao());
+                etPrecoServicoID.setText(servico.getPreco().toString());
+                if(servico.isUrgente()){
+                    switchTipoServico.setChecked(true);
+                }
+                latLngInicial = new LatLng(servico.getLatitude(), servico.getLongitude());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
+
         });
 
         switchTipoServico.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -148,6 +157,7 @@ public class EditarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                builder.setLatLngBounds(new LatLngBounds(latLngInicial,latLngInicial));
                 try {
                     startActivityForResult(builder.build(EditarServicoActivity.this),PLACE_PICKER_REQUEST);
                 } catch (GooglePlayServicesRepairableException e) {

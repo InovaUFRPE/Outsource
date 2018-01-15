@@ -1,5 +1,8 @@
 package com.outsource.inovaufrpe.usuario.utils;
 
+import android.content.Context;
+import android.text.format.DateUtils;
+
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -30,6 +33,12 @@ public class CardFormat {
             e.printStackTrace();
         }
         return nData;
+
+    }
+
+    public String tempoFormat(long tempo) {
+
+        return DateUtils.getRelativeTimeSpanString(tempo).toString();
 
     }
 }

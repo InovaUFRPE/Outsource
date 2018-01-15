@@ -3,7 +3,7 @@ package com.outsource.inovaufrpe.usuario.solicitante.dominio;
 
 public class Comentario {
     private String texto;
-    private String data;
+    private long tempo;
     private String autor;
     private String servico;
 
@@ -18,12 +18,12 @@ public class Comentario {
         this.texto = texto;
     }
 
-    public String getData() {
-        return data;
+    public long getTempo() {
+        return tempo;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setTempo(long tempo) {
+        this.tempo = tempo;
     }
 
     public String getAutor() {

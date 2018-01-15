@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btLogarID:
-                Toast.makeText(LoginActivity.this, "ADLE", Toast.LENGTH_SHORT).show();
                 if (etCodigo.getVisibility() == View.VISIBLE) {
                     logarComCredential();
                 } else {
@@ -170,11 +169,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.w("TAG", "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    // Invalid request
-                    // ...
+                    Toast.makeText(LoginActivity.this, "Formato de Telefone Inválido", Toast.LENGTH_SHORT).show();
                 } else if (e instanceof FirebaseTooManyRequestsException) {
-                    // The SMS quota for the project has been exceeded
-                    // ...
+                    Toast.makeText(LoginActivity.this, "Erro 2", Toast.LENGTH_SHORT).show();
                 }
 
                 // Show a message and update the UI

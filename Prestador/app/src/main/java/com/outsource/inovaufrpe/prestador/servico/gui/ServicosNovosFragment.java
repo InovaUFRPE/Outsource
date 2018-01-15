@@ -117,7 +117,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     public void onSuccess(Location location) {
                         if (location != null) {
                             locationUsuario = location;
-                            databaseReference.addValueEventListener(valueEventListener);
+                            databaseReference.orderByChild("ordem-ref").addValueEventListener(valueEventListener);
                         }
                     }
                 });

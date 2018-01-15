@@ -98,14 +98,19 @@ public class ServicosConcluidosFragment extends Fragment {
                 });
                 return viewHolder;
             }
+
+            @Override
+            public int getItemCount(){
+                if (super.getItemCount() < 1) {
+                    tvNenhumServico.setVisibility(View.VISIBLE);
+                }else{
+                    tvNenhumServico.setVisibility(View.GONE);
+                }
+                return super.getItemCount();
+            }
         };
 
-        //verifica se tem algum servico concluido
-        if (adapter.getItemCount() > 0) {
-            tvNenhumServico.setVisibility(View.GONE);
-        } else {
-            tvNenhumServico.setVisibility(View.VISIBLE);
-        }
+
 
         mRecyclerView.setAdapter(adapter);
     }

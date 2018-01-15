@@ -2,8 +2,12 @@ package com.outsource.inovaufrpe.usuario.solicitante.gui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +38,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
@@ -62,7 +68,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         etCodigo.setVisibility(View.INVISIBLE);
         login.setOnClickListener(this);
         loginButton.setOnClickListener(this);
-
 
     }
 
@@ -135,11 +140,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Log.w("TAG", "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    // Invalid request
-                    // ...
+                    Toast.makeText(LoginActivity.this, "Formato de Telefone Inválido", Toast.LENGTH_SHORT).show();
                 } else if (e instanceof FirebaseTooManyRequestsException) {
-                    // The SMS quota for the project has been exceeded
-                    // ...
+                    Toast.makeText(LoginActivity.this, "Erro 2", Toast.LENGTH_SHORT).show();
                 }
 
                 // Show a message and update the UI
@@ -221,7 +224,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btLogarID:
-                Toast.makeText(LoginActivity.this, "ADLE", Toast.LENGTH_SHORT).show();
                 if (etCodigo.getVisibility() == View.VISIBLE) {
                     logarComCredential();
                 } else {

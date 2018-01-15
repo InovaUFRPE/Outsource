@@ -213,6 +213,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
                         criarDialogAvaliarUsuario();
+                        while (dialog.isShowing()){}
+                        atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
+                        finish();
                     }
                 } else {
                     criarDialogAvaliarUsuario();
@@ -466,8 +469,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 DatabaseReference databaseReference = FirebaseAux.getInstancia().getDatabaseReference();
                 databaseReference.child("prestador").child(servico.getIdPrestador()).child("nota").setValue(notaMedia.mediaNotas(critica.getNota()));
                 databaseReference.child("feedback").child(servico.getIdPrestador()).child(databaseReference.child("feedback").child(servico.getIdPrestador()).push().getKey()).setValue(critica);
-                atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
-                finish();
             }
         });
 
@@ -481,13 +482,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         Comentario comentario = new Comentario();
         Date data = new Date();
         String novaData = new Timestamp(data.getTime()).toString();
-        comentario.setData(cardFormat.dataFormat(novaData));
+        comentario.setTempo(data.getTime());
         comentario.setTexto(texto);
         comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
         comentario.setServico(servicoId);
         novaData = novaData.replace(".", "");
         DatabaseReference databaseReferenceComentario = FirebaseDatabase.getInstance().getReference().child("comentario");
-        databaseReferenceComentario.child(comentario.getServico()).child(novaData).setValue(comentario);
+        databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario);
     }
 
     @Override

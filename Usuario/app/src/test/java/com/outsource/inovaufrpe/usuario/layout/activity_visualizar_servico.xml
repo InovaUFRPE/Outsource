@@ -87,7 +87,7 @@
             android:id="@+id/tvDescricaoServico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultrices rutrum blandit. Vestibulum scelerisque ornare purus, sed mollis metus tempor sed." />
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultrices rutrum blandit. Vestibulum scelerisque ornare purus, sed mollis metus datar sed." />
 
     </LinearLayout>
 

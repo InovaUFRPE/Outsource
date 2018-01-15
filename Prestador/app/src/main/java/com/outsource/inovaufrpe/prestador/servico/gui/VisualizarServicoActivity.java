@@ -232,6 +232,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
                         criarDialogAvaliarUsuario();
+                        while (dialog.isShowing()){}
+                        atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
+                        finish();
                     }
                 } else {
                     criarDialogAvaliarUsuario();
@@ -308,7 +311,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void dadosServico() {
-        databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceServico.child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 servico = dataSnapshot.getValue(Servico.class);
@@ -462,8 +465,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 DatabaseReference databaseReference = FirebaseAux.getInstancia().getDatabaseReference();
                 databaseReference.child("usuario").child(servico.getIdPrestador()).child("nota").setValue(notaMedia.mediaNotas(critica.getNota()));
                 databaseReference.child("feedback").child(servico.getIdCriador()).child(databaseReference.child("feedback").child(servico.getIdCriador()).push().getKey()).setValue(critica);
-                atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
-                finish();
+                dialog.dismiss();
             }
         });
 
