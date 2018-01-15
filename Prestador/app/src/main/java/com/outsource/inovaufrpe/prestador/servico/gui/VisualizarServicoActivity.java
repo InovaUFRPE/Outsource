@@ -337,7 +337,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
                 tvNomePessoa.setText(s);
-                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(Integer.class)));
+                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(float.class)));
                 if (servico.getOfertante() != null) {
                     dadosNegociacao();
                 }
@@ -392,7 +392,10 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter adapter;
 
         TextView nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
-        nomeUsuario.setText(tvNomeOfertante.getText().toString());
+        RatingBar avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
+        nomeUsuario.setText(tvNomePessoa.getText().toString());
+        avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString()));
+
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
         ImageButton closeBtn = v1.findViewById(R.id.closeBtn);
         ImageButton chatBtn = v1.findViewById(R.id.chatButton);

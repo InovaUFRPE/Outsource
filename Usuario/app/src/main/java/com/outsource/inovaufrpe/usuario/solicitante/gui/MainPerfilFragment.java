@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +25,7 @@ public class MainPerfilFragment extends Fragment {
     TextView nomeUsuario;
     TextView emailUsuario;
     TextView telefoneUsuario;
+    RatingBar avaliarPerfil;
 
     public MainPerfilFragment() {}
 
@@ -35,6 +38,7 @@ public class MainPerfilFragment extends Fragment {
         nomeUsuario = view.findViewById(R.id.tvNomePerfil);
         emailUsuario = view.findViewById(R.id.tvEmailPerfil);
         telefoneUsuario = view.findViewById(R.id.tvTelefonePerfil);
+        avaliarPerfil = view.findViewById(R.id.rbAvaliarPerfil);
         FirebaseAux firebase = FirebaseAux.getInstancia();
         DatabaseReference usuarioReference = firebase.getUsuarioReference().child(firebase.getUser().getUid());
         usuarioReference.addValueEventListener(
@@ -46,6 +50,7 @@ public class MainPerfilFragment extends Fragment {
                         nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(user.getEmail());
                         telefoneUsuario.setText(user.getTelefone());
+                        avaliarPerfil.setRating(user.getNota());
                     }
 
                     @Override

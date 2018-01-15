@@ -69,6 +69,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     String servicoId;
     String estadoId;
     TextView nomeUsuario;
+    RatingBar avaliarPerfil;
     FirebaseAuth firebaseAuth;
     Servico servico;
     DatabaseReference databaseReferenceServico;
@@ -327,7 +328,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
                 tvNomePessoa.setText(s);
-                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(Integer.class)));
+                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(float.class)));
                 if (servico.getOfertante() != null) {
                     dadosNegociacao();
                 }
@@ -415,7 +416,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         });
 
         nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
-        nomeUsuario.setText(tvNomePrestador.getText().toString());
+        avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
+        nomeUsuario.setText(tvNomePessoa.getText().toString());
+        avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString()));
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
 
         mRecyclerView.setFocusable(false);

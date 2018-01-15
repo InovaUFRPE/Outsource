@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +31,7 @@ public class MainPerfilFragment extends Fragment {
     TextView nomeUsuario;
     TextView emailUsuario;
     TextView telefoneUsuario;
+    RatingBar avaliarPerfil;
 
 
     public MainPerfilFragment() {
@@ -45,6 +47,7 @@ public class MainPerfilFragment extends Fragment {
         nomeUsuario = view.findViewById(R.id.tvNomePerfil);
         emailUsuario = view.findViewById(R.id.tvEmailPerfil);
         telefoneUsuario = view.findViewById(R.id.tvTelefonePerfil);
+        avaliarPerfil = view.findViewById(R.id.rbAvaliarPefil);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
@@ -58,6 +61,7 @@ public class MainPerfilFragment extends Fragment {
                         nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(prestador.getEmail());
                         telefoneUsuario.setText(prestador.getTelefone());
+                        avaliarPerfil.setRating(prestador.getNota());
                     }
 
                     @Override

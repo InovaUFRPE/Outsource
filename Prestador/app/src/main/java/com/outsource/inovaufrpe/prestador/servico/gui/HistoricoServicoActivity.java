@@ -52,7 +52,7 @@ public class HistoricoServicoActivity extends AppCompatActivity {
     }
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
-        Query query = databaseReference.orderByChild("idPrestador").equalTo(solicitanteID);
+        Query query = databaseReference.orderByChild("idCriador").equalTo(solicitanteID);
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
             @Override
