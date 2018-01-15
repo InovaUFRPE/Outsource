@@ -69,6 +69,12 @@ public class ServicosConcluidosFragment extends Fragment {
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
+                if (model.isUrgente()) {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
+                } else {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                }
+
             }
 
             @Override

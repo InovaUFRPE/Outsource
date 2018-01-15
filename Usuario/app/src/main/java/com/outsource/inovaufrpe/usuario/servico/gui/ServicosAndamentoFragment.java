@@ -104,6 +104,12 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
 
+                if (model.isUrgente()) {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
+                } else {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                }
+
             }
 
             @Override
@@ -139,6 +145,12 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
+
+                if (model.isUrgente()) {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
+                } else {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                }
 
             }
 

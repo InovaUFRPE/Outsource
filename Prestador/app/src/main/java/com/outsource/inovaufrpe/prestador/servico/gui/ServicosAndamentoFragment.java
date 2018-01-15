@@ -87,8 +87,8 @@ public class ServicosAndamentoFragment extends Fragment {
 
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query queryNegociacao = databaseReference.child("servico").child("negociacao").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        Query queryAndamento = databaseReference.child("servico").child("andamento").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryNegociacao = databaseReference.child("servico").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryAndamento = databaseReference.child("servico").child("andamento").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter1 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
 
             @Override
@@ -103,6 +103,12 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
+
+                if (model.isUrgente()) {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
+                } else {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                }
 
             }
 
@@ -139,6 +145,12 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
+
+                if (model.isUrgente()) {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
+                } else {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                }
 
             }
 
