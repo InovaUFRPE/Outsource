@@ -103,6 +103,7 @@ public class ServicosPessoaisFragment extends Fragment {
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
                         Servico servico = (Servico) adapter.getItem(position);
+                        it.putExtra("nomeServico", servico.getNome());
                         it.putExtra("servicoID", servico.getId());
                         it.putExtra("estado", servico.getEstado());
                         startActivity(it);

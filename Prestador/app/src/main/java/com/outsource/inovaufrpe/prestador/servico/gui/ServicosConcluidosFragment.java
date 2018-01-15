@@ -91,6 +91,7 @@ public class ServicosConcluidosFragment extends Fragment {
                         Servico servico = (Servico) adapter.getItem(position);
                         it.putExtra("servicoID", servico.getId());
                         it.putExtra("estado", servico.getEstado());
+                        it.putExtra("nomeServico", servico.getNome());
                         startActivity(it);
                     }
 

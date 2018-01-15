@@ -184,6 +184,7 @@ public class ServicosAndamentoFragment extends Fragment {
                         Servico servico = (Servico) adapter2.getItem(position);
                         it.putExtra("servicoID", servico.getId());
                         it.putExtra("estado", servico.getEstado());
+                        it.putExtra("nomeServico", servico.getNome());
                         startActivity(it);
                     }
 

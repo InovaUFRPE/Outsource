@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -70,6 +71,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     Servico servico;
     DatabaseReference databaseReferenceServico;
     String nomeSolicitante;
+    String nomeServico;
     NotaMedia notaMedia = new NotaMedia();
     CardFormat cardFormat = new CardFormat();
 
@@ -81,6 +83,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         servicoId = intent.getStringExtra("servicoID");
         estadoId = intent.getStringExtra("estado");
+        nomeServico = intent.getStringExtra("nomeServico");
         setTitle(getString(R.string.visualizar_servico));
         view = findViewById(R.id.ly);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -99,6 +102,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btConcluir = findViewById(R.id.btnConcluirServico);
         btAceitarOferta = findViewById(R.id.btAceitarNegociacao);
         LinearLayout solicitanteLayout = findViewById(R.id.layoutPessoa);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setSubtitle(nomeServico);
 
         tituloLayoutPessoa.setText(R.string.solicitado_por);
 
