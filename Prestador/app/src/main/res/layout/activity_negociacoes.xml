@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.outsource.inovaufrpe.prestador.servico.gui.NegociacoesActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleNegociacoesID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="12dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10">
+
+        <LinearLayout
+            android:id="@+id/layoutBtnAceitarOferta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/screenEnd"
+            android:background="@color/colorDanger"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btAceitarNegociacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:text="@string/cancelar_negociacao"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/screenEnd"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
