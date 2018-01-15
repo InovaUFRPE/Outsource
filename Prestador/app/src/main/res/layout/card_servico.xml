@@ -11,10 +11,11 @@
     tools:targetApi="o">
 
 <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorGreen"
-        android:padding="8dp" />
+    android:id="@+id/tipo_servico_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorGreen"
+    android:padding="8dp" />
 
     <RelativeLayout
         android:id="@+id/servico_card"

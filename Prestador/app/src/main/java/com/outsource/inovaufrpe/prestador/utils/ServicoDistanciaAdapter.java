@@ -2,10 +2,12 @@ package com.outsource.inovaufrpe.prestador.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
@@ -22,6 +24,8 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
     private List<Servico> servicos;
     private Context context;
     private CardFormat cardFormat;
+    private RelativeLayout barraTipoServico;
+
 
     private OnItemClicked onClick;
 
@@ -41,6 +45,7 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
 
         View view = LayoutInflater.from(context).inflate(R.layout.card_servico,parent,false);
         ServicoListHolder holder = new ServicoListHolder(view);
+        barraTipoServico = view.findViewById(R.id.tipo_servico_bar);
 
 
         return holder;
@@ -49,6 +54,7 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
 
         ServicoListHolder viewHolder = (ServicoListHolder) holder;
         Servico servico = servicos.get(position);
@@ -64,6 +70,13 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
                 onClick.onItemClick(position);
             }
         });
+
+        Resources res = viewHolder.itemView.getResources();
+        if (servico.isUrgente()) {
+            viewHolder.barraTipoServico.setBackgroundColor(res.getColor(R.color.colorDanger));
+        } else {
+            viewHolder.barraTipoServico.setBackgroundColor(res.getColor(R.color.colorGreen));
+        }
 
     }
 

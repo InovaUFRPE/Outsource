@@ -19,6 +19,8 @@ public class Servico {
     private double latitude;
     private double longitude;
     private String estado;
+    private boolean urgente;
+
 
     public Servico() {
     }
@@ -117,6 +119,14 @@ public class Servico {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public boolean isUrgente() {
+        return urgente;
+    }
+
+    public void setUrgente(boolean ehUrgente) {
+        this.urgente = ehUrgente;
     }
 }
 
