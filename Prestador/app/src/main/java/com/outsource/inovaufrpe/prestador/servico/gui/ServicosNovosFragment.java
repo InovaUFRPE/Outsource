@@ -83,6 +83,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     tvNenhumServico.setVisibility(View.VISIBLE);
                 } else {
                     tvNenhumServico.setVisibility(View.GONE);
+                    adaptador();
                     mRecyclerView.setAdapter(new ServicoDistanciaAdapter(servicos, getContext(), ServicosNovosFragment.this));
                 }
             }
@@ -93,8 +94,6 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                 Toast.makeText(getActivity(), "Erro ao carregar dados", Toast.LENGTH_SHORT).show();
             }
         };
-
-        adaptador();
 
         return layout;
     }
