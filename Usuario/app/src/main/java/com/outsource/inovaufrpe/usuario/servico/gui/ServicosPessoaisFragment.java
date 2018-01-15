@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +32,8 @@ public class ServicosPessoaisFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private FirebaseRecyclerAdapter adapter;
+    private TextView tvNenhumServico;
+
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -47,6 +50,11 @@ public class ServicosPessoaisFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_servicos_pessoais, container, false);
 
         mRecyclerView = view.findViewById(R.id.RecycleID);
+
+        tvNenhumServico = view.findViewById(R.id.nenhum_servico);
+        String s = getContext().getString(R.string.nenhum_servico) + " novo";
+        tvNenhumServico.setText(s);
+        tvNenhumServico.setVisibility(View.GONE);
 
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -105,6 +113,13 @@ public class ServicosPessoaisFragment extends Fragment {
             }
 
         };
+
+        //verifica se tem algum servico pessoal
+        if (adapter.getItemCount() > 0) {
+            tvNenhumServico.setVisibility(View.GONE);
+        } else {
+            tvNenhumServico.setVisibility(View.VISIBLE);
+        }
 
         mRecyclerView.setAdapter(adapter);
     }

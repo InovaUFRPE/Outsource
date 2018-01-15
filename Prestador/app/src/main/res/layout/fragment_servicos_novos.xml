@@ -6,11 +6,18 @@
     android:orientation="vertical"
     tools:context=".servico.gui.ServicosNovosFragment">
 
+    <TextView
+        android:id="@+id/nenhum_servico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nenhum_servico"
+        android:textAlignment="center" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleID"
         android:paddingBottom="50dp"
         android:clipToPadding="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

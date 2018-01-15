@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -39,6 +40,9 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
     private Location locationUsuario;
     private List<Servico> servicos;
 
+    private TextView tvNenhumServico;
+
+
     DatabaseReference databaseReference;
 
     CardFormat cardFormat = new CardFormat();
@@ -58,6 +62,11 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("aberto");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
+        tvNenhumServico = layout.findViewById(R.id.nenhum_servico);
+        String s = getContext().getString(R.string.nenhum_servico) + " novo";
+        tvNenhumServico.setText(s);
+        tvNenhumServico.setVisibility(View.GONE);
+
         valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -65,16 +74,22 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                 for (DataSnapshot dados : dataSnapshot.getChildren()) {
                     Servico servico = dados.getValue(Servico.class);
                     float[] result = new float[2];
-                    Location.distanceBetween(servico.getLatitude(), servico.getLongitude(), locationUsuario.getLatitude(),locationUsuario.getLongitude(), result);
-                    if (result[0] < 1000 ){
+                    Location.distanceBetween(servico.getLatitude(), servico.getLongitude(), locationUsuario.getLatitude(), locationUsuario.getLongitude(), result);
+                    if (result[0] < 1000) {
                         servicos.add(servico);
                     }
                 }
-                mRecyclerView.setAdapter(new ServicoDistanciaAdapter(servicos,getContext(),ServicosNovosFragment.this));
+                if (servicos.isEmpty()) {
+                    tvNenhumServico.setVisibility(View.VISIBLE);
+                } else {
+                    tvNenhumServico.setVisibility(View.GONE);
+                    mRecyclerView.setAdapter(new ServicoDistanciaAdapter(servicos, getContext(), ServicosNovosFragment.this));
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                tvNenhumServico.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(), "Erro ao carregar dados", Toast.LENGTH_SHORT).show();
             }
         };
@@ -112,14 +127,12 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
 
     @Override
     public void onItemClick(int position) {
-                Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                Servico servico = (Servico) servicos.get(position);
-                it.putExtra("servicoID", servico.getId());
-                it.putExtra("estado", servico.getEstado());
-                startActivity(it);
+        Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
+        Servico servico = servicos.get(position);
+        it.putExtra("servicoID", servico.getId());
+        it.putExtra("estado", servico.getEstado());
+        startActivity(it);
     }
-
-
 
 
 }

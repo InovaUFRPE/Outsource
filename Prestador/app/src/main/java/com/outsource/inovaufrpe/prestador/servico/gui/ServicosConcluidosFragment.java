@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,23 +22,20 @@ import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
 
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 public class ServicosConcluidosFragment extends Fragment {
 
 
     private RecyclerView mRecyclerView;
     private FirebaseRecyclerAdapter adapter;
+    private TextView tvNenhumServico;
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     CardFormat cardFormat = new CardFormat();
 
-    public ServicosConcluidosFragment() {}
+    public ServicosConcluidosFragment() {
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -49,6 +47,11 @@ public class ServicosConcluidosFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        tvNenhumServico = layout.findViewById(R.id.nenhum_servico);
+        String s = getContext().getString(R.string.nenhum_servico) + " concluído";
+        tvNenhumServico.setText(s);
+        tvNenhumServico.setVisibility(View.GONE);
 
         adaptador();
 
@@ -95,6 +98,13 @@ public class ServicosConcluidosFragment extends Fragment {
             }
 
         };
+
+        //verifica se tem algum servico concluido
+        if (adapter.getItemCount() > 0) {
+            tvNenhumServico.setVisibility(View.GONE);
+        } else {
+            tvNenhumServico.setVisibility(View.VISIBLE);
+        }
 
         mRecyclerView.setAdapter(adapter);
     }

@@ -38,7 +38,8 @@ public class ServicosAndamentoFragment extends Fragment {
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    public ServicosAndamentoFragment() {}
+    public ServicosAndamentoFragment() {
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -62,14 +63,21 @@ public class ServicosAndamentoFragment extends Fragment {
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                String s;
                 switch (pos) {
                     case 0:
                         mRecyclerViewNegociacao.setVisibility(View.GONE);
                         mRecyclerViewAndamento.setVisibility(View.VISIBLE);
+                        s = getContext().getString(R.string.nenhum_servico) + " em execução";
+                        tvNenhumServico.setText(s);
                         break;
                     case 1:
                         mRecyclerViewNegociacao.setVisibility(View.VISIBLE);
                         mRecyclerViewAndamento.setVisibility(View.GONE);
+                        tvNenhumServico.setText(R.string.nenhum_servico);
+                        tvNenhumServico.setVisibility(View.VISIBLE);
+                        s = getContext().getString(R.string.nenhum_servico) + " em negociação";
+                        tvNenhumServico.setText(s);
                         break;
                 }
             }
@@ -89,6 +97,7 @@ public class ServicosAndamentoFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Query queryNegociacao = databaseReference.child("servico").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
         Query queryAndamento = databaseReference.child("servico").child("andamento").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+
         adapter1 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
 
             @Override
@@ -131,6 +140,13 @@ public class ServicosAndamentoFragment extends Fragment {
 
         };
 
+        //verifica se tem algum servico em negociacao
+        if (adapter1.getItemCount() > 0) {
+            tvNenhumServico.setVisibility(View.GONE);
+        } else {
+            tvNenhumServico.setVisibility(View.VISIBLE);
+        }
+
         adapter2 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryAndamento) {
 
             @Override
@@ -172,6 +188,13 @@ public class ServicosAndamentoFragment extends Fragment {
             }
 
         };
+
+        //verifica se tem algum servico em andamento
+        if (adapter2.getItemCount() > 0) {
+            tvNenhumServico.setVisibility(View.GONE);
+        } else {
+            tvNenhumServico.setVisibility(View.VISIBLE);
+        }
 
         mRecyclerViewNegociacao.setAdapter(adapter1);
         mRecyclerViewAndamento.setAdapter(adapter2);
