@@ -407,7 +407,10 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(VisualizarServicoActivity.this ,HistoricoServicoActivity.class));
+                Intent intent = new Intent(VisualizarServicoActivity.this,HistoricoServicoActivity.class);
+                intent.putExtra("solicitanteNome",tvNomePessoa.getText().toString());
+                intent.putExtra("ID",servico.getIdCriador());
+                startActivity(intent);
             }
         });
 

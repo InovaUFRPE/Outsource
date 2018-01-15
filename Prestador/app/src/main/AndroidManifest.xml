@@ -45,7 +45,7 @@
         </activity>
         <activity android:name=".servico.gui.HistoricoServicoActivity">
             <meta-data
-                android:name="ndroid.support.PARENT_ACTIVITY"
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
         </activity>
     </application>

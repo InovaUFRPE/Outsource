@@ -193,6 +193,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
+
         } else {
             tituloLayoutPessoa.setText(R.string.executado_por);
             findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
@@ -406,7 +407,10 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(VisualizarServicoActivity.this ,HistoricoServicoActivity.class));
+                Intent intent = new Intent(VisualizarServicoActivity.this,HistoricoServicoActivity.class);
+                intent.putExtra("prestadorNome",tvNomePrestador.getText().toString());
+                intent.putExtra("prestadorID",servico.getIdPrestador());
+                startActivity(intent);
             }
         });
 
@@ -485,7 +489,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.opcoes_servico_menu, menu);
+        if (estadoId.equals(EstadoServico.ABERTA.getValue()) || estadoId.equals(EstadoServico.NEGOCIACAO.getValue())){
+            getMenuInflater().inflate(R.menu.opcoes_servico_menu, menu);
+        }
         return true;
     }
 
@@ -493,10 +499,19 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.excluirServicoBtn) {
-//            excluirServico();
+            excluirServico();
         } else {
-//            editarServico();
+            Intent intent = new Intent(this,EditarServicoActivity.class);
+            intent.putExtra("servicoID",servicoId);
+            intent.putExtra("estado",estadoId);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void excluirServico(){
+        databaseReferenceServico.child(estadoId).child(servicoId).removeValue();
+        FirebaseAux.getInstancia().getDatabaseReference().child("usuario").child(FirebaseAux.getInstancia().getFirebaseAuth().getCurrentUser().getUid())
+                .child("servicos").child(servicoId).removeValue();
     }
 }

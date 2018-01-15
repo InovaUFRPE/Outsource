@@ -11,7 +11,9 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class NotaMedia {
-    private float media;
+    private static float media;
+    private static int peso;
+
 
     public float getMedia() {
         return media;
@@ -32,7 +34,8 @@ public class NotaMedia {
     }
 
     public float mediaNotas(int nota){
-        media = (nota + media)/2;
+        peso+=1;
+        media = (nota + media*(peso-1))/peso;
         return media;
     }
 }

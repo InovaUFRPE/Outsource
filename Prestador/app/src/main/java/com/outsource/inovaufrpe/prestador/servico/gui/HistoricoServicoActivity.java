@@ -27,6 +27,8 @@ public class HistoricoServicoActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     CardFormat cardFormat = new CardFormat();
+    String nomeSolicitante;
+    String solicitanteID;
 
     public HistoricoServicoActivity() {
     }
@@ -34,6 +36,10 @@ public class HistoricoServicoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico_servico);
+        Intent intent = getIntent();
+        nomeSolicitante = intent.getStringExtra("solicitanteNome");
+        setTitle("Histórico de "+nomeSolicitante);
+        solicitanteID = intent.getStringExtra("solicitanteID");
 
         mRecyclerView = findViewById(R.id.recycleID);
 
@@ -46,7 +52,7 @@ public class HistoricoServicoActivity extends AppCompatActivity {
     }
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
-        Query query = databaseReference.orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query query = databaseReference.orderByChild("idPrestador").equalTo(solicitanteID);
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
             @Override
@@ -66,11 +72,6 @@ public class HistoricoServicoActivity extends AppCompatActivity {
                 viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent it = new Intent(HistoricoServicoActivity.this, VisualizarServicoActivity.class);
-                        Servico servico = (Servico) adapter.getItem(position);
-                        it.putExtra("servicoID", servico.getId());
-                        it.putExtra("estado", servico.getEstado());
-                        startActivity(it);
                     }
 
                 });

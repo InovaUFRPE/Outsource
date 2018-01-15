@@ -76,4 +76,5 @@
         <item>Em Execução</item>
         <item>Em Negociação</item>
     </string-array>
+    <string name="editar_servico">Editar Serviço</string>
 </resources>
