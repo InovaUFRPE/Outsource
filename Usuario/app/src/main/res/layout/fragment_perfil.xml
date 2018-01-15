@@ -20,7 +20,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:contentDescription="@string/foto_do_solicitante"
-            android:src="@drawable/me1" />
+            android:src="@drawable/default_profile" />
 
         <RatingBar
             android:id="@+id/rbAvaliarPerfil"

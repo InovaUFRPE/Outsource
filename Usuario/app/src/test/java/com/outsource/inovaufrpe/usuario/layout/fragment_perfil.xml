@@ -19,7 +19,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="@drawable/me1" />
+            android:src="@drawable/default_profile" />
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -155,7 +155,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/me1" />
+                android:src="@drawable/default_profile" />
 
         </RelativeLayout>
     </LinearLayout>

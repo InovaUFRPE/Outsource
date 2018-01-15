@@ -16,7 +16,7 @@
             android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:contentDescription="@string/foto_do_prestador"
-            android:src="@drawable/me1" />
+            android:src="@drawable/default_profile" />
 
         <TextView
             android:id="@+id/tvNomePrestador"
