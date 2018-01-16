@@ -63,7 +63,7 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
         viewHolder.titulo.setText(servico.getNome());
         viewHolder.status.setText(servico.getEstado());
         viewHolder.valor.setText(cardFormat.dinheiroFormat(servico.getPreco().toString()));
-        viewHolder.data.setText(cardFormat.dataFormat(servico.getData()));
+        viewHolder.data.setText(cardFormat.dataFormat(servico.getData(),"dd/MM/yyyy"));
         viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
             @Override
             public void onItemClick(View view, int position) {

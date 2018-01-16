@@ -17,9 +17,9 @@ import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
-import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
+import com.outsource.inovaufrpe.prestador.utils.HistoricoServicoListHolder;
 
-public class HistoricoServicosFragment extends Fragment {
+public class HistoricoTransacoesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     CardFormat cardFormat = new CardFormat();
 
@@ -28,7 +28,7 @@ public class HistoricoServicosFragment extends Fragment {
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    public HistoricoServicosFragment() {
+    public HistoricoTransacoesFragment() {
         // Required empty public constructor
     }
 
@@ -37,7 +37,7 @@ public class HistoricoServicosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_historico_servicos, container, false);
+        View view = inflater.inflate(R.layout.fragment_historico_transacoes, container, false);
 
         mRecyclerView = view.findViewById(R.id.RecycleID);
         mRecyclerView.setHasFixedSize(true);
@@ -51,28 +51,19 @@ public class HistoricoServicosFragment extends Fragment {
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
         Query query = databaseReference.orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
+        adapter = new FirebaseRecyclerAdapter<Servico, HistoricoServicoListHolder>(Servico.class, R.layout.table_historico_negociacoes_row, HistoricoServicoListHolder.class, query) {
 
             @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
-                viewHolder.mainLayout.setVisibility(View.VISIBLE);
-                viewHolder.linearLayout.setVisibility(View.VISIBLE);
-                viewHolder.titulo.setText(model.getNome());
-                viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getDataf()));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
+            protected void populateViewHolder(HistoricoServicoListHolder viewHolder, Servico model, int position) {
+                viewHolder.nomeServico.setText(model.getNome());
+                viewHolder.data.setText(cardFormat.dataFormat(model.getDataf(),"dd/MM"));
+                viewHolder.preco.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
             }
 
             @Override
-            public ServicoListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-                final ServicoListHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                    }
-
-                });
+            public HistoricoServicoListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+                final HistoricoServicoListHolder viewHolder = super.onCreateViewHolder(parent, viewType);
                 return viewHolder;
             }
 

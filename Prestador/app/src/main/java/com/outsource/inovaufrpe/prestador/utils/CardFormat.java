@@ -24,10 +24,10 @@ public class CardFormat {
         return df.format(Float.parseFloat(din));
     }
 
-    public static String dataFormat(String data){
+    public static String dataFormat(String data, String pattern){
         String nData = null;
         try {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat = new SimpleDateFormat(pattern);
             DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
             nData = dateFormat.format(dateFormat2.parse(data));
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_above="@+id/navigation"
-    tools:context="com.outsource.inovaufrpe.prestador.carteira.gui.HistoricoGanhosActivity">
+    tools:context="com.outsource.inovaufrpe.prestador.carteira.gui.HistoricoTransacoesFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/RecycleID"

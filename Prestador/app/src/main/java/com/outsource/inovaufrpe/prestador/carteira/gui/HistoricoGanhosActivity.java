@@ -50,7 +50,7 @@ public class HistoricoGanhosActivity extends AppCompatActivity {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getDataf()));
+                viewHolder.data.setText(cardFormat.dataFormat(model.getDataf(),"dd/MM/yyyy"));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
             }

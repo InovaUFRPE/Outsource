@@ -35,7 +35,7 @@ public class MainCarteiraFragment extends android.support.v4.app.Fragment {
     private void setupViewPager(ViewPager viewPager) {
         TabAdapter adapter = new TabAdapter(getChildFragmentManager());
         adapter.addFragment(new SaldoFragment(), "Saldo");
-        adapter.addFragment(new HistoricoServicosFragment(), "Histórico");
+        adapter.addFragment(new HistoricoTransacoesFragment(), "Histórico");
         viewPager.setAdapter(adapter);
     }
 }

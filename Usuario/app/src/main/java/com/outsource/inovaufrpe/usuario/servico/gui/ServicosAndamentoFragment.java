@@ -102,7 +102,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
+                viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM"));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
 
                 if (model.isUrgente()) {
@@ -144,7 +144,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
+                viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM"));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
 
                 if (model.isUrgente()) {
@@ -196,7 +196,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getData()));
+                viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM"));
                 viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
 
                 if (model.isUrgente()) {

@@ -17,11 +17,8 @@ import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
-import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
+import com.outsource.inovaufrpe.usuario.utils.HistoricoServicoListHolder;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HistoricoTransacoesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     CardFormat cardFormat = new CardFormat();
@@ -32,7 +29,6 @@ public class HistoricoTransacoesFragment extends Fragment {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     public HistoricoTransacoesFragment() {
-        // Required empty public constructor
     }
 
 
@@ -53,28 +49,19 @@ public class HistoricoTransacoesFragment extends Fragment {
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
         Query query = databaseReference.orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
+        adapter = new FirebaseRecyclerAdapter<Servico, HistoricoServicoListHolder>(Servico.class, R.layout.table_historico_negociacoes_row, HistoricoServicoListHolder.class, query) {
 
             @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
-                viewHolder.mainLayout.setVisibility(View.VISIBLE);
-                viewHolder.linearLayout.setVisibility(View.VISIBLE);
-                viewHolder.titulo.setText(model.getNome());
-                viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getDataf()));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
+            protected void populateViewHolder(HistoricoServicoListHolder viewHolder, Servico model, int position) {
+                viewHolder.nomeServico.setText(model.getNome());
+                viewHolder.data.setText(cardFormat.dataFormat(model.getDataf(),"dd/MM"));
+                viewHolder.preco.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
             }
 
             @Override
-            public ServicoListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-                final ServicoListHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                    }
-
-                });
+            public HistoricoServicoListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+                final HistoricoServicoListHolder viewHolder = super.onCreateViewHolder(parent, viewType);
                 return viewHolder;
             }
 

@@ -22,10 +22,10 @@ public class CardFormat {
         return "R$ "+ df.format(Float.parseFloat(dinheiro)).replace(",",".");
     }
 
-    public String dataFormat(String data){
+    public static String dataFormat(String data, String pattern){
         String nData = null;
         try {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat = new SimpleDateFormat(pattern);
             DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
             nData = dateFormat.format(dateFormat2.parse(data));
 
