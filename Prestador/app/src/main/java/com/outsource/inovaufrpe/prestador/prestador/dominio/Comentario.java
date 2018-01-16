@@ -2,9 +2,10 @@ package com.outsource.inovaufrpe.prestador.prestador.dominio;
 
 public class Comentario {
     private String texto;
-    private String data;
+    private long tempo;
     private String autor;
-    private String servico;
+    private String nomeAutor;
+    private Double valor;
 
     public Comentario() {
     }
@@ -17,12 +18,12 @@ public class Comentario {
         this.texto = texto;
     }
 
-    public String getData() {
-        return data;
+    public long getTempo() {
+        return tempo;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setTempo(long tempo) {
+        this.tempo = tempo;
     }
 
     public String getAutor() {
@@ -33,11 +34,20 @@ public class Comentario {
         this.autor = autor;
     }
 
-    public String getServico() {
-        return servico;
+    public String getNomeAutor() {
+        return nomeAutor;
     }
 
-    public void setServico(String servico) {
-        this.servico = servico;
+    public void setNomeAutor(String nomeAutor) {
+        this.nomeAutor = nomeAutor;
     }
+
+    public Double getvalor() {
+        return valor;
+    }
+
+    public void setvalor(Double valor) {
+        this.valor = valor;
+    }
+
 }

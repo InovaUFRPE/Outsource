@@ -75,7 +75,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     Servico servico = dados.getValue(Servico.class);
                     float[] result = new float[2];
                     Location.distanceBetween(servico.getLatitude(), servico.getLongitude(), locationUsuario.getLatitude(), locationUsuario.getLongitude(), result);
-                    if (result[0] < 1000) {
+                    if (result[0] < 10000) {
                         servicos.add(servico);
                     }
                 }
@@ -85,6 +85,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     tvNenhumServico.setVisibility(View.GONE);
                     mRecyclerView.setAdapter(new ServicoDistanciaAdapter(servicos, getContext(), ServicosNovosFragment.this));
                 }
+                mRecyclerView.setAdapter(new ServicoDistanciaAdapter(servicos, getContext(), ServicosNovosFragment.this));
             }
 
             @Override
@@ -97,6 +98,8 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         adaptador();
         return layout;
     }
+
+
 
     private void adaptador() {
 

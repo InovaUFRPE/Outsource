@@ -102,6 +102,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btConcluir = findViewById(R.id.btnConcluirServico);
         btAceitarOferta = findViewById(R.id.btAceitarNegociacao);
         LinearLayout solicitanteLayout = findViewById(R.id.layoutPessoa);
+        LinearLayout negociacaoLayout = findViewById(R.id.layoutNegociacoes);
 
         ActionBar ab = getSupportActionBar();
         ab.setSubtitle(nomeServico);
@@ -122,11 +123,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         adicionarComentario(comentario.getText().toString());
                         if ((df.format(Float.parseFloat(precoServico.getText().toString().replace(",", ".")))).equals(servico.getOferta())) {
-                            if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                                atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
-                            } else {
-                                encerraDialog();
-                            }
+                            encerraDialog();
                         } else {
                             try {
                                 negociar();
@@ -177,7 +174,16 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                    atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
+                    databaseReferenceServico.child(estadoId).child(servicoId).child("preco").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if(task.isSuccessful()){
+                                atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
+                            }else{
+                                Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 } else {
                     Toast.makeText(VisualizarServicoActivity.this, "Você quem realizou a ultima oferta!", Toast.LENGTH_SHORT).show();
                 }
@@ -188,6 +194,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 criarDialogVisualizarPerfil();
+            }
+        });
+
+        negociacaoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(VisualizarServicoActivity.this, NegociacoesActivity.class);
+                intent.putExtra("servicoID", servicoId);
+                startActivity(intent);
             }
         });
 
@@ -238,13 +253,20 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
                         criarDialogAvaliarUsuario();
-                        while (dialog.isShowing()){}
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
-                        finish();
                     }
                 } else {
                     criarDialogAvaliarUsuario();
-                    databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
+                    databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if(task.isSuccessful()){
+                                atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
+                            }else{
+                                Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
 
@@ -266,7 +288,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 God carteira = new God(dataSnapshot.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").getValue(Double.class));
                 carteira.adicionar(dataSnapshot.child("servico").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
-                God.setFundos(dataSnapshot.child("servico").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
                 databaseReference.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
             }
 
@@ -485,12 +506,19 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         Comentario comentario = new Comentario();
         Date data = new Date();
         String novaData = new Timestamp(data.getTime()).toString();
-        comentario.setData(cardFormat.dataFormat(novaData));
+        comentario.setTempo(data.getTime());
         comentario.setTexto(texto);
         comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
-        comentario.setServico(servicoId);
+        comentario.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
         novaData = novaData.replace(".", "");
         DatabaseReference databaseReferenceComentario = FirebaseDatabase.getInstance().getReference().child("comentario");
-        databaseReferenceComentario.child(comentario.getServico()).child(novaData).setValue(comentario);
+        databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if(!task.isSuccessful()){
+                    Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

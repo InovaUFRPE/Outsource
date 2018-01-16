@@ -1,5 +1,7 @@
 package com.outsource.inovaufrpe.prestador.utils;
 
+import android.text.format.DateUtils;
+
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -11,7 +13,7 @@ import java.text.SimpleDateFormat;
 
 public class CardFormat {
 
-    public String dinheiroFormat(String dinheiro){
+    public static String dinheiroFormat(String dinheiro){
         DecimalFormat df = new DecimalFormat("####0.00");
         return "R$ "+ df.format(Float.parseFloat(dinheiro)).replace(".",",");
     }
@@ -21,7 +23,7 @@ public class CardFormat {
         return "R$ "+ df.format(Float.parseFloat(dinheiro)).replace(",",".");
     }
 
-    public String dataFormat(String data){
+    public static String dataFormat(String data){
         String nData = null;
         try {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -32,6 +34,11 @@ public class CardFormat {
             e.printStackTrace();
         }
         return nData;
+    }
+
+    public static String tempoFormat(long tempo) {
+
+        return DateUtils.getRelativeTimeSpanString(tempo).toString();
 
     }
 }

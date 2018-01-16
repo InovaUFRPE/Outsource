@@ -102,10 +102,6 @@ public class ServicosAndamentoFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
-                if (this.getItemCount() < 0) {
-                    tvNenhumServico.setVisibility(View.VISIBLE);
-                    return;
-                }
                 viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());

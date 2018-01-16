@@ -48,6 +48,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
         </activity>
+        <activity android:name=".servico.gui.NegociacoesActivity">
+        </activity>
     </application>
 
 </manifest>

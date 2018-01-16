@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 
 public class CardFormat {
 
-    public String dinheiroFormat(String dinheiro){
+    public static String dinheiroFormat(String dinheiro){
         DecimalFormat df = new DecimalFormat("####0.00");
         return "R$ "+ df.format(Float.parseFloat(dinheiro)).replace(".",",");
     }
@@ -36,7 +36,7 @@ public class CardFormat {
 
     }
 
-    public String tempoFormat(long tempo) {
+    public static String tempoFormat(long tempo) {
 
         return DateUtils.getRelativeTimeSpanString(tempo).toString();
 

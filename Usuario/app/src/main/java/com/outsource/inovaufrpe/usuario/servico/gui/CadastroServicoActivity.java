@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +24,8 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.solicitante.dominio.Comentario;
 import com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity;
 
 import java.sql.Timestamp;
@@ -196,6 +200,16 @@ public class CadastroServicoActivity extends AppCompatActivity {
             }
         });
         databaseReference.child("servico").child("aberto").child(servicoId).child("ordem-ref").setValue(gambi + new Timestamp(-1 * data.getTime()).toString());
+        Comentario comentario = new Comentario();
+        String novaData = new Timestamp(data.getTime()).toString();
+        comentario.setTempo(data.getTime());
+        comentario.setTexto("Valor Inicial");
+        comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
+        comentario.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
+        novaData = novaData.replace(".", "");
+        DatabaseReference databaseReferenceComentario = FirebaseDatabase.getInstance().getReference().child("comentario");
+        databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario);
+
         return servico;
     }
 

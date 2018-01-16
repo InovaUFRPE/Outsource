@@ -102,6 +102,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tvOferta = findViewById(R.id.tvPrecoOrcamento);
         LinearLayout prestadorLayout = findViewById(R.id.layoutPessoa);
         TextView tituloLayoutPessoa = findViewById(R.id.tvTituloLayout);
+        LinearLayout negociacaoLayout = findViewById(R.id.layoutNegociacoes);
 
         ActionBar ab = getSupportActionBar();
         ab.setSubtitle(nomeServico);
@@ -125,12 +126,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         adicionarComentario(comentario.getText().toString());
                         if (df.format(Float.parseFloat(precoServico.getText().toString().replace(",", "."))).equals(servico.getOferta())) {
-                            if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                                databaseReferenceServico.child(servico.getEstado()).child(servicoId).child("preco").setValue(servico.getOferta());
-                                atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
-                            } else {
-                                encerraDialog();
-                            }
+                            encerraDialog();
                         } else {
                             try {
                                 negociar();
@@ -148,9 +144,17 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                    databaseReferenceServico.child(servico.getEstado()).child(servicoId).child("preco").setValue(servico.getOferta());
-                    descontar();
-                    atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
+                    databaseReferenceServico.child(servico.getEstado()).child(servicoId).child("preco").setValue(servico.getOferta(), new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if(task.isSuccessful()){
+                                descontar();
+                                atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
+                            }else{
+                                Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 } else {
                     Toast.makeText(VisualizarServicoActivity.this, "Você quem realizou a ultima oferta!", Toast.LENGTH_SHORT).show();
                 }
@@ -169,6 +173,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 criarDialogVisualizarPerfil();
+            }
+        });
+
+        negociacaoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(VisualizarServicoActivity.this, NegociacoesActivity.class);
+                intent.putExtra("servicoID", servicoId);
+                startActivity(intent);
             }
         });
 
@@ -219,9 +232,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
                         criarDialogAvaliarUsuario();
-                        while (dialog.isShowing()){}
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
-                        finish();
                     }
                 } else {
                     criarDialogAvaliarUsuario();
@@ -491,10 +502,17 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         comentario.setTempo(data.getTime());
         comentario.setTexto(texto);
         comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
-        comentario.setServico(servicoId);
+        comentario.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
         novaData = novaData.replace(".", "");
         DatabaseReference databaseReferenceComentario = FirebaseDatabase.getInstance().getReference().child("comentario");
-        databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario);
+        databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if(!task.isSuccessful()){
+                    Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
