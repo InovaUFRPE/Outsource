@@ -1,10 +1,13 @@
 package com.outsource.inovaufrpe.usuario.servico.gui;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +26,10 @@ public class NegociacoesActivity extends AppCompatActivity {
     private ValueEventListener valueEventListener;
     private RecyclerView.LayoutManager mLayoutManager;
     String servicoId;
+    String myUserID;
+    String nomePrestador;
     private DatabaseReference databaseReference;
+    private CardView cardNegociacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,14 @@ public class NegociacoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_negociacoes);
         Intent intent = getIntent();
         servicoId = intent.getStringExtra("servicoID");
+        myUserID = intent.getStringExtra("myUserID");
+        nomePrestador = intent.getStringExtra("nomePrestador");
+
+        setTitle("Visualizar negociação");
+
+        ActionBar ab = getSupportActionBar();
+        ab.setSubtitle(nomePrestador);
+
         recycleNegociacoes = findViewById(R.id.recycleNegociacoesID);
 
         recycleNegociacoes.setHasFixedSize(true);
@@ -47,11 +61,24 @@ public class NegociacoesActivity extends AppCompatActivity {
                 viewHolder.precoSugerido.setText(CardFormat.dinheiroFormat(model.getvalor().toString()));
                 viewHolder.tvComentario.setText(model.getTexto());
                 viewHolder.tvTempo.setText(CardFormat.tempoFormat(model.getTempo()));
+                cardNegociacao = viewHolder.cardServico;
+
+                if (model.getAutor().equals(myUserID)) {
+                    setarMarginCard(cardNegociacao, 100, 16);
+                    cardNegociacao.setCardBackgroundColor(getResources().getColor(R.color.colorIsabelline));
+                } else {
+                    setarMarginCard(cardNegociacao, 16, 100);
+                }
             }
         };
 
         recycleNegociacoes.setAdapter(adapter);
+    }
 
-
+    private void setarMarginCard(CardView card, int left, int right) {
+        ViewGroup.MarginLayoutParams layoutParams =
+                (ViewGroup.MarginLayoutParams) card.getLayoutParams();
+        layoutParams.setMargins(left, 8, right, 8);
+        card.requestLayout();
     }
 }

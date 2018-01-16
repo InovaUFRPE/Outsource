@@ -203,7 +203,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
         Comentario comentario = new Comentario();
         String novaData = new Timestamp(data.getTime()).toString();
         comentario.setTempo(data.getTime());
-        comentario.setTexto("Valor Inicial");
+        comentario.setTexto("Valor inicial proposto por você");
         comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
         comentario.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
         comentario.setvalor(servico.getPreco());
