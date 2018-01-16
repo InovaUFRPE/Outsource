@@ -56,7 +56,6 @@ public class MainPerfilFragment extends Fragment {
                             avaliarPerfil.setRating((float)user.getNota()/user.getPesoNota());
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 

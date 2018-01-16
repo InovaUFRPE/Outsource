@@ -14,7 +14,6 @@ public class God {
         if (fundos == null){
             fundos = Double.valueOf(0);
         }
-
     }
 
     public Double getMoeda() {
