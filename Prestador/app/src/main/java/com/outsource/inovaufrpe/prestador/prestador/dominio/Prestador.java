@@ -16,6 +16,7 @@ public class Prestador {
     private float nota;
     private List<Servico> listaServicos = new ArrayList<Servico>();
     private God carteira;
+    private int pesoNota;
 
     public Prestador() {
     }
@@ -90,5 +91,13 @@ public class Prestador {
 
     public void setNota(float nota) {
         this.nota = nota;
+    }
+
+    public int getPesoNota() {
+        return pesoNota;
+    }
+
+    public void setPesoNota(int pesoNota) {
+        this.pesoNota = pesoNota;
     }
 }

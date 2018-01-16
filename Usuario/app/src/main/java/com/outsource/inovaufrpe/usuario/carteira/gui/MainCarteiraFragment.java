@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.solicitante.adapter.TabAdapter;
-import com.outsource.inovaufrpe.usuario.solicitante.gui.MainPerfilFragment;
 
 public class MainCarteiraFragment extends android.support.v4.app.Fragment {
 
@@ -34,7 +33,7 @@ public class MainCarteiraFragment extends android.support.v4.app.Fragment {
     private void setupViewPager(ViewPager viewPager) {
         TabAdapter adapter = new TabAdapter(getChildFragmentManager());
         adapter.addFragment(new SaldoFragment(), "Saldo");
-        adapter.addFragment(new HistoricoServicosFragment(), "Histórico");
+        adapter.addFragment(new HistoricoTransacoesFragment(), "Histórico");
         viewPager.setAdapter(adapter);
     }
 }

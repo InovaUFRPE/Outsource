@@ -77,8 +77,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     ValueEventListener listenerServico;
     String nomeSolicitante;
     String nomeServico;
-    NotaMedia notaMedia = new NotaMedia();
     CardFormat cardFormat = new CardFormat();
+    int peso;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -124,7 +124,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        adicionarComentario(comentario.getText().toString(), Double.valueOf(precoServico.getText().toString().trim()));
+                        adicionarComentario(comentario.getText().toString(), Double.valueOf(precoServico.getText().toString().trim().replace(",", ".")));
                         if (df.format(Float.parseFloat(precoServico.getText().toString().replace(",", "."))).equals(servico.getOferta())) {
                             encerraDialog();
                         } else {
@@ -144,7 +144,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                    databaseReferenceServico.child(servico.getEstado()).child(servicoId).child("preco").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    databaseReferenceServico.child(estadoId).child(servicoId).child("preco").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task task) {
                             if(task.isSuccessful()){
@@ -235,9 +235,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     } else {
                         criarDialogAvaliarUsuario();
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
+                        databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     }
                 } else {
                     criarDialogAvaliarUsuario();
+                    databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                 }
             }
@@ -247,6 +249,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         });
+        finish();
     }
 
     @Override
@@ -350,7 +353,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
                 tvNomePessoa.setText(s);
-                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(float.class)));
+                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(int.class)));
+                peso = dataSnapshot.child("pesoNota").getValue(int.class);
                 if (servico.getOfertante() != null) {
                     dadosNegociacao();
                 }
@@ -440,7 +444,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
         avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
         nomeUsuario.setText(tvNomePessoa.getText().toString());
-        avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString()));
+        if (peso == 0){
+            avaliarPerfil.setRating(0);
+        }else {
+            avaliarPerfil.setRating(Integer.parseInt(tvNotaPessoa.getText().toString())/peso);
+        }
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
 
         mRecyclerView.setFocusable(false);
@@ -481,13 +489,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btnConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Critica critica = new Critica();
+                final Critica critica = new Critica();
                 critica.setComentadorNome(nomeSolicitante);
                 critica.setComentario(edComentarioAvaliacao.getText().toString());
                 critica.setNota((int) ratingBar.getRating());
                 DatabaseReference databaseReference = FirebaseAux.getInstancia().getDatabaseReference();
-                databaseReference.child("prestador").child(servico.getIdPrestador()).child("nota").setValue(notaMedia.mediaNotas(critica.getNota()));
+                NotaMedia notaMedia = new NotaMedia();
+                notaMedia.adicionarNota(servico.getIdPrestador(),critica.getNota());
                 databaseReference.child("feedback").child(servico.getIdPrestador()).child(databaseReference.child("feedback").child(servico.getIdPrestador()).push().getKey()).setValue(critica);
+                dialog.dismiss();
             }
         });
 

@@ -1,11 +1,9 @@
 package com.outsource.inovaufrpe.prestador.carteira.gui;
 
-
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,7 +17,7 @@ import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
 
-public class HistoricoServicosFragment extends Fragment {
+public class HistoricoGanhosActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     CardFormat cardFormat = new CardFormat();
 
@@ -28,24 +26,17 @@ public class HistoricoServicosFragment extends Fragment {
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    public HistoricoServicosFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_historico_servicos, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_historico_ganhos);
 
-        mRecyclerView = view.findViewById(R.id.RecycleID);
+        mRecyclerView = findViewById(R.id.RecycleID);
         mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         adaptador();
-        return view;
     }
 
     private void adaptador() {

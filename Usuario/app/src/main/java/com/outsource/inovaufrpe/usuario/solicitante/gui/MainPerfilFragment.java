@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,7 +49,12 @@ public class MainPerfilFragment extends Fragment {
                         nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(user.getEmail());
                         telefoneUsuario.setText(user.getTelefone());
-                        avaliarPerfil.setRating(user.getNota());
+                        if (user.getPesoNota() == 0){
+                            avaliarPerfil.setRating(0);
+                        }
+                        else {
+                            avaliarPerfil.setRating(user.getNota()/user.getPesoNota());
+                        }
                     }
 
                     @Override

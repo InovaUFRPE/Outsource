@@ -72,8 +72,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     DatabaseReference databaseReferenceServico;
     String nomeSolicitante;
     String nomeServico;
-    NotaMedia notaMedia = new NotaMedia();
     CardFormat cardFormat = new CardFormat();
+    int peso;
 
 
     @Override
@@ -140,7 +140,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                descontar();
+                adicionar();
                 concluir();
             }
         });
@@ -256,9 +256,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     } else {
                         criarDialogAvaliarUsuario();
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
+                        databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     }
                 } else {
                     criarDialogAvaliarUsuario();
+                    databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task task) {
@@ -282,7 +284,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         this.dialog.dismiss();
     }
 
-    private void descontar() {
+    private void adicionar() {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -368,7 +370,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
                 tvNomePessoa.setText(s);
-                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(float.class)));
+                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(int.class)));
+                peso = dataSnapshot.child("pesoNota").getValue(int.class);
                 if (servico.getOfertante() != null) {
                     dadosNegociacao();
                 }
@@ -425,7 +428,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         TextView nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
         RatingBar avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
         nomeUsuario.setText(tvNomePessoa.getText().toString());
-        avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString()));
+        if (peso == 0){
+            avaliarPerfil.setRating(0);
+        }else{
+            avaliarPerfil.setRating(Integer.parseInt(tvNotaPessoa.getText().toString())/peso);
+        }
 
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
         ImageButton closeBtn = v1.findViewById(R.id.closeBtn);
@@ -491,7 +498,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 critica.setComentario(edComentarioAvaliacao.getText().toString());
                 critica.setNota((int) ratingBar.getRating());
                 DatabaseReference databaseReference = FirebaseAux.getInstancia().getDatabaseReference();
-                databaseReference.child("usuario").child(servico.getIdPrestador()).child("nota").setValue(notaMedia.mediaNotas(critica.getNota()));
+                NotaMedia notaMedia = new NotaMedia();
+                notaMedia.adicionarNota(servico.getIdCriador(),critica.getNota());
                 databaseReference.child("feedback").child(servico.getIdCriador()).child(databaseReference.child("feedback").child(servico.getIdCriador()).push().getKey()).setValue(critica);
                 dialog.dismiss();
             }

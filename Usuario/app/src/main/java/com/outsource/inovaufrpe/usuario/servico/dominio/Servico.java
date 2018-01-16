@@ -16,6 +16,7 @@ public class Servico {
     private double longitude;
     private String estado;
     private boolean urgente;
+    private String dataf;
 
     public Servico() {
     }
@@ -122,6 +123,14 @@ public class Servico {
 
     public void setUrgente(boolean ehUrgente) {
         this.urgente = ehUrgente;
+    }
+
+    public String getDataf() {
+        return dataf;
+    }
+
+    public void setDataf(String dataf) {
+        this.dataf = dataf;
     }
 }
 

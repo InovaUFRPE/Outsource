@@ -61,7 +61,7 @@
         <activity android:name=".servico.gui.EditarServicoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity"/>
+                android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
         </activity>
     </application>
 

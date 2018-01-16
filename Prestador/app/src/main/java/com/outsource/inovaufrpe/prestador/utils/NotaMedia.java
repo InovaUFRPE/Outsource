@@ -11,18 +11,21 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class NotaMedia {
-    private static float media;
-    private static int peso;
+    private int notaMedia;
+    private int peso;
+    private String solicitanteID;
 
-    public float getMedia() {
-        return media;
-    }
 
-    public NotaMedia() {
-        FirebaseDatabase.getInstance().getReference().child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+    public void adicionarNota(final String solicitanteId, final int nota) {
+        solicitanteID = solicitanteId;
+        FirebaseDatabase.getInstance().getReference().child("prestador").child(solicitanteId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                media = dataSnapshot.child("nota").getValue(Float.class);
+                notaMedia = dataSnapshot.child("nota").getValue(int.class);
+                peso = dataSnapshot.child("pesoNota").getValue(int.class);
+                FirebaseDatabase.getInstance().getReference().child("prestador").child(solicitanteId).child("nota").setValue(notaMedia+nota);
+                FirebaseDatabase.getInstance().getReference().child("prestador").child(solicitanteId).child("pesoNota").setValue(peso+1);
             }
 
             @Override
@@ -30,11 +33,5 @@ public class NotaMedia {
 
             }
         });
-    }
-
-    public float mediaNotas(int nota){
-        peso+=1;
-        media = (nota + media*(peso-1))/peso;
-        return media;
     }
 }

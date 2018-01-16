@@ -61,7 +61,11 @@ public class MainPerfilFragment extends Fragment {
                         nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(prestador.getEmail());
                         telefoneUsuario.setText(prestador.getTelefone());
-                        avaliarPerfil.setRating(prestador.getNota());
+                        if(prestador.getPesoNota() == 0){
+                            avaliarPerfil.setRating(0);
+                        }else{
+                            avaliarPerfil.setRating(prestador.getNota()/prestador.getPesoNota());
+                        }
                     }
 
                     @Override

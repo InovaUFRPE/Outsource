@@ -1,4 +1,4 @@
-package com.outsource.inovaufrpe.prestador.carteira.gui;
+package com.outsource.inovaufrpe.usuario.carteira.gui;
 
 
 import android.os.Bundle;
@@ -14,12 +14,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.outsource.inovaufrpe.prestador.R;
-import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
-import com.outsource.inovaufrpe.prestador.utils.CardFormat;
-import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
+import com.outsource.inovaufrpe.usuario.R;
+import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.utils.CardFormat;
+import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
 
-public class HistoricoServicosFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class HistoricoTransacoesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     CardFormat cardFormat = new CardFormat();
 
@@ -28,7 +31,7 @@ public class HistoricoServicosFragment extends Fragment {
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    public HistoricoServicosFragment() {
+    public HistoricoTransacoesFragment() {
         // Required empty public constructor
     }
 
@@ -36,8 +39,7 @@ public class HistoricoServicosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_historico_servicos, container, false);
+        View view = inflater.inflate(R.layout.fragment_historico_transacoes, container, false);
 
         mRecyclerView = view.findViewById(R.id.RecycleID);
         mRecyclerView.setHasFixedSize(true);
@@ -50,7 +52,7 @@ public class HistoricoServicosFragment extends Fragment {
 
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
-        Query query = databaseReference.orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query query = databaseReference.orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
             @Override
@@ -80,4 +82,5 @@ public class HistoricoServicosFragment extends Fragment {
 
         mRecyclerView.setAdapter(adapter);
     }
+
 }

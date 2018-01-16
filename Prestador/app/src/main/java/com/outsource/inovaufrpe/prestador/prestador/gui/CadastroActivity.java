@@ -64,6 +64,7 @@ public class CadastroActivity extends AppCompatActivity {
                             prestador.setTelefone(etTelefone.getText().toString().trim());
                             prestador.setCarteira(Double.valueOf("0"));
                             prestador.setNota(0);
+                            prestador.setPesoNota(0);
                             firebase.getPrestadorReference().child(user.getUid()).setValue(prestador);
                             startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                             finish();

@@ -13,9 +13,10 @@ public class Usuario {
     private String email;
     private String telefone;
     private String nascimento;
-    private float nota;
+    private int nota;
     private List<String> listaServicos = new ArrayList<>();
     private God carteira;
+    private int pesoNota;
 
     public Usuario() {
     }
@@ -68,11 +69,11 @@ public class Usuario {
         this.nascimento = nascimento;
     }
 
-    public float getNota() {
+    public int getNota() {
         return nota;
     }
 
-    public void setNota(float nota) {
+    public void setNota(int nota) {
         this.nota = nota;
     }
 
@@ -90,5 +91,13 @@ public class Usuario {
 
     public void setCarteira(Double carteira) {
         this.carteira = new God(carteira);
+    }
+
+    public int getPesoNota() {
+        return pesoNota;
+    }
+
+    public void setPesoNota(int pesoNota) {
+        this.pesoNota = pesoNota;
     }
 }

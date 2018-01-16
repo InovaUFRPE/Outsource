@@ -22,7 +22,7 @@ public class God {
     }
 
     public void adicionar(Double mais) {
-        this.gods = this.gods + mais;
+        this.gods = this.gods + (mais*(1-TAXA));
     }
     public void subtrair(Double menos) {
         this.gods = this.gods - menos;
@@ -38,7 +38,7 @@ public class God {
         return fundos;
     }
 
-    public static void setFundos(Double fundos) {
-        fundos += (fundos * getTAXA());
+    public static void setFundos(Double maisFundos) {
+        fundos += (maisFundos * getTAXA());
     }
 }
