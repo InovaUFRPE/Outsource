@@ -121,7 +121,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        adicionarComentario(comentario.getText().toString());
+                        adicionarComentario(comentario.getText().toString(),precoServico.getText().toString());
                         if ((df.format(Float.parseFloat(precoServico.getText().toString().replace(",", ".")))).equals(servico.getOferta())) {
                             encerraDialog();
                         } else {
@@ -159,7 +159,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         try {
-                            adicionarComentario(comentario.getText().toString());
+                            adicionarComentario(comentario.getText().toString(), precoServico.getText().toString());
                             negociar();
                             atualizarEstadoServico(servico.getEstado(), EstadoServico.NEGOCIACAO.getValue());
                         } catch (DatabaseException e) {
@@ -502,7 +502,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     }
 
-    private void adicionarComentario(String texto) {
+    private void adicionarComentario(String texto, String valor) {
         Comentario comentario = new Comentario();
         Date data = new Date();
         String novaData = new Timestamp(data.getTime()).toString();
@@ -510,6 +510,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         comentario.setTexto(texto);
         comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
         comentario.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
+        comentario.setvalor(valor);
         novaData = novaData.replace(".", "");
         DatabaseReference databaseReferenceComentario = FirebaseDatabase.getInstance().getReference().child("comentario");
         databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario).addOnCompleteListener(new OnCompleteListener<Void>() {

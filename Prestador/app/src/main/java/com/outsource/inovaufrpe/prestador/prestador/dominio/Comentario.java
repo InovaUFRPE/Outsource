@@ -5,7 +5,7 @@ public class Comentario {
     private long tempo;
     private String autor;
     private String nomeAutor;
-    private Double valor;
+    private String valor;
 
     public Comentario() {
     }
@@ -42,11 +42,11 @@ public class Comentario {
         this.nomeAutor = nomeAutor;
     }
 
-    public Double getvalor() {
+    public String getvalor() {
         return valor;
     }
 
-    public void setvalor(Double valor) {
+    public void setvalor(String valor) {
         this.valor = valor;
     }
 
