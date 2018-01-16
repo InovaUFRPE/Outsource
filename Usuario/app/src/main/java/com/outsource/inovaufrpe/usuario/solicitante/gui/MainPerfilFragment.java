@@ -53,7 +53,7 @@ public class MainPerfilFragment extends Fragment {
                             avaliarPerfil.setRating(0);
                         }
                         else {
-                            avaliarPerfil.setRating(user.getNota()/user.getPesoNota());
+                            avaliarPerfil.setRating((float)user.getNota()/user.getPesoNota());
                         }
                     }
 

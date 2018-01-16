@@ -57,7 +57,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     TextView descricaoID;
     TextView tvNomePessoa;
     TextView tvNotaPessoa;
-    TextView tvNomePrestador;
+    TextView tvNomeOfertante;
     TextView tvEstadoServicoID;
     TextView tvOferta;
     Button solicNovoOrca;
@@ -79,6 +79,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     String nomeServico;
     CardFormat cardFormat = new CardFormat();
     int peso;
+    int somatorio;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -98,7 +99,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tvNotaPessoa = findViewById(R.id.tvNotaPessoa);
         tvEstadoServicoID = findViewById(R.id.tvEstadoServicoID);
         databaseReferenceServico = FirebaseDatabase.getInstance().getReference().child("servico");
-        tvNomePrestador = findViewById(R.id.tvNomePrestador);
+        tvNomeOfertante = findViewById(R.id.tvNomeOfertante);
         tvOferta = findViewById(R.id.tvPrecoOrcamento);
         LinearLayout prestadorLayout = findViewById(R.id.layoutPessoa);
         TextView tituloLayoutPessoa = findViewById(R.id.tvTituloLayout);
@@ -182,7 +183,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 Intent intent = new Intent(VisualizarServicoActivity.this, NegociacoesActivity.class);
                 intent.putExtra("servicoID", servicoId);
                 intent.putExtra("myUserID",  servico.getIdCriador());
-                intent.putExtra("nomePrestador",  tvNomePrestador.getText().toString());
+                intent.putExtra("nomePrestador",  tvNomeOfertante.getText().toString());
                 startActivity(intent);
             }
         });
@@ -226,7 +227,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void concluir() {
         //TODO: CORRIGIR A AVALIAÇÃO DE USUARIO TARDIA
-        databaseReferenceServico.child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
+        databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
@@ -249,7 +250,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         });
-        finish();
     }
 
     @Override
@@ -353,8 +353,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
                 tvNomePessoa.setText(s);
-                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(int.class)));
+                somatorio = dataSnapshot.child("nota").getValue(int.class);
                 peso = dataSnapshot.child("pesoNota").getValue(int.class);
+                if(peso != 0) {
+                    tvNotaPessoa.setText(String.format("%.02f", (float)somatorio / peso));
+                }else{
+                    tvNotaPessoa.setText("0.0");
+                }
                 if (servico.getOfertante() != null) {
                     dadosNegociacao();
                 }
@@ -368,19 +373,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void dadosNegociacao() {
-        DatabaseReference databaseReferencePrestador = FirebaseDatabase.getInstance().getReference().child("prestador").child(servico.getIdPrestador());
-        databaseReferencePrestador.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String s = dataSnapshot.child("nome").getValue(String.class)+" "+dataSnapshot.child("sobrenome").getValue(String.class);
-                tvNomePrestador.setText(s);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        if(servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())){
+            tvNomeOfertante.setText("Você");
+        }else{
+            tvNomeOfertante.setText(tvNomePessoa.getText());
+        }
         tvOferta.setText(cardFormat.dinheiroFormat(servico.getOferta().toString()));
     }
 
@@ -408,6 +405,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         comentario = view1.findViewById(R.id.etComentarios);
         cancelarNegociacao = view1.findViewById(R.id.btnCancelarNegociacao);
         solicNovoOrca = view1.findViewById(R.id.btnSolicitarNovoOrcamento);
+        view1.findViewById(R.id.btnCancelarNegociacao).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
         mBuilder.setView(view1);
         dialog = mBuilder.create();
         dialog.show();
@@ -435,7 +438,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(VisualizarServicoActivity.this,HistoricoServicoActivity.class);
-                intent.putExtra("prestadorNome",tvNomePrestador.getText().toString());
+                intent.putExtra("prestadorNome", tvNomeOfertante.getText().toString());
                 intent.putExtra("prestadorID",servico.getIdPrestador());
                 startActivity(intent);
             }
@@ -447,7 +450,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         if (peso == 0){
             avaliarPerfil.setRating(0);
         }else {
-            avaliarPerfil.setRating(Integer.parseInt(tvNotaPessoa.getText().toString())/peso);
+            avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString()));
         }
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
 

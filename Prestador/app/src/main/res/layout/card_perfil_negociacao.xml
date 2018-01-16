@@ -19,7 +19,7 @@
             android:src="@drawable/default_profile" />
 
         <TextView
-            android:id="@+id/tvNomePrestador"
+            android:id="@+id/tvNomeOfertante"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

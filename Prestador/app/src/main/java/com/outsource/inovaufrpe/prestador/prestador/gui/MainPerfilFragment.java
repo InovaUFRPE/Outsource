@@ -64,7 +64,7 @@ public class MainPerfilFragment extends Fragment {
                         if(prestador.getPesoNota() == 0){
                             avaliarPerfil.setRating(0);
                         }else{
-                            avaliarPerfil.setRating(prestador.getNota()/prestador.getPesoNota());
+                            avaliarPerfil.setRating((float)prestador.getNota()/prestador.getPesoNota());
                         }
                     }
 

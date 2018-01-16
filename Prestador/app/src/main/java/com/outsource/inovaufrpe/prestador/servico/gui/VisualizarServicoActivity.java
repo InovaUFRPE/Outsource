@@ -74,6 +74,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     String nomeServico;
     CardFormat cardFormat = new CardFormat();
     int peso;
+    int somatorio;
 
 
     @Override
@@ -95,7 +96,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tituloLayoutPessoa = findViewById(R.id.tvTituloLayout);
         tvNomePessoa = findViewById(R.id.tvNomePessoa);
         tvNotaPessoa = findViewById(R.id.tvNotaPessoa);
-        tvNomeOfertante = findViewById(R.id.tvNomePrestador);
+        tvNomeOfertante = findViewById(R.id.tvNomeOfertante);
         tvOferta = findViewById(R.id.tvPrecoOrcamento);
         tvEstadoServicoID = findViewById(R.id.tvEstadoServicoID);
         btNegociar = findViewById(R.id.btnNegociar);
@@ -302,20 +303,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void dadosNegociacao() {
-
-        DatabaseReference databaseReferencePrestador = FirebaseDatabase.getInstance().getReference().child("usuario").child(servico.getIdCriador());
-        databaseReferencePrestador.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String s = dataSnapshot.child("nome").getValue(String.class)+" "+dataSnapshot.child("sobrenome").getValue(String.class);
-                tvNomeOfertante.setText(s);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        if(servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())){
+            tvNomeOfertante.setText("Você");
+        }else{
+            tvNomeOfertante.setText(tvNomePessoa.getText());
+        }
         tvOferta.setText(cardFormat.dinheiroFormat(servico.getOferta().toString()));
     }
 
@@ -370,8 +362,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
                 tvNomePessoa.setText(s);
-                tvNotaPessoa.setText(String.valueOf(dataSnapshot.child("nota").getValue(int.class)));
+                somatorio = dataSnapshot.child("nota").getValue(int.class);
                 peso = dataSnapshot.child("pesoNota").getValue(int.class);
+                if(peso != 0) {
+                    tvNotaPessoa.setText(String.format("%.02f", (float)somatorio / peso));
+                }else{
+                    tvNotaPessoa.setText("0.0");
+                }
                 if (servico.getOfertante() != null) {
                     dadosNegociacao();
                 }
@@ -411,6 +408,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         comentario = view1.findViewById(R.id.etComentarios);
         cancelarNegociacao = view1.findViewById(R.id.btnCancelarNegociacao);
         solicNovoOrca = view1.findViewById(R.id.btnSolicitarNovoOrcamento);
+        view1.findViewById(R.id.btnCancelarNegociacao).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
         mBuilder.setView(view1);
         dialog = mBuilder.create();
         dialog.show();
@@ -431,7 +434,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         if (peso == 0){
             avaliarPerfil.setRating(0);
         }else{
-            avaliarPerfil.setRating(Integer.parseInt(tvNotaPessoa.getText().toString())/peso);
+            avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString()));
         }
 
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
