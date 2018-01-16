@@ -206,6 +206,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
         comentario.setTexto("Valor Inicial");
         comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
         comentario.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
+        comentario.setvalor(servico.getPreco());
         novaData = novaData.replace(".", "");
         DatabaseReference databaseReferenceComentario = FirebaseDatabase.getInstance().getReference().child("comentario");
         databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario);

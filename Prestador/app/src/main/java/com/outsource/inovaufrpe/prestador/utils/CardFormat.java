@@ -18,9 +18,10 @@ public class CardFormat {
         return "R$ "+ df.format(Float.parseFloat(dinheiro)).replace(".",",");
     }
 
-    public String dinheiroRefactor(String dinheiro){
+    public static String dinheiroRefactor(String dinheiro){
         DecimalFormat df = new DecimalFormat("####0.00");
-        return "R$ "+ df.format(Float.parseFloat(dinheiro)).replace(",",".");
+        String din = dinheiro.replace(",",".").trim();
+        return df.format(Float.parseFloat(din));
     }
 
     public static String dataFormat(String data){

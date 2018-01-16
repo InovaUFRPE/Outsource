@@ -116,12 +116,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 criarDialogNegociacao();
                 final DecimalFormat df = new DecimalFormat("####0.00");
-                precoServico.setText(df.format(Float.parseFloat(servico.getOferta().toString())).replace(".", ","));
+                precoServico.setText(df.format(Float.parseFloat(servico.getOferta().toString())));
 
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        adicionarComentario(comentario.getText().toString(),precoServico.getText().toString());
+                        adicionarComentario(comentario.getText().toString(),Double.valueOf(precoServico.getText().toString().trim()));
                         if ((df.format(Float.parseFloat(precoServico.getText().toString().replace(",", ".")))).equals(servico.getOferta())) {
                             encerraDialog();
                         } else {
@@ -153,13 +153,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
                 criarDialogNegociacao();
                 final DecimalFormat df = new DecimalFormat("####0.00");
-                precoServico.setText(df.format(Float.parseFloat(servico.getPreco().toString())).replace(".", ","));
+                precoServico.setText(df.format(Float.parseFloat(servico.getPreco().toString())));
 
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         try {
-                            adicionarComentario(comentario.getText().toString(), precoServico.getText().toString());
+                            adicionarComentario(comentario.getText().toString(),Double.valueOf(precoServico.getText().toString().trim()));
                             negociar();
                             atualizarEstadoServico(servico.getEstado(), EstadoServico.NEGOCIACAO.getValue());
                         } catch (DatabaseException e) {
@@ -245,7 +245,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void concluir() {
         //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIAgh
-        databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceServico.child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
@@ -260,9 +260,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task task) {
-                            if(task.isSuccessful()){
-                                atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
-                            }else{
+                            if(!task.isSuccessful()){
+
                                 Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -502,7 +501,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     }
 
-    private void adicionarComentario(String texto, String valor) {
+    private void adicionarComentario(String texto, Double valor) {
         Comentario comentario = new Comentario();
         Date data = new Date();
         String novaData = new Timestamp(data.getTime()).toString();

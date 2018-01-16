@@ -124,7 +124,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        adicionarComentario(comentario.getText().toString(), precoServico.getText().toString());
+                        adicionarComentario(comentario.getText().toString(), Double.valueOf(precoServico.getText().toString().trim()));
                         if (df.format(Float.parseFloat(precoServico.getText().toString().replace(",", "."))).equals(servico.getOferta())) {
                             encerraDialog();
                         } else {
@@ -224,7 +224,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void concluir() {
         //TODO: CORRIGIR A AVALIAÇÃO DE USUARIO TARDIA
-        databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceServico.child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
@@ -495,7 +495,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void adicionarComentario(String texto, String valor) {
+    private void adicionarComentario(String texto, Double valor) {
         Comentario comentario = new Comentario();
         Date data = new Date();
         String novaData = new Timestamp(data.getTime()).toString();
