@@ -44,7 +44,7 @@ public class NegociacoesActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(ComentarioViewHolder viewHolder, Comentario model, int position) {
                 viewHolder.nomeUsuario.setText(model.getNomeAutor());
-                viewHolder.precoSugerido.setText(CardFormat.dinheiroFormat(CardFormat.dinheiroRefactor(model.getvalor().toString())));
+                viewHolder.precoSugerido.setText(CardFormat.dinheiroFormat(model.getvalor().toString()));
                 viewHolder.tvComentario.setText(model.getTexto());
                 viewHolder.tvTempo.setText(CardFormat.tempoFormat(model.getTempo()));
             }

@@ -121,7 +121,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        adicionarComentario(comentario.getText().toString(),Double.valueOf(precoServico.getText().toString().trim()));
+                        adicionarComentario(comentario.getText().toString(),Double.valueOf(precoServico.getText().toString().replace(",",".").trim()));
                         if ((df.format(Float.parseFloat(precoServico.getText().toString().replace(",", ".")))).equals(servico.getOferta())) {
                             encerraDialog();
                         } else {
@@ -159,7 +159,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         try {
-                            adicionarComentario(comentario.getText().toString(),Double.valueOf(precoServico.getText().toString().trim()));
+                            adicionarComentario(comentario.getText().toString(),Double.valueOf(precoServico.getText().toString().replace(",",".").trim()));
                             negociar();
                             atualizarEstadoServico(servico.getEstado(), EstadoServico.NEGOCIACAO.getValue());
                         } catch (DatabaseException e) {
