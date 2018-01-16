@@ -202,6 +202,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(VisualizarServicoActivity.this, NegociacoesActivity.class);
                 intent.putExtra("servicoID", servicoId);
+                intent.putExtra("myUserID",  servico.getIdPrestador());
+                intent.putExtra("nomeUsuario",  tvNomePessoa.getText().toString());
                 startActivity(intent);
             }
         });
