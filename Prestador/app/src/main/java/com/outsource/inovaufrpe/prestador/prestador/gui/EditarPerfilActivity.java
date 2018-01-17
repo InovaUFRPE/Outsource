@@ -84,14 +84,36 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     public void Atualizar() {
-        FirebaseUser user = firebase.getUser();
-        Prestador usuario = new Prestador();
-        usuario.setId(user.getUid());
-        usuario.setNome(etAtualizaNome.getText().toString().trim());
-        usuario.setSobrenome(etAtualizaSobrenome.getText().toString().trim());
-        usuario.setEmail(etAtualizaEmail.getText().toString().trim());
-        usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
-        firebase.getPrestadorReference().child(usuario.getId()).setValue(usuario);
+        final FirebaseUser user = firebase.getUser();
+        user.updateEmail(etAtualizaEmail.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    final Prestador usuario = new Prestador();
+                    usuario.setId(user.getUid());
+                    usuario.setNome(etAtualizaNome.getText().toString().trim());
+                    usuario.setSobrenome(etAtualizaSobrenome.getText().toString().trim());
+                    usuario.setEmail(etAtualizaEmail.getText().toString().trim());
+                    usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
+                    firebase.getPrestadorReference().child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Double moeda = dataSnapshot.child("carteira").getValue(Double.class);
+                            usuario.setCarteira(moeda);
+                            usuario.setPesoNota(dataSnapshot.child("pesoNota").getValue(int.class));
+                            usuario.setNota(dataSnapshot.child("nota").getValue(float.class));
+                            firebase.getPrestadorReference().child(usuario.getId()).setValue(usuario);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                    finish();
+                    startActivity(new Intent(EditarPerfilActivity.this, MainActivity.class));
+                }
+            }
+        });
     }
 
     public void Deletar() {

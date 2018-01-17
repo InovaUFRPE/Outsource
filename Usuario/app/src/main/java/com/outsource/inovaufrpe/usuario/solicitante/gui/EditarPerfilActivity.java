@@ -89,11 +89,13 @@ public class EditarPerfilActivity extends AppCompatActivity {
                     usuario.setSobrenome(etAtualizaSobrenome.getText().toString().trim());
                     usuario.setEmail(etAtualizaEmail.getText().toString().trim());
                     usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
-                    firebase.getUsuarioReference().child(user.getUid()).child("carteira").addValueEventListener(new ValueEventListener() {
+                    firebase.getUsuarioReference().child(user.getUid()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Double moeda = dataSnapshot.getValue(Double.class);
+                            Double moeda = dataSnapshot.child("carteira").getValue(Double.class);
                             usuario.setCarteira(moeda);
+                            usuario.setNota(dataSnapshot.child("nota").getValue(float.class));
+                            usuario.setPesoNota(dataSnapshot.child("pesoNota").getValue(int.class));
                             firebase.getUsuarioReference().child(usuario.getId()).setValue(usuario);
                         }
 
