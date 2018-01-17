@@ -40,5 +40,6 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-database:0.5.1'
     compile 'com.android.support:support-v4:26.0.2'
     testCompile 'junit:junit:4.12'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }
 apply plugin: 'com.google.gms.google-services'

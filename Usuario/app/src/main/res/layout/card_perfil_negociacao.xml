@@ -10,12 +10,12 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivFotoPrestador"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/default_profile" />
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/default_profile"
+            android:layout_centerVertical="true" />
 
         <TextView
             android:id="@+id/tvNomeOfertante"

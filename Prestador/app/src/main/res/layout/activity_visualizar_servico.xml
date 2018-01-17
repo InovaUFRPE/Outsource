@@ -138,15 +138,14 @@
                 android:text="@string/nota_exemplo"
                 android:textSize="16sp" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivFotoSolicitante"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/default_profile"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:contentDescription="@string/foto_do_solicitante"
-                android:src="@drawable/default_profile" />
+                android:layout_alignParentTop="true" />
 
         </RelativeLayout>
     </LinearLayout>

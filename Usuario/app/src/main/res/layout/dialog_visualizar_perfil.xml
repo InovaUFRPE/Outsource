@@ -44,17 +44,20 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_chat_black_24dp" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:contentDescription="@string/foto_do_solicitante"
                 android:src="@drawable/default_profile"
+                app:civ_border_color="#FFFFFF"
+                app:civ_border_width="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </android.support.constraint.ConstraintLayout>
 
 
@@ -68,10 +71,10 @@
                 android:id="@+id/rbAvaliarServico"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:secondaryProgressTint="#00000000"
+                android:isIndicator="true"
                 android:numStars="5"
-                android:stepSize="0.1"
-                android:isIndicator="true"/>
+                android:secondaryProgressTint="#00000000"
+                android:stepSize="0.1" />
 
         </LinearLayout>
 
