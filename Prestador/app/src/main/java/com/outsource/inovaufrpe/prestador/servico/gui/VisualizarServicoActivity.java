@@ -141,7 +141,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adicionar();
                 concluir();
             }
         });
@@ -248,14 +247,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void concluir() {
         //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIAgh
-        databaseReferenceServico.child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
+        databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
-                    if (dataSnapshot.child("concluido").equals(firebaseAuth.getCurrentUser().getUid())) {
+                    if (dataSnapshot.child("concluido").getValue().equals(firebaseAuth.getCurrentUser().getUid())) {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
                         criarDialogAvaliarUsuario();
+                        adicionar();
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                         databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     }
@@ -339,7 +339,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 servico = dataSnapshot.getValue(Servico.class);
                 if (servico != null) {
                     tituloID.setText(servico.getNome());
-                    valorID.setText(cardFormat.dinheiroFormat(servico.getPreco().toString()));
+                    valorID.setText(cardFormat.dinheiroFormat(String.valueOf(servico.getPreco())));
                     descricaoID.setText(servico.getDescricao());
                     dadosUsuario();
                 } else {

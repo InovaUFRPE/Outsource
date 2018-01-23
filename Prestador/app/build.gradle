@@ -38,7 +38,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:11.2.2'
     compile 'com.google.android.gms:play-services-places:11.2.2'
     compile 'com.firebaseui:firebase-ui-database:0.5.1'
-    compile 'com.android.support:support-v4:26.0.2'
+    compile 'com.android.support:support-v13:26.1.0'
     testCompile 'junit:junit:4.12'
     compile 'de.hdodenhof:circleimageview:2.2.0'
 }

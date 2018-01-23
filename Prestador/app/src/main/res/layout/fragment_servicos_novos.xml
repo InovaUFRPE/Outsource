@@ -6,6 +6,11 @@
     android:orientation="vertical"
     tools:context=".servico.gui.ServicosNovosFragment">
 
+    <include
+        layout="@layout/card_busca_servico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/nenhum_servico"
         android:layout_width="match_parent"
@@ -15,9 +20,9 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleID"
-        android:paddingBottom="50dp"
-        android:clipToPadding="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="50dp" />
 
 </LinearLayout>

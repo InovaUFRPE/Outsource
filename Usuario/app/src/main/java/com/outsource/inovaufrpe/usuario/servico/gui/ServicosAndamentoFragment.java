@@ -163,58 +163,6 @@ public class ServicosAndamentoFragment extends Fragment {
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
                         Servico servico = (Servico) adapter2.getItem(position);
-                        it.putExtra("servicoID", servico.getId());
-                        it.putExtra("estado", servico.getEstado());
-                        startActivity(it);
-                    }
-
-                });
-                return viewHolder;
-            }
-
-            @Override
-            public int getItemCount(){
-                if (super.getItemCount() < 1) {
-                    tvNenhumServico.setVisibility(View.VISIBLE);
-                }else{
-                    tvNenhumServico.setVisibility(View.GONE);
-                }
-                return super.getItemCount();
-            }
-
-        };
-
-        adapter2 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryAndamento) {
-
-            @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
-                if (this.getItemCount() < 0) {
-                    tvNenhumServico.setVisibility(View.VISIBLE);
-                    return;
-                }
-                viewHolder.mainLayout.setVisibility(View.VISIBLE);
-                viewHolder.linearLayout.setVisibility(View.VISIBLE);
-                viewHolder.titulo.setText(model.getNome());
-                viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
-
-                if (model.isUrgente()) {
-                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
-                } else {
-                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-                }
-
-            }
-
-            @Override
-            public ServicoListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-                final ServicoListHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                        Servico servico = (Servico) adapter2.getItem(position);
                         it.putExtra("nomeServico", servico.getNome());
                         it.putExtra("servicoID", servico.getId());
                         it.putExtra("estado", servico.getEstado());

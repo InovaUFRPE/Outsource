@@ -165,7 +165,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aplicarTaxa();
                 concluir();
             }
         });
@@ -183,7 +182,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 Intent intent = new Intent(VisualizarServicoActivity.this, NegociacoesActivity.class);
                 intent.putExtra("servicoID", servicoId);
                 intent.putExtra("myUserID",  servico.getIdCriador());
-                intent.putExtra("nomePrestador",  tvNomeOfertante.getText().toString());
+                intent.putExtra("nomePrestador",  tvNomePessoa.getText().toString());
                 startActivity(intent);
             }
         });
@@ -231,11 +230,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
-                    if (dataSnapshot.child("concluido").equals(firebaseAuth.getCurrentUser().getUid())) {
+                    if (dataSnapshot.child("concluido").getValue().toString().equals(firebaseAuth.getCurrentUser().getUid())) {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
                         criarDialogAvaliarUsuario();
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
+                        aplicarTaxa();
                         databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     }
                 } else {
@@ -438,7 +438,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(VisualizarServicoActivity.this,HistoricoServicoActivity.class);
-                intent.putExtra("prestadorNome", tvNomeOfertante.getText().toString());
+                intent.putExtra("prestadorNome", tvNomePessoa.getText().toString());
                 intent.putExtra("prestadorID",servico.getIdPrestador());
                 startActivity(intent);
             }

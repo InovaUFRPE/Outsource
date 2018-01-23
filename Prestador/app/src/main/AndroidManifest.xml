@@ -31,7 +31,8 @@
         <activity
             android:name=".prestador.gui.CadastroActivity"
             android:theme="@style/FullScreenTheme" />
-        <activity android:name=".prestador.gui.MainActivity" />
+        <activity android:windowSoftInputMode="stateHidden"
+            android:name=".prestador.gui.MainActivity" />
         <activity android:name=".carteira.gui.AdicionarMoedaActivity" />
         <activity android:name=".servico.gui.VisualizarServicoActivity">
             <meta-data
