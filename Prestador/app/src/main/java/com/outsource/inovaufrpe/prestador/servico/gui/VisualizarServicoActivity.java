@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +36,7 @@ import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.carteira.dominio.God;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Comentario;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Critica;
+import com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity;
 import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
@@ -293,6 +296,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 God carteira = new God(dataSnapshot.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").getValue(Double.class));
                 carteira.adicionar(dataSnapshot.child("servico").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
+                carteira.aplicarTaxa(dataSnapshot.child("servico").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
                 databaseReference.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
             }
 
@@ -535,4 +539,28 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         });
     }
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())){
+            getMenuInflater().inflate(R.menu.cancelar_menu, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.cancelarBtn){
+            cancelarServico();
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    public void cancelarServico(){
+        servico.setIdPrestador("");
+        servico.setOfertante("");
+        servico.setOferta(Double.valueOf(0));
+        atualizarEstadoServico(estadoId,EstadoServico.ABERTA.getValue());
+        finish();
+        startActivity(new Intent(VisualizarServicoActivity.this, MainActivity.class));
+    }*/
 }
