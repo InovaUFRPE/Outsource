@@ -259,12 +259,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        databaseReferenceServico.child(estadoId).child(servicoId).removeEventListener(listenerServico);
-    }
-
     private void encerraDialog() {
         this.dialog.dismiss();
     }
@@ -450,7 +444,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         if (peso == 0){
             avaliarPerfil.setRating(0);
         }else {
-            avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString()));
+            avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString().replace(",",".")));
         }
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
 

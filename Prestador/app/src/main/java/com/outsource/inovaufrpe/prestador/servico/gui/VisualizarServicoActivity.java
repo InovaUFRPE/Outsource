@@ -1,5 +1,6 @@
 package com.outsource.inovaufrpe.prestador.servico.gui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -70,6 +71,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     Servico servico;
     DatabaseReference databaseReferenceServico;
+    ValueEventListener listenerServico;
     String nomeSolicitante;
     String nomeServico;
     CardFormat cardFormat = new CardFormat();
@@ -262,15 +264,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 } else {
                     criarDialogAvaliarUsuario();
                     databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
-                    databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
-                            if(!task.isSuccessful()){
-
-                                Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                 }
             }
 
@@ -279,6 +273,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dadosServico();
+
     }
 
     private void encerraDialog() {
@@ -434,7 +435,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         if (peso == 0){
             avaliarPerfil.setRating(0);
         }else{
-            avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString()));
+            avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString().replace(",",".")));
         }
 
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
@@ -488,7 +489,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
      */
     private void criarDialogAvaliarUsuario() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
-        View v1 = getLayoutInflater().inflate(R.layout.dialog_avaliacao_usuario, null);
+        @SuppressLint("InflateParams") View v1 = getLayoutInflater().inflate(R.layout.dialog_avaliacao_usuario, null);
 
         Button btnConcluir = v1.findViewById(R.id.btnAvaliarConcluir);
         final EditText edComentarioAvaliacao = v1.findViewById(R.id.etComentarios);

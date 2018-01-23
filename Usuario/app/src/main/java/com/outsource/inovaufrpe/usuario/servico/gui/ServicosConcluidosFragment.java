@@ -26,7 +26,6 @@ import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
 public class ServicosConcluidosFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    CardFormat cardFormat = new CardFormat();
 
     private TextView tvNenhumServico;
 
@@ -71,8 +70,8 @@ public class ServicosConcluidosFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
+                viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM"));
+                viewHolder.valor.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
 
                 if (model.isUrgente()) {
                     viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));

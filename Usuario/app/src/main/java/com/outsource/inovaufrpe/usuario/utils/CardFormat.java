@@ -1,6 +1,5 @@
 package com.outsource.inovaufrpe.usuario.utils;
 
-import android.content.Context;
 import android.text.format.DateUtils;
 
 import java.text.DateFormat;
