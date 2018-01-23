@@ -3,6 +3,7 @@ package com.outsource.inovaufrpe.usuario.carteira.gui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import java.text.DecimalFormat;
 public class SaldoFragment extends android.support.v4.app.Fragment {
     TextView tvMoedaCarteiraID;
     Button btAdicionarMoedaID;
+    RecyclerView rvCartao;
+    Button btInserirCartao;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -67,4 +70,6 @@ public class SaldoFragment extends android.support.v4.app.Fragment {
             }
         });
     }
+
+
 }

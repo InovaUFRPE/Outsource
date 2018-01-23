@@ -136,6 +136,13 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
             }
         });
 
+        btFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adaptador();
+            }
+        });
+
         sbDistancia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

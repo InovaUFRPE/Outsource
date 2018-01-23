@@ -7,8 +7,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-//TODO: se tiver em desuso, excluir esta classe....
-
 public class CardFormat {
 
     public static String dinheiroFormat(String dinheiro){

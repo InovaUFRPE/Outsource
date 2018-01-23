@@ -1,0 +1,27 @@
+
+asquid:S1192"GDefine a constant instead of duplicating this literal "aberto" 3 times.(©ŒŒ“ùÿÿÿÿ
+bsquid:S1192"HDefine a constant instead of duplicating this literal "servico" 3 times.(©ŒŒ“ùÿÿÿÿ
+Isquid:S1066"/Merge this if statement with the enclosing one.(±„‘‰ýÿÿÿÿ
+jsquid:S1450"URemove the "tvData" field and declare it as a local variable in the relevant methods.(žÒ©‘
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(íûï
+Gsquid:S1135"2Complete the task associated to this TODO comment.(íûï
+[squid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(¦Ëìùÿÿÿÿ
+[squid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(¦Ëìùÿÿÿÿ
+Vsquid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(à×Í
+Vsquid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(à×Í
+Vsquid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(³ÖŸ±
+[squid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(ó±‚åúÿÿÿÿ
+[squid:CallToDeprecatedMethod"0Remove this use of "getPlace"; it is deprecated.(ç®š„øÿÿÿÿ
+;squid:S1170"!Make this final field static too.(·ŒéÞÿÿÿÿÿ
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(íÑíÍ
+•squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ô—½4
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(º½±
+Zsquid:S2147"ECombine this catch with the one at line 131, which has the same body.(•÷Õº
+zsquid:S00116"_Rename this field "PLACE_PICKER_REQUEST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·ŒéÞÿÿÿÿÿ
+`squid:UselessImportCheck"?Remove this unused import 'android.support.annotation.NonNull'.(¼Åß
+`squid:UselessImportCheck">Remove this unused import 'com.google.android.gms.tasks.Task'.(¦âÏô
+ssquid:UselessImportCheck"LRemove this unused import 'com.google.android.gms.tasks.OnCompleteListener'.(Çð¸Òÿÿÿÿÿ
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+Osquid:S1161":Add the "@Override" annotation above this method signature(ŸŒ¹Ñ
+dsquid:MaximumInheritanceDepth"=This class has 10 parents which is greater than 5 authorized.(´ã¬Ù

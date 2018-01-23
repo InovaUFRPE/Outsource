@@ -463,7 +463,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(VisualizarServicoActivity.this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query query = databaseReference.child("feedback").child(servico.getIdCriador()).orderByChild("data");
+        Query query = databaseReference.child("feedback").child("usuario").child(servico.getIdCriador()).orderByChild("data");
 
         adapter = new FirebaseRecyclerAdapter<Critica, CriticaViewHolder>(Critica.class, R.layout.card_critica, CriticaViewHolder.class, query) {
 
@@ -504,7 +504,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 DatabaseReference databaseReference = FirebaseAux.getInstancia().getDatabaseReference();
                 NotaMedia notaMedia = new NotaMedia();
                 notaMedia.adicionarNota(servico.getIdCriador(),critica.getNota());
-                databaseReference.child("feedback").child(servico.getIdCriador()).child(databaseReference.child("feedback").child(servico.getIdCriador()).push().getKey()).setValue(critica);
+                databaseReference.child("feedback").child("usuario").child(servico.getIdCriador()).child(databaseReference.child("feedback").child("usuario").child(servico.getIdCriador()).push().getKey()).setValue(critica);
                 dialog.dismiss();
             }
         });

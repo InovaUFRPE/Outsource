@@ -1,0 +1,23 @@
+
+]squid:S1192"HDefine a constant instead of duplicating this literal "servico" 3 times.(¾Å¬
+Isquid:S1066"/Merge this if statement with the enclosing one.(±„‘‰ıÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(íûï
+Gsquid:S1135"2Complete the task associated to this TODO comment.(íûï
+[squid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(¦Ëìùÿÿÿÿ
+[squid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(¦Ëìùÿÿÿÿ
+Vsquid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(à×Í
+Vsquid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(à×Í
+Vsquid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(³ÖŸ±
+[squid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(ó±‚åúÿÿÿÿ
+[squid:CallToDeprecatedMethod"0Remove this use of "getPlace"; it is deprecated.(ç®š„øÿÿÿÿ
+;squid:S1170"!Make this final field static too.(·ŒéŞÿÿÿÿÿ
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(íÑíÍ
+•squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ô—½4
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+Zsquid:S2147"ECombine this catch with the one at line 163, which has the same body.(•÷Õº
+zsquid:S00116"_Rename this field "PLACE_PICKER_REQUEST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·ŒéŞÿÿÿÿÿ
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+Osquid:S1161":Add the "@Override" annotation above this method signature(ŸŒ¹Ñ
+isquid:MaximumInheritanceDepth"=This class has 10 parents which is greater than 5 authorized.(Á Íèşÿÿÿÿ
