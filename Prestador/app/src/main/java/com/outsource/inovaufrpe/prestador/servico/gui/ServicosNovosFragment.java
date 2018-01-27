@@ -2,21 +2,21 @@ package com.outsource.inovaufrpe.prestador.servico.gui;
 
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -47,10 +47,9 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
     private SeekBar sbDistancia;
     private EditText etFiltro;
     private CheckBox cbUrgente;
-    private Button btFiltro;
     private TextView tvDistancia;
-    private Button btShowHide;
     private final int MY_PERMISSIONS_REQUEST = 0;
+    private FloatingActionButton filtroBtn;
 
     private TextView tvNenhumServico;
 
@@ -67,24 +66,23 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         View layout = inflater.inflate(R.layout.fragment_servicos_novos, container, false);
         servicos = new ArrayList<Servico>();
         mRecyclerView = layout.findViewById(R.id.recycleID);
-        sbDistancia = layout.findViewById(R.id.sbDistanciaID);
-        cbUrgente = layout.findViewById(R.id.cbUrgenteID);
-        etFiltro = layout.findViewById(R.id.etFiltroID);
-        btFiltro = layout.findViewById(R.id.btFiltroID);
-        btShowHide = layout.findViewById(R.id.btShowHide);
-        final CardView cvFiltro = layout.findViewById(R.id.cvFiltro);
-        cvFiltro.setVisibility(View.GONE);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("aberto");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        tvDistancia = layout.findViewById(R.id.tvDistanciaID);
-        tvDistancia.setText("Distância: " + sbDistancia.getProgress() + " Km");
         tvNenhumServico = layout.findViewById(R.id.nenhum_servico);
         String s = getContext().getString(R.string.nenhum_servico) + " novo";
         tvNenhumServico.setText(s);
         tvNenhumServico.setVisibility(View.GONE);
+        filtroBtn = layout.findViewById(R.id.filtrarBtn);
+
+        filtroBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogFiltroServico();
+            }
+        });
 
         valueEventListener = new ValueEventListener() {
             @Override
@@ -124,41 +122,6 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
 
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 MY_PERMISSIONS_REQUEST);
-
-        btShowHide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cvFiltro.isShown()){
-                    cvFiltro.setVisibility(View.GONE);
-                }else{
-                    cvFiltro.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        btFiltro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adaptador();
-            }
-        });
-
-        sbDistancia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                tvDistancia.setText("Distância: " + sbDistancia.getProgress() + " Km");
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
 
         adaptador();
         return layout;
@@ -214,6 +177,40 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         it.putExtra("estado", servico.getEstado());
         it.putExtra("nomeServico", servico.getNome());
         startActivity(it);
+    }
+
+    private void dialogFiltroServico(){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
+        View v1 = getLayoutInflater().inflate(R.layout.dialog_filtro_servicos, null);
+        sbDistancia = v1.findViewById(R.id.sbDistanciaID);
+        cbUrgente = v1.findViewById(R.id.cbUrgenteID);
+        etFiltro = v1.findViewById(R.id.etFiltroID);
+        tvDistancia = v1.findViewById(R.id.tvDistanciaID);
+        tvDistancia.setText("Distância: " + sbDistancia.getProgress() + " Km");
+        sbDistancia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                tvDistancia.setText("Distância: " + sbDistancia.getProgress() + " Km");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        mBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        adaptador();
+                    }
+                });
+        mBuilder.setView(v1);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
     }
 
 
