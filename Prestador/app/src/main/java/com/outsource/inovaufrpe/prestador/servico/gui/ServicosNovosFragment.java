@@ -50,6 +50,9 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
     private TextView tvDistancia;
     private final int MY_PERMISSIONS_REQUEST = 0;
     private FloatingActionButton filtroBtn;
+    private boolean urgencia = true;
+    private int sbValor = 10;
+    private String stringFiltro = "";
 
     private TextView tvNenhumServico;
 
@@ -92,13 +95,13 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     Servico servico = dados.getValue(Servico.class);
                     float[] result = new float[2];
                     Location.distanceBetween(servico.getLatitude(), servico.getLongitude(), locationUsuario.getLatitude(), locationUsuario.getLongitude(), result);
-                    if (result[0] < sbDistancia.getProgress() * 1000) {
-                        if(etFiltro.getText().toString().isEmpty()){
+                    if (result[0] < sbValor * 1000) {
+                        if(stringFiltro.isEmpty()){
                             servicos.add(servico);
                         }else{
                             StringBuilder sb = new StringBuilder();
                             sb.append(servico.getDescricao()).append(servico.getNome());
-                            if(sb.toString().toUpperCase().contains(etFiltro.getText().toString().toUpperCase())){
+                            if(sb.toString().toUpperCase().contains(stringFiltro.toUpperCase())){
                                 servicos.add(servico);
                             }
                         }
@@ -141,7 +144,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     public void onSuccess(Location location) {
                         if (location != null) {
                             locationUsuario = location;
-                            if (cbUrgente.isChecked()){
+                            if (urgencia){
                                 databaseReference.orderByChild("ordem-ref").addValueEventListener(valueEventListener);
                             }else{
                                 databaseReference.orderByChild("ordem-ref").startAt("1").addValueEventListener(valueEventListener);
@@ -206,6 +209,9 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         mBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         adaptador();
+                        urgencia = cbUrgente.isChecked();
+                        sbValor = sbDistancia.getProgress();
+                        stringFiltro = etFiltro.getText().toString();
                     }
                 });
         mBuilder.setView(v1);
