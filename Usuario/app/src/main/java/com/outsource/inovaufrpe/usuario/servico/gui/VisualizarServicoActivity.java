@@ -183,6 +183,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 intent.putExtra("servicoID", servicoId);
                 intent.putExtra("myUserID",  servico.getIdCriador());
                 intent.putExtra("nomePrestador",  tvNomePessoa.getText().toString());
+                intent.putExtra("estadoID",estadoId);
                 startActivity(intent);
             }
         });
@@ -533,7 +534,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.excluirServicoBtn) {
@@ -551,5 +552,5 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         databaseReferenceServico.child(estadoId).child(servicoId).removeValue();
         FirebaseAux.getInstancia().getDatabaseReference().child("usuario").child(FirebaseAux.getInstancia().getFirebaseAuth().getCurrentUser().getUid())
                 .child("servicos").child(servicoId).removeValue();
-    }
+    }*/
 }

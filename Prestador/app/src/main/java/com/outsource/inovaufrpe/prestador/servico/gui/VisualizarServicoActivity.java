@@ -209,6 +209,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 intent.putExtra("servicoID", servicoId);
                 intent.putExtra("myUserID",  servico.getIdPrestador());
                 intent.putExtra("nomeUsuario",  tvNomePessoa.getText().toString());
+                intent.putExtra("estadoID", estadoId);
                 startActivity(intent);
             }
         });
