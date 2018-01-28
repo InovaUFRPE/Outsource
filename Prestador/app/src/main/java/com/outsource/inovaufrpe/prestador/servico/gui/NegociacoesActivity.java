@@ -111,6 +111,13 @@ public class NegociacoesActivity extends AppCompatActivity {
             }
         });
 
+        /*adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount) {
+                recycleNegociacoes.smoothScrollToPosition(adapter.getItemCount());
+            }
+        });*/
+
         recycleNegociacoes.setAdapter(adapter);
     }
 

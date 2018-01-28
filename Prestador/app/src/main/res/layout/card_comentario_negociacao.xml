@@ -17,7 +17,6 @@
             android:id="@+id/tvComentarioID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:gravity="start"
             android:text="@string/comentario"
             android:textAlignment="textStart"
@@ -37,7 +36,8 @@
                 android:layout_alignBottom="@+id/precoSugeridoID"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:textSize="16sp" />
+                android:textStyle="bold"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/precoSugeridoID"
@@ -47,7 +47,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:text="@string/dinheiro_exemplo"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/colorMoney"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
