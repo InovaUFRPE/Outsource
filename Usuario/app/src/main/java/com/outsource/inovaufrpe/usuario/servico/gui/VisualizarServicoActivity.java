@@ -217,7 +217,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void concluir() {
         //TODO: CORRIGIR A AVALIAÇÃO DE USUARIO TARDIA
-        databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
@@ -253,7 +253,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 God carteira = new God(dataSnapshot.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").getValue(Double.class));
-                carteira.subtrair(dataSnapshot.child("servico").child("negociacao").child(servicoId).child("oferta").getValue(Double.class));
+                carteira.subtrair(dataSnapshot.child("vizualizacao").child("negociacao").child(servicoId).child("oferta").getValue(Double.class));
                 databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
             }
 
@@ -309,6 +309,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     valorID.setText(cardFormat.dinheiroFormat(servico.getPreco().toString()));
                     tvEstadoServicoID.setText(estadoId);
                     descricaoID.setText(servico.getDescricao());
+                    servico.setIdPrestador(servico.getOfertante());
                     definirLayout();
                     if (servico.getIdPrestador() != null) {
                         dadosUsuario();
@@ -336,6 +337,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             prestadorLayout.setVisibility(View.GONE);
             tituloLayoutPessoa.setText(R.string.executado_por);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
+            findViewById(R.id.btnNegociar).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_andamento);
             tituloLayoutPessoa.setText(R.string.executado_por);
@@ -364,9 +366,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 }else{
                     tvNotaPessoa.setText("0.0");
                 }
-                if (servico.getOfertante() != null) {
+                /*if (servico.getOfertante() != null) {
                     dadosNegociacao();
-                }
+                }*/
             }
 
             @Override
@@ -390,9 +392,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             this.dialog.dismiss();
         }
         FirebaseUtil fu = new FirebaseUtil();
+        DatabaseReference databaseReferenceVizualizacao = FirebaseDatabase.getInstance().getReference().child("vizualizacao");
         try {
             if (!estadoAtual.equals(estadoDestino)) {
-                fu.moverServico(databaseReferenceServico.child(estadoAtual).child(servicoId), databaseReferenceServico.child(estadoDestino).child(servicoId), estadoDestino);
+                fu.moverServico(databaseReferenceVizualizacao.child(estadoAtual).child(servicoId), databaseReferenceVizualizacao.child(estadoDestino).child(servicoId), estadoDestino);
+                databaseReferenceServico.child(servicoId).child("estado").setValue(estadoDestino);
             }
 
         } catch (DatabaseException e) {

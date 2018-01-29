@@ -231,7 +231,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void concluir() {
         //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIAgh
-        databaseReferenceServico.child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
@@ -299,8 +299,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 God carteira = new God(dataSnapshot.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").getValue(Double.class));
-                carteira.adicionar(dataSnapshot.child("servico").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
-                carteira.aplicarTaxa(dataSnapshot.child("servico").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
+                carteira.adicionar(dataSnapshot.child("vizualizacao").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
+                carteira.aplicarTaxa(dataSnapshot.child("vizualizacao").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
                 databaseReference.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
             }
 
@@ -322,6 +322,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void negociar() throws DatabaseException {
         servico.setOferta(Double.valueOf(precoServico.getText().toString().replace(",", ".")));
+        DatabaseReference databaseReferenceVizualizar = FirebaseDatabase.getInstance().getReference().child("vizualizar");
         databaseReferenceServico.child(servicoId).child("oferta").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -330,6 +331,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 }
             }
         });
+        databaseReferenceVizualizar.child(estadoId).child(servicoId).child("oferta").setValue(servico.getOferta());
         databaseReferenceServico.child(servicoId).child("ofertante").setValue(firebaseAuth.getCurrentUser().getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -405,7 +407,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             if (!estadoAtual.equals(estadoDestino)) {
                 fu.moverServico(databaseReferenceVizualizacao.child(estadoAtual).child(servicoId), databaseReferenceVizualizacao.child(estadoDestino).child(servicoId), estadoDestino);
                 databaseReferenceServico.child(servicoId).child("estado").setValue(estadoDestino);
-                databaseReferenceVizualizacao.child(servicoId).child("estado").setValue(estadoDestino);
             }
 
         } catch (DatabaseException e) {

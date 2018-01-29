@@ -159,7 +159,7 @@ public class MensagemActivity extends AppCompatActivity {
         mensagem.setvalor(valor);
         novaData = novaData.replace(".", "");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("mensagem").child(servicoId).child(firebaseAuth.getCurrentUser().getUid()).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("mensagem").child(servicoId).child(prestadorID).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if(!task.isSuccessful()){

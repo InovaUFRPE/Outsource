@@ -9,7 +9,7 @@ public class Servico {
     private String nome;
     private String descricao;
     private God preco;
-    private God oferta;
+    private Double oferta;
     private String ofertante;
     private String data;
     private double latitude;
@@ -70,11 +70,11 @@ public class Servico {
     }
 
     public Double getOferta() {
-        return oferta.getMoeda();
+        return this.oferta;
     }
 
     public void setOferta(Double oferta) {
-        this.oferta = new God(oferta);
+        this.oferta = oferta;
     }
 
     public String getOfertante() {

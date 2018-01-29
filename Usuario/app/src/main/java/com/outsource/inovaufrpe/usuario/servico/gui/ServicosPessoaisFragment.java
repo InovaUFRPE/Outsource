@@ -75,7 +75,7 @@ public class ServicosPessoaisFragment extends Fragment {
     }
 
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("servico");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("vizualizacao").child("aberto");
         Query query = databaseReference.orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 

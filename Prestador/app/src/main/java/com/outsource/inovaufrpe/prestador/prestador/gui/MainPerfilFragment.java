@@ -23,6 +23,9 @@ import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
 
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class MainPerfilFragment extends Fragment {
     ImageButton btnConfig;
     TextView nomeUsuario;
@@ -46,7 +49,7 @@ public class MainPerfilFragment extends Fragment {
         nomeUsuario = view.findViewById(R.id.tvNomePerfil);
         emailUsuario = view.findViewById(R.id.tvEmailPerfil);
         telefoneUsuario = view.findViewById(R.id.tvTelefonePerfil);
-        avaliarPerfil = view.findViewById(R.id.rbAvaliarPefil);
+        avaliarPerfil = view.findViewById(R.id.rbAvaliarPerfil);
         numServicosAtendidos = view.findViewById(R.id.num_servicos_atendidos);
         numAvaliacoes = view.findViewById(R.id.num_avaliacoes);
 
