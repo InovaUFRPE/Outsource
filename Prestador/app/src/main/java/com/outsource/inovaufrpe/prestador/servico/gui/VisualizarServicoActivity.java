@@ -352,6 +352,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     tituloID.setText(servico.getNome());
                     valorID.setText(cardFormat.dinheiroFormat(String.valueOf(servico.getPreco())));
                     descricaoID.setText(servico.getDescricao());
+                    estadoId = servico.getEstado();
                     definirLayout();
                     dadosUsuario();
                 } else {

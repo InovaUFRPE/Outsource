@@ -310,6 +310,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     tvEstadoServicoID.setText(estadoId);
                     descricaoID.setText(servico.getDescricao());
                     servico.setIdPrestador(servico.getOfertante());
+                    estadoId = servico.getEstado();
                     definirLayout();
                     if (servico.getIdPrestador() != null) {
                         dadosUsuario();
