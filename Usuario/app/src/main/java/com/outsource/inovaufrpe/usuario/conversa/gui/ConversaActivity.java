@@ -43,7 +43,6 @@ public class ConversaActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Query query;
         if(servicoID != null){
-            Toast.makeText(this, "mimiim", Toast.LENGTH_SHORT).show();
             query = databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("servicoID").equalTo(servicoID);
         }else{
             query = databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("ordem-ref");
@@ -71,6 +70,7 @@ public class ConversaActivity extends AppCompatActivity {
                         it.putExtra("prestadorID", conversa.getPrestadorID());
                         it.putExtra("nomeServico", conversa.getServicoNome());
                         it.putExtra("usuarioID", conversa.getUsuarioID());
+                        it.putExtra("estado", conversa.getEstadoServico());
                         startActivity(it);
                     }
 

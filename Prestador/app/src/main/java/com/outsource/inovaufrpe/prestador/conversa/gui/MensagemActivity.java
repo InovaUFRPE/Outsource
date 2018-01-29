@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.conversa.dominio.Conversa;
 import com.outsource.inovaufrpe.prestador.conversa.dominio.Mensagem;
+import com.outsource.inovaufrpe.prestador.servico.gui.VisualizarServicoActivity;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
 import com.outsource.inovaufrpe.prestador.conversa.adapter.MensagemViewHolder;
@@ -48,6 +49,7 @@ public class MensagemActivity extends AppCompatActivity {
     String prestadorID;
     String usuarioID;
     String nomeServico;
+    String estado;
     Button cancelarNegociacao;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -64,6 +66,7 @@ public class MensagemActivity extends AppCompatActivity {
         prestadorID = intent.getStringExtra("prestadorID");
         nomeServico = intent.getStringExtra("nomeServico");
         usuarioID = intent.getStringExtra("usuarioID");
+        estado = intent.getStringExtra("estado");
         setTitle("Chat");
 
         ActionBar ab = getSupportActionBar();
@@ -170,6 +173,7 @@ public class MensagemActivity extends AppCompatActivity {
         conversa.setUsuarioID(usuarioID);
         conversa.setServicoID(servicoId);
         conversa.setServicoNome(nomeServico);
+        conversa.setEstadoServico(estado);
         conversa.setTempo(data.getTime());
         conversa.setUltimaMensagem(mensagem.getTexto());
         conversa.setOrdemRef(new Timestamp(-1 * data.getTime()).toString());
@@ -197,7 +201,11 @@ public class MensagemActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.verServicoBtn) {
-            //abrir visualizar servico
+            Intent it = new Intent(this, VisualizarServicoActivity.class);
+            it.putExtra("servicoID", servicoId);
+            it.putExtra("nomeServico",nomeServico);
+            it.putExtra("estado", estado);
+            startActivity(it);
         }
         return super.onOptionsItemSelected(item);
     }

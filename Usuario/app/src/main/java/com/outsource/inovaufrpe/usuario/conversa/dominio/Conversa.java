@@ -11,6 +11,7 @@ public class Conversa {
     private String usuarioID;
     private String prestadorID;
     private String servicoID;
+    private String estadoServico;
     private String servicoNome;
     private String ultimaMensagem;
     private long tempo;
@@ -47,6 +48,14 @@ public class Conversa {
 
     public void setServicoID(String servicoID) {
         this.servicoID = servicoID;
+    }
+
+    public String getEstadoServico() {
+        return estadoServico;
+    }
+
+    public void setEstadoServico(String estadoServico) {
+        this.estadoServico = estadoServico;
     }
 
     public String getServicoNome() {

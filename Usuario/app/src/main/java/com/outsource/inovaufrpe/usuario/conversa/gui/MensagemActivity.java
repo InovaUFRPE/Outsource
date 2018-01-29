@@ -32,6 +32,7 @@ import com.outsource.inovaufrpe.usuario.conversa.dominio.Conversa;
 import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Mensagem;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.servico.gui.VisualizarServicoActivity;
 import com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.conversa.adapter.MensagemViewHolder;
@@ -52,12 +53,12 @@ public class MensagemActivity extends AppCompatActivity {
     String servicoId;
     String myUserID;
     String nomePrestador;
-    String estadoID;
     Button cancelarNegociacao;
     private DatabaseReference databaseReference;
     private CardView cardNegociacao;
     FirebaseUtil fu = new FirebaseUtil();
     private String prestadorID;
+    private String estado;
     private String nomeServico;
     private String usuarioID;
     FirebaseAuth firebaseAuth;
@@ -68,6 +69,7 @@ public class MensagemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mensagem);
         Intent intent = getIntent();
         servicoId = intent.getStringExtra("servicoID");
+        estado = intent.getStringExtra("estado");
         prestadorID = intent.getStringExtra("prestadorID");
         nomeServico = intent.getStringExtra("nomeServico");
         usuarioID = intent.getStringExtra("usuarioID");
@@ -156,7 +158,7 @@ public class MensagemActivity extends AppCompatActivity {
         mensagem.setvalor(valor);
         novaData = novaData.replace(".", "");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("mensagem").child(servicoId).child(firebaseAuth.getCurrentUser().getUid()).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("mensagem").child(servicoId).child(prestadorID).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if(!task.isSuccessful()){
@@ -169,6 +171,7 @@ public class MensagemActivity extends AppCompatActivity {
         conversa.setPrestadorID(prestadorID);
         conversa.setUsuarioID(usuarioID);
         conversa.setServicoID(servicoId);
+        conversa.setEstadoServico(estado);
         conversa.setServicoNome(nomeServico);
         conversa.setTempo(data.getTime());
         conversa.setUltimaMensagem(mensagem.getTexto());
@@ -196,7 +199,11 @@ public class MensagemActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.verServicoBtn) {
-            //abrir visualizar servico
+            Intent it = new Intent(this, VisualizarServicoActivity.class);
+            it.putExtra("servicoID", servicoId);
+            it.putExtra("nomeServico",nomeServico);
+            it.putExtra("estado", estado);
+            startActivity(it);
         }
         return super.onOptionsItemSelected(item);
     }

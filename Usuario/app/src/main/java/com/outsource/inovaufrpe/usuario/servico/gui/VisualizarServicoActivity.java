@@ -84,6 +84,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     CardFormat cardFormat = new CardFormat();
     int peso;
     int somatorio;
+    LinearLayout prestadorLayout;
+    TextView tituloLayoutPessoa;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -94,9 +96,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         view = findViewById(R.id.ly);
         Intent intent = getIntent();
         servicoId = intent.getStringExtra("servicoID");
-        estadoId = intent.getStringExtra("estado");
         nomeServico = intent.getStringExtra("nomeServico");
         tituloID = findViewById(R.id.tvNomeServico);
+        estadoId = intent.getStringExtra("estado");
         valorID = findViewById(R.id.tvPrecoServico);
         descricaoID = findViewById(R.id.tvDescricaoServico);
         tvNomePessoa = findViewById(R.id.tvNomePessoa);
@@ -105,8 +107,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         databaseReferenceServico = FirebaseDatabase.getInstance().getReference().child("servico");
         tvNomeOfertante = findViewById(R.id.tvNomeOfertante);
         tvOferta = findViewById(R.id.tvPrecoOrcamento);
-        LinearLayout prestadorLayout = findViewById(R.id.layoutPessoa);
-        TextView tituloLayoutPessoa = findViewById(R.id.tvTituloLayout);
+        prestadorLayout = findViewById(R.id.layoutPessoa);
+        tituloLayoutPessoa = findViewById(R.id.tvTituloLayout);
         LinearLayout negociacaoLayout = findViewById(R.id.layoutNegociacoes);
 
         ActionBar ab = getSupportActionBar();
@@ -202,27 +204,14 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         });
 
-        if (estadoId.equals(EstadoServico.ABERTA.getValue())) {
-            tvEstadoServicoID.setText(R.string.aberta);
-            prestadorLayout.setVisibility(View.GONE);
-            findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
-        } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
-            tvEstadoServicoID.setText(R.string.em_negociacao);
-            prestadorLayout.setVisibility(View.GONE);
-            tituloLayoutPessoa.setText(R.string.executado_por);
-            findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
-        } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
-            tvEstadoServicoID.setText(R.string.em_andamento);
-            tituloLayoutPessoa.setText(R.string.executado_por);
-            findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
-            findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
-            findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
 
-        } else {
-            tituloLayoutPessoa.setText(R.string.executado_por);
-            findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
-            findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
-        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dadosServico();
 
     }
 
@@ -252,13 +241,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        dadosServico();
-
     }
 
     private void encerraDialog() {
@@ -322,10 +304,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 servico = dataSnapshot.getValue(Servico.class);
                 if (servico != null) {
+                    estadoId = servico.getEstado();
                     tituloID.setText(servico.getNome());
                     valorID.setText(cardFormat.dinheiroFormat(servico.getPreco().toString()));
-                    tvEstadoServicoID.setText(servico.getEstado());
+                    tvEstadoServicoID.setText(estadoId);
                     descricaoID.setText(servico.getDescricao());
+                    definirLayout();
                     if (servico.getIdPrestador() != null) {
                         dadosUsuario();
                     }
@@ -340,6 +324,30 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         };
         databaseReferenceServico.child(servicoId).addValueEventListener(listenerServico);
+    }
+
+    private void definirLayout() {
+        if (estadoId.equals(EstadoServico.CONCLUIDA.getValue())) {
+            tituloLayoutPessoa.setText(R.string.executado_por);
+            findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
+            findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
+        } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
+            tvEstadoServicoID.setText(R.string.em_negociacao);
+            prestadorLayout.setVisibility(View.GONE);
+            tituloLayoutPessoa.setText(R.string.executado_por);
+            findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
+        } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
+            tvEstadoServicoID.setText(R.string.em_andamento);
+            tituloLayoutPessoa.setText(R.string.executado_por);
+            findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
+            findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
+            findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
+
+        } else {
+            tvEstadoServicoID.setText(R.string.aberta);
+            prestadorLayout.setVisibility(View.GONE);
+            findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
+        }
     }
 
     private void dadosUsuario() {
