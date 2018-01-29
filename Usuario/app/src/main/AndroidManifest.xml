@@ -64,6 +64,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
         </activity>
+        <activity android:name=".notificacao.gui.NotificacaoActivity"></activity>
     </application>
 
 </manifest>

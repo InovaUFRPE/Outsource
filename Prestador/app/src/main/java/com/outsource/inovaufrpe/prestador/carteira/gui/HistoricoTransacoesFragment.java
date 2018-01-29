@@ -49,7 +49,7 @@ public class HistoricoTransacoesFragment extends Fragment {
     }
 
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
+        databaseReference = FirebaseDatabase.getInstance().getReference("vizualizacao").child("concluido");
         Query query = databaseReference.orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter = new FirebaseRecyclerAdapter<Servico, HistoricoServicoListHolder>(Servico.class, R.layout.table_historico_negociacoes_row, HistoricoServicoListHolder.class, query) {
 

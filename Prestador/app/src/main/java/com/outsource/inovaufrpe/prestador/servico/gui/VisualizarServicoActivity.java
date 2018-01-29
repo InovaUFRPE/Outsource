@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import com.outsource.inovaufrpe.prestador.conversa.gui.MensagemActivity;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.carteira.dominio.God;
 import com.outsource.inovaufrpe.prestador.conversa.dominio.Mensagem;
+import com.outsource.inovaufrpe.prestador.notificacao.dominio.Notificacao;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Critica;
 import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
@@ -403,6 +405,18 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             Toast.makeText(VisualizarServicoActivity.this, "Falha na solicitacao" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         Snackbar.make(view, "Serviço em processo de " + estadoDestino, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void enviarNotificacao(int tiponotificacao){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Notificacao notificacao = new Notificacao();
+        notificacao.setServicoID(servico.getId());
+        notificacao.setNomeServico(servico.getNome());
+        notificacao.setEstado(servico.getEstado());
+        notificacao.setTipoNotificacao(tiponotificacao);
+
+        databaseReference.child("Notificacao").child("usuario").child(servico.getIdCriador()).push().setValue(notificacao);
+
     }
 
     private void criarDialogNegociacao() {

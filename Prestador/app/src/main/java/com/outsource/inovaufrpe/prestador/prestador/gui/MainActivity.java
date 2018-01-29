@@ -1,5 +1,6 @@
 package com.outsource.inovaufrpe.prestador.prestador.gui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.carteira.gui.MainCarteiraFragment;
+import com.outsource.inovaufrpe.prestador.notificacao.gui.NotificacaoActivity;
 import com.outsource.inovaufrpe.prestador.servico.gui.MainServicosFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.notificacoesBtn) {
-            Toast.makeText(MainActivity.this, "Notificações", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, NotificacaoActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

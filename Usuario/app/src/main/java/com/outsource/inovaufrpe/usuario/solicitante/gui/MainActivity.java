@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.carteira.gui.MainCarteiraFragment;
+import com.outsource.inovaufrpe.usuario.notificacao.gui.NotificacaoActivity;
 import com.outsource.inovaufrpe.usuario.servico.gui.CadastroServicoActivity;
 import com.outsource.inovaufrpe.usuario.servico.gui.MainServicosFragment;
 
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.notificacoesBtn) {
-            Toast.makeText(MainActivity.this, R.string.notificacoes, Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, NotificacaoActivity.class));
         }
         if (id == R.id.inserirBtn) {
             startActivity(new Intent(this, CadastroServicoActivity.class));

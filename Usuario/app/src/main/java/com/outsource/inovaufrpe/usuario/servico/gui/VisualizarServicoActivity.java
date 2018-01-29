@@ -36,6 +36,7 @@ import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
 import com.outsource.inovaufrpe.usuario.conversa.gui.ConversaActivity;
 import com.outsource.inovaufrpe.usuario.conversa.gui.MensagemActivity;
+import com.outsource.inovaufrpe.usuario.notificacao.dominio.Notificacao;
 import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Mensagem;
@@ -391,6 +392,19 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         }
         Snackbar.make(view, "Serviço em processo de " + estadoDestino, Snackbar.LENGTH_LONG).show();
     }
+
+    private void enviarNotificacao(int tiponotificacao){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Notificacao notificacao = new Notificacao();
+        notificacao.setServicoID(servico.getId());
+        notificacao.setNomeServico(servico.getNome());
+        notificacao.setEstado(servico.getEstado());
+        notificacao.setTipoNotificacao(tiponotificacao);
+        //todo substituir a string, pelo valor
+        databaseReference.child("Notificacao").child("prestador").child("ID DO PRESTADOR AQUI").push().setValue(notificacao);
+
+    }
+
 
     private void criarDialogNegociacao() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);

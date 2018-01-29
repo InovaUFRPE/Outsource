@@ -10,6 +10,7 @@ public class ServicoView {
     private String descricao;
     private String estado;
     private String idCriador;
+    private String idPrestador;
     private Double preco;
     private double latitude;
     private double longitude;
@@ -55,6 +56,14 @@ public class ServicoView {
 
     public void setIdCriador(String idCriador) {
         this.idCriador = idCriador;
+    }
+
+    public String getIdPrestador() {
+        return idPrestador;
+    }
+
+    public void setIdPrestador(String idPrestador) {
+        this.idPrestador = idPrestador;
     }
 
     public Double getPreco() {
