@@ -20,6 +20,6 @@ public class CriticaViewHolder extends RecyclerView.ViewHolder {
         linearLayout = itemView.findViewById(R.id.critica_card);
         tvComentador = itemView.findViewById(R.id.tvComentadorID);
         tvNota = itemView.findViewById(R.id.tvNotaID);
-        tvComentario = itemView.findViewById(R.id.tvComentarioID);
+        tvComentario = itemView.findViewById(R.id.tvMensagemID);
     }
 }

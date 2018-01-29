@@ -28,13 +28,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
-import com.outsource.inovaufrpe.usuario.solicitante.dominio.Comentario;
+import com.outsource.inovaufrpe.usuario.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity;
 
 import java.sql.Timestamp;
@@ -157,16 +156,9 @@ public class CadastroServicoActivity extends AppCompatActivity {
         if(latLng == null){
             Toast.makeText(this, "Selecione um local para o serviço!", Toast.LENGTH_SHORT).show();
         }else {
-            Servico servico = criaServico();
-            adicionaServicoUsuario(servico);
-            finish();
+            criaServico();
             startActivity(new Intent(this, MainActivity.class));
         }
-    }
-
-    private void adicionaServicoUsuario(Servico servico) {
-        databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).child("servicos").child(servico.getId()).setValue(servico.getEstado());
-
     }
 
     private Servico criaServico() {
@@ -185,31 +177,46 @@ public class CadastroServicoActivity extends AppCompatActivity {
         servico.setLatitude(latLng.latitude);
         servico.setLongitude(latLng.longitude);
 
+
+        ServicoView servicoView = new ServicoView();
         if (switchTipoServico.isChecked()) {
             gambi = "0";
             servico.setUrgente(true);
+            servicoView.setUrgente(true);
         } else {
             gambi = "1";
             servico.setUrgente(false);
+            servicoView.setUrgente(false);
         }
 
-        databaseReference.child("servico").child("aberto").child(servicoId).setValue(servico, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+        servicoView.setId(servico.getId());
+        servicoView.setNome(servico.getNome());
+        servicoView.setEstado(servico.getEstado());
+        servicoView.setPreco(servico.getPreco());
+        servicoView.setData(servico.getData());
+        servicoView.setIdCriador(servico.getIdCriador());
+        servicoView.setLatitude(servico.getLatitude());
+        servicoView.setLongitude(servico.getLongitude());
+        servicoView.setOrdemRef(gambi + new Timestamp(-1 * data.getTime()).toString());
 
+
+        databaseReference.child("servico").child(servicoId).setValue(servico).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(!task.isSuccessful()){
+                    Toast.makeText(CadastroServicoActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
-        databaseReference.child("servico").child("aberto").child(servicoId).child("ordem-ref").setValue(gambi + new Timestamp(-1 * data.getTime()).toString());
-        Comentario comentario = new Comentario();
-        String novaData = new Timestamp(data.getTime()).toString();
-        comentario.setTempo(data.getTime());
-        comentario.setTexto("Valor inicial proposto por você");
-        comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
-        comentario.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
-        comentario.setvalor(servico.getPreco());
-        novaData = novaData.replace(".", "");
-        DatabaseReference databaseReferenceComentario = FirebaseDatabase.getInstance().getReference().child("comentario");
-        databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario);
+
+        databaseReference.child("vizualizacao").child("aberto").child(servicoId).setValue(servicoView).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(!task.isSuccessful()){
+                    Toast.makeText(CadastroServicoActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         return servico;
     }

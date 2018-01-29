@@ -152,10 +152,15 @@
             android:textAllCaps="true"
             android:textStyle="bold" />
 
-        <include
-            layout="@layout/card_perfil_negociacao"
+        <!--<include-->
+            <!--layout="@layout/card_perfil_negociacao"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+        <Button
+            android:id="@+id/btConversasID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Negociações"></Button>
 
     </LinearLayout>
     <!-- Fim Layout Prestador -->

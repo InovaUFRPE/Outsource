@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.outsource.inovaufrpe.prestador.R;
-import com.outsource.inovaufrpe.prestador.prestador.adapter.TabAdapter;
+import com.outsource.inovaufrpe.prestador.utils.TabAdapter;
 
 
 public class MainCarteiraFragment extends android.support.v4.app.Fragment {

@@ -21,8 +21,6 @@ public class FirebaseUtil {
                         } else {
                             toPath.child("estado").setValue(estadoServico);
                             fromPath.removeValue();
-                            System.out.println("Success");
-
                         }
                     }
                 });

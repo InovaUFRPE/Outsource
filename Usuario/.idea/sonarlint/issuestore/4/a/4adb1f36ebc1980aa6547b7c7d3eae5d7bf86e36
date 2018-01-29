@@ -1,22 +1,0 @@
-
-–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
-_squid:S1192"JDefine a constant instead of duplicating this literal "servicoID" 3 times.(Õİ¨Á
-psquid:S2159"VRemove this call to "equals"; comparisons between unrelated types always return false.(¼°Û”şÿÿÿÿ
-–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
-^squid:S1192"JDefine a constant instead of duplicating this literal "concluido" 3 times.(÷ ’w
-Fsquid:S1135"2Complete the task associated to this TODO comment.(²Úì
-–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
-^squid:HiddenFieldCheck">Rename "comentario" which hides the field declared at line 65.(À‡ÇÜ
-Osquid:S2209"5Change this instance-reference to a static reference.(°ŸßŒıÿÿÿÿ
-–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
-–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
-esquid:S1192"JDefine a constant instead of duplicating this literal "prestador" 4 times.(÷ æv8 ·ˆ‰’,
-csquid:S1192"IDefine a constant instead of duplicating this literal "feedback" 3 times.(…ËõÏùÿÿÿÿ
-\squid:S1192"GDefine a constant instead of duplicating this literal "oferta" 3 times.(‰Ûšú
-bsquid:S1192"HDefine a constant instead of duplicating this literal "usuario" 4 times.(‚ü¹±ùÿÿÿÿ
-lsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(¨Œşÿÿÿÿ
-Osquid:S2209"5Change this instance-reference to a static reference.(ğŸäèùÿÿÿÿ
-–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
-isquid:MaximumInheritanceDepth"=This class has 10 parents which is greater than 5 authorized.(ƒãÂşÿÿÿÿ
-]squid:S1192"HDefine a constant instead of duplicating this literal "servico" 3 times.(¾Å¬
-?squid:S2440"*Remove this instantiation of "CardFormat".(ƒ‡Ó÷

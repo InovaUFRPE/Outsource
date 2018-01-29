@@ -32,8 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
-import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
-import com.outsource.inovaufrpe.prestador.utils.ServicoDistanciaAdapter;
+import com.outsource.inovaufrpe.prestador.servico.dominio.ServicoView;
+import com.outsource.inovaufrpe.prestador.servico.adapter.ServicoDistanciaAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
     private FusedLocationProviderClient mFusedLocationClient;
     private ValueEventListener valueEventListener;
     private Location locationUsuario;
-    private List<Servico> servicos;
+    private List<ServicoView> servicos;
     private SeekBar sbDistancia;
     private EditText etFiltro;
     private CheckBox cbUrgente;
@@ -67,12 +67,12 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) throws NullPointerException {
         View layout = inflater.inflate(R.layout.fragment_servicos_novos, container, false);
-        servicos = new ArrayList<Servico>();
+        servicos = new ArrayList<ServicoView>();
         mRecyclerView = layout.findViewById(R.id.recycleID);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("aberto");
+        databaseReference = FirebaseDatabase.getInstance().getReference("vizualizacao").child("aberto");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         tvNenhumServico = layout.findViewById(R.id.nenhum_servico);
         String s = getContext().getString(R.string.nenhum_servico) + " novo";
@@ -92,7 +92,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
             public void onDataChange(DataSnapshot dataSnapshot) {
                 servicos.clear();
                 for (DataSnapshot dados : dataSnapshot.getChildren()) {
-                    Servico servico = dados.getValue(Servico.class);
+                    ServicoView servico = dados.getValue(ServicoView.class);
                     float[] result = new float[2];
                     Location.distanceBetween(servico.getLatitude(), servico.getLongitude(), locationUsuario.getLatitude(), locationUsuario.getLongitude(), result);
                     if (result[0] < sbValor * 1000) {
@@ -145,9 +145,9 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                         if (location != null) {
                             locationUsuario = location;
                             if (urgencia){
-                                databaseReference.orderByChild("ordem-ref").addValueEventListener(valueEventListener);
+                                databaseReference.orderByChild("ordemRef").addValueEventListener(valueEventListener);
                             }else{
-                                databaseReference.orderByChild("ordem-ref").startAt("1").addValueEventListener(valueEventListener);
+                                databaseReference.orderByChild("ordemRef").startAt("1").addValueEventListener(valueEventListener);
                             }
 
                         }
@@ -175,7 +175,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
     @Override
     public void onItemClick(int position) {
         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-        Servico servico = servicos.get(position);
+        ServicoView servico = servicos.get(position);
         it.putExtra("servicoID", servico.getId());
         it.putExtra("estado", servico.getEstado());
         it.putExtra("nomeServico", servico.getNome());

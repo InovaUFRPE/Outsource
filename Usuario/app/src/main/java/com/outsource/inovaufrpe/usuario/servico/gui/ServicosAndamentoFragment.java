@@ -88,8 +88,8 @@ public class ServicosAndamentoFragment extends Fragment {
 
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query queryNegociacao = databaseReference.child("servico").child("negociacao").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        Query queryAndamento = databaseReference.child("servico").child("andamento").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryNegociacao = databaseReference.child("vizualizacao").child("negociacao").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryAndamento = databaseReference.child("vizualizacao").child("andamento").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter1 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
 
             @Override

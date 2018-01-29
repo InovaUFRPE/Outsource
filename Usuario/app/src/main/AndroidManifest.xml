@@ -57,7 +57,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity" />
         </activity>
-        <activity android:name=".servico.gui.NegociacoesActivity" />
+        <activity android:name=".conversa.gui.MensagemActivity" />
+        <activity android:name=".conversa.gui.ConversaActivity" />
         <activity android:name=".servico.gui.EditarServicoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

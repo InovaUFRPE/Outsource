@@ -71,7 +71,7 @@
     <string name="aberta">Aberta</string>
     <string name="em_negociacao">Em negociacao</string>
     <string name="finalizada">Finalizada</string>
-    <string name="comentario">Comentário</string>
+    <string name="mensagem">Comentário</string>
     <string name="spinner_estado_servico_header">Selecione o estado do serviço</string>
     <string name="nenhum_servico">Nenhum serviço</string>
     <string-array name="tipos_servicos_andamento">

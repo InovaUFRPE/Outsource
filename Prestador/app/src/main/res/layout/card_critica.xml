@@ -51,14 +51,14 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvComentarioID"
+            android:id="@+id/tvMensagemID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/nomeServico"
             android:layout_alignStart="@+id/nomeServico"
             android:layout_below="@+id/nomeServico"
             android:gravity="start"
-            android:text="@string/comentario"
+            android:text="@string/mensagem"
             android:textAlignment="textStart"
             android:textColor="@color/colorBlack"
             android:textSize="16sp" />

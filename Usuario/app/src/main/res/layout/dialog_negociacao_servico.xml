@@ -18,12 +18,12 @@
         tools:layout_editor_absoluteY="16dp" />
 
     <EditText
-        android:id="@+id/etComentarios"
+        android:id="@+id/etMensagens"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="28dp"
-        android:hint="@string/comentario"
+        android:hint="@string/mensagem"
         android:inputType="textMultiLine" />
 
     <Button

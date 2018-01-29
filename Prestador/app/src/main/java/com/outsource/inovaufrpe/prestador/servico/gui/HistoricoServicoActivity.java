@@ -16,7 +16,7 @@ import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
-import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
+import com.outsource.inovaufrpe.prestador.servico.adapter.ServicoListHolder;
 
 public class HistoricoServicoActivity extends AppCompatActivity {
 

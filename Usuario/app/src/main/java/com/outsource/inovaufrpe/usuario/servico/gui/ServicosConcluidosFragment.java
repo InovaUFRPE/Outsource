@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
 
@@ -60,12 +61,12 @@ public class ServicosConcluidosFragment extends Fragment {
     }
 
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
+        databaseReference = FirebaseDatabase.getInstance().getReference("vizualizacao").child("concluido");
         Query query = databaseReference.orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
+        adapter = new FirebaseRecyclerAdapter<ServicoView, ServicoListHolder>(ServicoView.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
             @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+            protected void populateViewHolder(ServicoListHolder viewHolder, ServicoView model, int position) {
                 viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
@@ -88,7 +89,7 @@ public class ServicosConcluidosFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                        Servico servico = (Servico) adapter.getItem(position);
+                        ServicoView servico = (ServicoView) adapter.getItem(position);
                         it.putExtra("nomeServico", servico.getNome());
                         it.putExtra("servicoID", servico.getId());
                         it.putExtra("estado", servico.getEstado());

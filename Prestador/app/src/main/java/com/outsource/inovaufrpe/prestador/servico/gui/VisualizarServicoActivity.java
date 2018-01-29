@@ -10,8 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,15 +30,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.outsource.inovaufrpe.prestador.conversa.gui.MensagemActivity;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.carteira.dominio.God;
-import com.outsource.inovaufrpe.prestador.prestador.dominio.Comentario;
+import com.outsource.inovaufrpe.prestador.conversa.dominio.Mensagem;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Critica;
-import com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity;
 import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
-import com.outsource.inovaufrpe.prestador.utils.CriticaViewHolder;
+import com.outsource.inovaufrpe.prestador.prestador.adapter.CriticaViewHolder;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
 import com.outsource.inovaufrpe.prestador.utils.NotaMedia;
@@ -64,9 +62,10 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     TextView tvEstadoServicoID;
     Button solicNovoOrca;
     EditText precoServico;
-    EditText comentario;
+    EditText mensagem;
     Button cancelarNegociacao;
     Button btNegociar;
+    Button btMensagem;
     Button btAceitarOferta;
     Button btConcluir;
     String servicoId;
@@ -106,6 +105,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tvEstadoServicoID = findViewById(R.id.tvEstadoServicoID);
         btNegociar = findViewById(R.id.btnNegociar);
         btConcluir = findViewById(R.id.btnConcluirServico);
+        btMensagem = findViewById(R.id.btMensagemID);
         btAceitarOferta = findViewById(R.id.btAceitarNegociacao);
         LinearLayout solicitanteLayout = findViewById(R.id.layoutPessoa);
         LinearLayout negociacaoLayout = findViewById(R.id.layoutNegociacoes);
@@ -117,31 +117,30 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         dadosServico();
 
-        btNegociar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                criarDialogNegociacao();
-                final DecimalFormat df = new DecimalFormat("####0.00");
-                precoServico.setText(df.format(Float.parseFloat(servico.getOferta().toString())));
-
-                solicNovoOrca.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        adicionarComentario(comentario.getText().toString(),Double.valueOf(precoServico.getText().toString().replace(",",".").trim()));
-                        if ((df.format(Float.parseFloat(precoServico.getText().toString().replace(",", ".")))).equals(servico.getOferta())) {
-                            encerraDialog();
-                        } else {
-                            try {
-                                negociar();
-                                atualizarEstadoServico(servico.getEstado(), EstadoServico.NEGOCIACAO.getValue());
-                            } catch (DatabaseException e) {
-                                Toast.makeText(VisualizarServicoActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
-            }
-        });
+//        btNegociar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                criarDialogNegociacao();
+//                final DecimalFormat df = new DecimalFormat("####0.00");
+//                precoServico.setText(df.format(Float.parseFloat(servico.getOferta().toString())));
+//
+//                solicNovoOrca.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        if ((df.format(Float.parseFloat(precoServico.getText().toString().replace(",", ".")))).equals(servico.getOferta())) {
+//                            encerraDialog();
+//                        } else {
+//                            try {
+//                                negociar();
+//                                atualizarEstadoServico(servico.getEstado(), EstadoServico.NEGOCIACAO.getValue());
+//                            } catch (DatabaseException e) {
+//                                Toast.makeText(VisualizarServicoActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//        });
 
         btConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +163,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         try {
-                            adicionarComentario(comentario.getText().toString(),Double.valueOf(precoServico.getText().toString().replace(",",".").trim()));
                             negociar();
                             atualizarEstadoServico(servico.getEstado(), EstadoServico.NEGOCIACAO.getValue());
                         } catch (DatabaseException e) {
@@ -179,7 +177,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                    databaseReferenceServico.child(estadoId).child(servicoId).child("preco").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    databaseReferenceServico.child(servicoId).child("preco").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task task) {
                             if(task.isSuccessful()){
@@ -202,14 +200,14 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         });
 
-        negociacaoLayout.setOnClickListener(new View.OnClickListener() {
+        btMensagem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(VisualizarServicoActivity.this, NegociacoesActivity.class);
+                Intent intent = new Intent(VisualizarServicoActivity.this, MensagemActivity.class);
                 intent.putExtra("servicoID", servicoId);
-                intent.putExtra("myUserID",  servico.getIdPrestador());
-                intent.putExtra("nomeUsuario",  tvNomePessoa.getText().toString());
-                intent.putExtra("estadoID", estadoId);
+                intent.putExtra("prestadorID",  firebaseAuth.getCurrentUser().getUid());
+                intent.putExtra("usuarioID", servico.getIdCriador());
+                intent.putExtra("nomeServico",  servico.getNome());
                 startActivity(intent);
             }
         });
@@ -228,7 +226,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         if (estadoId.equals(EstadoServico.ABERTA.getValue())) {
             tvEstadoServicoID.setText(R.string.aberta);
-            findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
@@ -238,7 +235,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_andamento);
-            findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
             findViewById(R.id.btnSolicitarOrcamento).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
@@ -253,7 +249,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void concluir() {
         //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIAgh
-        databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceServico.child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
@@ -263,12 +259,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         criarDialogAvaliarUsuario();
                         adicionar();
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
-                        databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                        databaseReferenceServico.child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     }
                 } else {
                     criarDialogAvaliarUsuario();
-                    databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
-                    databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
+                    databaseReferenceServico.child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                    databaseReferenceServico.child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                 }
             }
 
@@ -319,7 +315,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void negociar() throws DatabaseException {
         servico.setOferta(Double.valueOf(precoServico.getText().toString().replace(",", ".")));
-        databaseReferenceServico.child(estadoId).child(servicoId).child("oferta").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReferenceServico.child(servicoId).child("oferta").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (!task.isSuccessful()) {
@@ -327,7 +323,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 }
             }
         });
-        databaseReferenceServico.child(estadoId).child(servicoId).child("ofertante").setValue(firebaseAuth.getCurrentUser().getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReferenceServico.child(servicoId).child("ofertante").setValue(firebaseAuth.getCurrentUser().getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (!task.isSuccessful()) {
@@ -339,7 +335,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void dadosServico() {
-        databaseReferenceServico.child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
+        databaseReferenceServico.child(servicoId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 servico = dataSnapshot.getValue(Servico.class);
@@ -392,12 +388,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             this.dialog.dismiss();
         }
         FirebaseUtil fu = new FirebaseUtil();
+        DatabaseReference databaseReferenceVizualizacao = FirebaseDatabase.getInstance().getReference().child("vizualizacao");
+        Toast.makeText(this, estadoAtual, Toast.LENGTH_SHORT).show();
         try {
             if (estadoAtual.equals(EstadoServico.ABERTA.getValue())) {
-                databaseReferenceServico.child(estadoAtual).child(servicoId).child("idPrestador").setValue(firebaseAuth.getCurrentUser().getUid());
+                databaseReferenceVizualizacao.child(estadoAtual).child(servicoId).child("idPrestador").setValue(firebaseAuth.getCurrentUser().getUid());
             }
             if (!estadoAtual.equals(estadoDestino)) {
-                fu.moverServico(databaseReferenceServico.child(estadoAtual).child(servicoId), databaseReferenceServico.child(estadoDestino).child(servicoId), estadoDestino);
+                fu.moverServico(databaseReferenceVizualizacao.child(estadoAtual).child(servicoId), databaseReferenceVizualizacao.child(estadoDestino).child(servicoId), estadoDestino);
+                databaseReferenceServico.child(servicoId).child("estado").setValue(estadoDestino);
             }
 
         } catch (DatabaseException e) {
@@ -411,7 +410,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         View view1 = getLayoutInflater().inflate(R.layout.dialog_negociacao_servico, null);
 
         precoServico = view1.findViewById(R.id.etPrecoServico);
-        comentario = view1.findViewById(R.id.etComentarios);
+        mensagem = view1.findViewById(R.id.etMensagens);
         cancelarNegociacao = view1.findViewById(R.id.btnCancelarNegociacao);
         solicNovoOrca = view1.findViewById(R.id.btnSolicitarNovoOrcamento);
         view1.findViewById(R.id.btnCancelarNegociacao).setOnClickListener(new View.OnClickListener() {
@@ -497,7 +496,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         @SuppressLint("InflateParams") View v1 = getLayoutInflater().inflate(R.layout.dialog_avaliacao_usuario, null);
 
         Button btnConcluir = v1.findViewById(R.id.btnAvaliarConcluir);
-        final EditText edComentarioAvaliacao = v1.findViewById(R.id.etComentarios);
+        final EditText edComentarioAvaliacao = v1.findViewById(R.id.etMensagens);
         final RatingBar ratingBar = v1.findViewById(R.id.rbAvaliarServico);
         btnConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -520,18 +519,17 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     }
 
-    private void adicionarComentario(String texto, Double valor) {
-        Comentario comentario = new Comentario();
+    private void escreverMensagem(String texto, String valor) {
+        Mensagem mensagem = new Mensagem();
         Date data = new Date();
         String novaData = new Timestamp(data.getTime()).toString();
-        comentario.setTempo(data.getTime());
-        comentario.setTexto(texto);
-        comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
-        comentario.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
-        comentario.setvalor(valor);
+        mensagem.setTempo(data.getTime());
+        mensagem.setTexto(texto);
+        mensagem.setAutor(firebaseAuth.getCurrentUser().getUid());
+        mensagem.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
+        mensagem.setvalor(valor);
         novaData = novaData.replace(".", "");
-        DatabaseReference databaseReferenceComentario = FirebaseDatabase.getInstance().getReference().child("comentario");
-        databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference().child("mensagem").child(servicoId).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if(!task.isSuccessful()){

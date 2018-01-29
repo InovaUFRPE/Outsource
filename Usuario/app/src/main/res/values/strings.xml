@@ -41,7 +41,7 @@
     <string name="negociar">Negociar</string>
     <string name="concluir_servico">Concluir Serviço</string>
     <string name="aceitar_oferta">Aceitar Oferta</string>
-    <string name="comentario">Comentário</string>
+    <string name="mensagem">Comentário</string>
     <string name="user_usuario_exemplo">Gabriel Lourenço</string>
     <string name="avaliar_usuario">Avaliar usuário</string>
     <string name="cancelar_negociacao">Cancelar negociação</string>

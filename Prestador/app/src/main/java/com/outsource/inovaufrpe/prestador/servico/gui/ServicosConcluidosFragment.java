@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,9 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.prestador.R;
-import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
+import com.outsource.inovaufrpe.prestador.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
-import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
+import com.outsource.inovaufrpe.prestador.servico.adapter.ServicoListHolder;
 
 public class ServicosConcluidosFragment extends Fragment {
 
@@ -60,18 +59,18 @@ public class ServicosConcluidosFragment extends Fragment {
     }
 
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
+        databaseReference = FirebaseDatabase.getInstance().getReference("vizualizacao").child("concluido");
         Query query = databaseReference.orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
+        adapter = new FirebaseRecyclerAdapter<ServicoView, ServicoListHolder>(ServicoView.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
             @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+            protected void populateViewHolder(ServicoListHolder viewHolder, ServicoView model, int position) {
                 viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM/yyyy"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
+                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
                 if (model.isUrgente()) {
                     viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
@@ -88,7 +87,7 @@ public class ServicosConcluidosFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                        Servico servico = (Servico) adapter.getItem(position);
+                        ServicoView servico = (ServicoView) adapter.getItem(position);
                         it.putExtra("servicoID", servico.getId());
                         it.putExtra("estado", servico.getEstado());
                         it.putExtra("nomeServico", servico.getNome());

@@ -19,9 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.prestador.R;
-import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
+import com.outsource.inovaufrpe.prestador.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
-import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
+import com.outsource.inovaufrpe.prestador.servico.adapter.ServicoListHolder;
 
 
 public class ServicosAndamentoFragment extends Fragment {
@@ -95,19 +95,19 @@ public class ServicosAndamentoFragment extends Fragment {
 
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query queryNegociacao = databaseReference.child("servico").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        Query queryAndamento = databaseReference.child("servico").child("andamento").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryNegociacao = databaseReference.child("vizualizacao").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryAndamento = databaseReference.child("vizualizacao").child("andamento").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
 
-        adapter1 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
+        adapter1 = new FirebaseRecyclerAdapter<ServicoView, ServicoListHolder>(ServicoView.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
 
             @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+            protected void populateViewHolder(ServicoListHolder viewHolder, ServicoView model, int position) {
                 viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM/yyyy"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
+                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
                 if (model.isUrgente()) {
                     viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
@@ -124,7 +124,7 @@ public class ServicosAndamentoFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                        Servico servico = (Servico) adapter1.getItem(position);
+                        ServicoView servico = (ServicoView) adapter1.getItem(position);
                         it.putExtra("servicoID", servico.getId());
                         it.putExtra("estado", servico.getEstado());
                         startActivity(it);
@@ -147,10 +147,10 @@ public class ServicosAndamentoFragment extends Fragment {
         };
 
 
-        adapter2 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryAndamento) {
+        adapter2 = new FirebaseRecyclerAdapter<ServicoView, ServicoListHolder>(ServicoView.class, R.layout.card_servico, ServicoListHolder.class, queryAndamento) {
 
             @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
+            protected void populateViewHolder(ServicoListHolder viewHolder, ServicoView model, int position) {
                 if (this.getItemCount() < 0) {
                     tvNenhumServico.setVisibility(View.VISIBLE);
                     return;
@@ -160,7 +160,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM/yyyy"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
+                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
                 if (model.isUrgente()) {
                     viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
@@ -177,7 +177,7 @@ public class ServicosAndamentoFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                        Servico servico = (Servico) adapter2.getItem(position);
+                        ServicoView servico = (ServicoView) adapter2.getItem(position);
                         it.putExtra("servicoID", servico.getId());
                         it.putExtra("estado", servico.getEstado());
                         it.putExtra("nomeServico", servico.getNome());

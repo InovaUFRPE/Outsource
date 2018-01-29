@@ -31,8 +31,9 @@
         <activity
             android:name=".prestador.gui.CadastroActivity"
             android:theme="@style/FullScreenTheme" />
-        <activity android:windowSoftInputMode="stateHidden"
-            android:name=".prestador.gui.MainActivity" />
+        <activity
+            android:name=".prestador.gui.MainActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".carteira.gui.AdicionarMoedaActivity" />
         <activity android:name=".servico.gui.VisualizarServicoActivity">
             <meta-data
@@ -49,8 +50,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
         </activity>
-        <activity android:name=".servico.gui.NegociacoesActivity">
-        </activity>
+        <activity android:name=".conversa.gui.MensagemActivity"></activity>
+        <activity android:name=".conversa.gui.ConversaActivity"></activity>
     </application>
 
 </manifest>

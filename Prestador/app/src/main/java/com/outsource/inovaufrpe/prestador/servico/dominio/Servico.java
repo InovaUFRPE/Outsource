@@ -1,10 +1,6 @@
 package com.outsource.inovaufrpe.prestador.servico.dominio;
 
 import com.outsource.inovaufrpe.prestador.carteira.dominio.God;
-import com.outsource.inovaufrpe.prestador.prestador.dominio.Comentario;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Servico {
     private String id;

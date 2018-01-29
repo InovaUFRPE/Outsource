@@ -51,7 +51,7 @@ public class ServicosPessoaisFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.RecycleID);
 
         tvNenhumServico = view.findViewById(R.id.nenhum_servico);
-        String s = getContext().getString(R.string.nenhum_servico) + " novo";
+        String s = getContext().getString(R.string.nenhum_servico) + " criado";
         tvNenhumServico.setText(s);
         tvNenhumServico.setVisibility(View.GONE);
 
@@ -75,7 +75,7 @@ public class ServicosPessoaisFragment extends Fragment {
     }
 
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("servico").child("aberto");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("servico");
         Query query = databaseReference.orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 

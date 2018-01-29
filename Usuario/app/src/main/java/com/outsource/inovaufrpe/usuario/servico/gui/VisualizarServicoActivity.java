@@ -34,9 +34,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
+import com.outsource.inovaufrpe.usuario.conversa.gui.ConversaActivity;
+import com.outsource.inovaufrpe.usuario.conversa.gui.MensagemActivity;
 import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
-import com.outsource.inovaufrpe.usuario.solicitante.dominio.Comentario;
+import com.outsource.inovaufrpe.usuario.conversa.dominio.Mensagem;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Critica;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.CriticaViewHolder;
@@ -62,11 +64,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     TextView tvOferta;
     Button solicNovoOrca;
     EditText precoServico;
-    EditText comentario;
+    EditText mensagem;
     Button cancelarNegociacao;
     Button btNegociar;
     Button btAceitarOferta;
     Button btConcluir;
+    Button btConversas;
     String servicoId;
     String estadoId;
     TextView nomeUsuario;
@@ -113,33 +116,34 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btNegociar = findViewById(R.id.btnNegociar);
         btConcluir = findViewById(R.id.btnConcluirServico);
         btAceitarOferta = findViewById(R.id.btAceitarNegociacao);
+        btConversas = findViewById(R.id.btConversasID);
 
-        btNegociar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                criarDialogNegociacao();
-
-                final DecimalFormat df = new DecimalFormat("####0.00");
-                precoServico.setText(df.format(Float.parseFloat(servico.getOferta().toString())).replace(".", ","));
-
-                solicNovoOrca.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        adicionarComentario(comentario.getText().toString(), Double.valueOf(precoServico.getText().toString().trim().replace(",", ".")));
-                        if (df.format(Float.parseFloat(precoServico.getText().toString().replace(",", "."))).equals(servico.getOferta())) {
-                            encerraDialog();
-                        } else {
-                            try {
-                                negociar();
-                                atualizarEstadoServico(servico.getEstado(), EstadoServico.NEGOCIACAO.getValue());
-                            } catch (Exception e) {
-                                Toast.makeText(VisualizarServicoActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
-            }
-        });
+//        btNegociar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                criarDialogNegociacao();
+//
+//                final DecimalFormat df = new DecimalFormat("####0.00");
+//                precoServico.setText(df.format(Float.parseFloat(servico.getOferta().toString())).replace(".", ","));
+//
+//                solicNovoOrca.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        adicionarMensagem(mensagem.getText().toString(), Double.valueOf(precoServico.getText().toString().trim().replace(",", ".")));
+//                        if (df.format(Float.parseFloat(precoServico.getText().toString().replace(",", "."))).equals(servico.getOferta())) {
+//                            encerraDialog();
+//                        } else {
+//                            try {
+//                                negociar();
+//                                atualizarEstadoServico(servico.getEstado(), EstadoServico.NEGOCIACAO.getValue());
+//                            } catch (Exception e) {
+//                                Toast.makeText(VisualizarServicoActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//        });
 
         btAceitarOferta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,14 +180,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         });
 
-        negociacaoLayout.setOnClickListener(new View.OnClickListener() {
+        btConversas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(VisualizarServicoActivity.this, NegociacoesActivity.class);
+                Intent intent = new Intent(VisualizarServicoActivity.this, ConversaActivity.class);
                 intent.putExtra("servicoID", servicoId);
-                intent.putExtra("myUserID",  servico.getIdCriador());
-                intent.putExtra("nomePrestador",  tvNomePessoa.getText().toString());
-                intent.putExtra("estadoID",estadoId);
                 startActivity(intent);
             }
         });
@@ -204,7 +205,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             tvEstadoServicoID.setText(R.string.aberta);
             prestadorLayout.setVisibility(View.GONE);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
-            findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_negociacao);
             prestadorLayout.setVisibility(View.GONE);
@@ -338,7 +338,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         };
-        databaseReferenceServico.child(estadoId).child(servicoId).addValueEventListener(listenerServico);
+        databaseReferenceServico.child(servicoId).addValueEventListener(listenerServico);
     }
 
     private void dadosUsuario() {
@@ -397,7 +397,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         @SuppressLint("InflateParams") View view1 = getLayoutInflater().inflate(R.layout.dialog_negociacao_servico, null);
 
         precoServico = view1.findViewById(R.id.etPrecoServico);
-        comentario = view1.findViewById(R.id.etComentarios);
+        mensagem = view1.findViewById(R.id.etMensagens);
         cancelarNegociacao = view1.findViewById(R.id.btnCancelarNegociacao);
         solicNovoOrca = view1.findViewById(R.id.btnSolicitarNovoOrcamento);
         view1.findViewById(R.id.btnCancelarNegociacao).setOnClickListener(new View.OnClickListener() {
@@ -482,7 +482,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         @SuppressLint("InflateParams") View v1 = getLayoutInflater().inflate(R.layout.dialog_avaliacao_usuario, null);
 
         Button btnConcluir = v1.findViewById(R.id.btnAvaliarConcluir);
-        final EditText edComentarioAvaliacao = v1.findViewById(R.id.etComentarios);
+        final EditText edComentarioAvaliacao = v1.findViewById(R.id.etMensagens);
         final RatingBar ratingBar = v1.findViewById(R.id.rbAvaliarServico);
         btnConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -505,18 +505,17 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void adicionarComentario(String texto, Double valor) {
-        Comentario comentario = new Comentario();
+    private void adicionarMensagem(String texto, String valor) {
+        Mensagem mensagem = new Mensagem();
         Date data = new Date();
         String novaData = new Timestamp(data.getTime()).toString();
-        comentario.setTempo(data.getTime());
-        comentario.setTexto(texto);
-        comentario.setAutor(firebaseAuth.getCurrentUser().getUid());
-        comentario.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
-        comentario.setvalor(valor);
+        mensagem.setTempo(data.getTime());
+        mensagem.setTexto(texto);
+        mensagem.setAutor(firebaseAuth.getCurrentUser().getUid());
+        mensagem.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
+        mensagem.setvalor(valor);
         novaData = novaData.replace(".", "");
-        DatabaseReference databaseReferenceComentario = FirebaseDatabase.getInstance().getReference().child("comentario");
-        databaseReferenceComentario.child(servicoId).child(novaData).setValue(comentario).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference().child("mensagem").child(servicoId).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if(!task.isSuccessful()){

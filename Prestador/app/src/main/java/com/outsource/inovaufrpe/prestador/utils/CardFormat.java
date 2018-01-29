@@ -15,6 +15,9 @@ public class CardFormat {
 
     public static String dinheiroFormat(String dinheiro){
         DecimalFormat df = new DecimalFormat("####0.00");
+        if(dinheiro.isEmpty()){
+            return "R$ "+ df.format(0.0).replace(".",",");
+        }
         return "R$ "+ df.format(Float.parseFloat(dinheiro)).replace(".",",");
     }
 

@@ -15,7 +15,7 @@ import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
-import com.outsource.inovaufrpe.prestador.utils.ServicoListHolder;
+import com.outsource.inovaufrpe.prestador.servico.adapter.ServicoListHolder;
 
 public class HistoricoGanhosActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -40,7 +40,7 @@ public class HistoricoGanhosActivity extends AppCompatActivity {
     }
 
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
+        databaseReference = FirebaseDatabase.getInstance().getReference("vizualizacao").child("concluido");
         Query query = databaseReference.orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
