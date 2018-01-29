@@ -230,10 +230,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             tvEstadoServicoID.setText(R.string.aberta);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
+            findViewById(R.id.btMensagemID).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_negociacao);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
             findViewById(R.id.btnSolicitarOrcamento).setVisibility(View.GONE);
+            findViewById(R.id.btnNegociar).setVisibility(View.GONE);
 
         } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_andamento);
@@ -310,7 +312,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         if(servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())){
             tvNomeOfertante.setText("Você");
         }else{
-            tvNomeOfertante.setText(tvNomePessoa.getText());
+            tvNomeOfertante.setText(tvNomePessoa.getText().toString());
         }
         tvOferta.setText(cardFormat.dinheiroFormat(servico.getOferta().toString()));
     }
@@ -373,9 +375,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 }else{
                     tvNotaPessoa.setText("0.0");
                 }
-                if (servico.getOfertante() != null) {
+                /*if (servico.getOfertante() != null) {
                     dadosNegociacao();
-                }
+                }*/
             }
 
             @Override
@@ -399,6 +401,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             if (!estadoAtual.equals(estadoDestino)) {
                 fu.moverServico(databaseReferenceVizualizacao.child(estadoAtual).child(servicoId), databaseReferenceVizualizacao.child(estadoDestino).child(servicoId), estadoDestino);
                 databaseReferenceServico.child(servicoId).child("estado").setValue(estadoDestino);
+                databaseReferenceVizualizacao.child(servicoId).child("estado").setValue(estadoDestino);
             }
 
         } catch (DatabaseException e) {
@@ -424,7 +427,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         View view1 = getLayoutInflater().inflate(R.layout.dialog_negociacao_servico, null);
 
         precoServico = view1.findViewById(R.id.etPrecoServico);
-        mensagem = view1.findViewById(R.id.etMensagens);
+        //mensagem = view1.findViewById(R.id.etMensagens);
         cancelarNegociacao = view1.findViewById(R.id.btnCancelarNegociacao);
         solicNovoOrca = view1.findViewById(R.id.btnSolicitarNovoOrcamento);
         view1.findViewById(R.id.btnCancelarNegociacao).setOnClickListener(new View.OnClickListener() {
@@ -510,7 +513,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         @SuppressLint("InflateParams") View v1 = getLayoutInflater().inflate(R.layout.dialog_avaliacao_usuario, null);
 
         Button btnConcluir = v1.findViewById(R.id.btnAvaliarConcluir);
-        final EditText edComentarioAvaliacao = v1.findViewById(R.id.etMensagens);
+        final EditText edComentarioAvaliacao = v1.findViewById(R.id.etComentario);
         final RatingBar ratingBar = v1.findViewById(R.id.rbAvaliarServico);
         btnConcluir.setOnClickListener(new View.OnClickListener() {
             @Override

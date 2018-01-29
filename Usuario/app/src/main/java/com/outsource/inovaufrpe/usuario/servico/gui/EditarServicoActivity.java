@@ -83,7 +83,7 @@ public class EditarServicoActivity extends AppCompatActivity {
 
         switchTipoServico = findViewById(R.id.switchTipoServico);
 
-        databaseReferenceServico = FirebaseDatabase.getInstance().getReference().child("servico");
+        databaseReferenceServico = FirebaseDatabase.getInstance().getReference().child("vizualizacao");
         databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

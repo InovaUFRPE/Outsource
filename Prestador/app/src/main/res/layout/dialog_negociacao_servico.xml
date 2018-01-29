@@ -18,14 +18,14 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />
 
-    <EditText
+    <!--<EditText
         android:id="@+id/etMensagens"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="28dp"
         android:hint="@string/comentarios"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine" />-->
 
     <Button
         android:id="@+id/btnSolicitarNovoOrcamento"
