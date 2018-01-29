@@ -71,7 +71,7 @@
             color:layout_constraintEnd_toEndOf="parent">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/num_servicos_atendidos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -81,13 +81,12 @@
                 android:textStyle="bold"
                 android:layout_marginEnd="10dp" />
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/textView4"
-                android:layout_toRightOf="@+id/textView4"
+                android:layout_toEndOf="@+id/num_servicos_atendidos"
+                android:layout_toRightOf="@+id/num_servicos_atendidos"
                 android:text="@string/servicos_atendidos"
                 android:textColor="@color/colorWhite" />
         </RelativeLayout>
@@ -102,7 +101,7 @@
             color:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/num_avaliacoes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -116,8 +115,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/textView5"
-                android:layout_toRightOf="@+id/textView5"
+                android:layout_toEndOf="@+id/num_avaliacoes"
+                android:layout_toRightOf="@+id/num_avaliacoes"
                 android:text="@string/avaliacoes"
                 android:textColor="@color/colorWhite" />
         </RelativeLayout>

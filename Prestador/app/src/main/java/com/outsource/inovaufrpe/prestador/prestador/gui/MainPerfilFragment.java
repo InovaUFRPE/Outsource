@@ -23,15 +23,14 @@ import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MainPerfilFragment extends Fragment {
     ImageButton btnConfig;
     TextView nomeUsuario;
     TextView emailUsuario;
     TextView telefoneUsuario;
     RatingBar avaliarPerfil;
+    TextView numServicosAtendidos;
+    TextView numAvaliacoes;
 
 
     public MainPerfilFragment() {
@@ -48,6 +47,8 @@ public class MainPerfilFragment extends Fragment {
         emailUsuario = view.findViewById(R.id.tvEmailPerfil);
         telefoneUsuario = view.findViewById(R.id.tvTelefonePerfil);
         avaliarPerfil = view.findViewById(R.id.rbAvaliarPefil);
+        numServicosAtendidos = view.findViewById(R.id.num_servicos_atendidos);
+        numAvaliacoes = view.findViewById(R.id.num_avaliacoes);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
@@ -61,6 +62,8 @@ public class MainPerfilFragment extends Fragment {
                         nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(prestador.getEmail());
                         telefoneUsuario.setText(prestador.getTelefone());
+                        numAvaliacoes.setText(String.valueOf(prestador.getPesoNota()));
+                        numServicosAtendidos.setText(String.valueOf(prestador.getListaServicos().size()));
                         if(prestador.getPesoNota() == 0){
                             avaliarPerfil.setRating(0);
                         }else{

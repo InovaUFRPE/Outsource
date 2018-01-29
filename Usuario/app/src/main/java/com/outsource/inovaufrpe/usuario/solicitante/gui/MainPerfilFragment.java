@@ -25,6 +25,8 @@ public class MainPerfilFragment extends Fragment {
     TextView emailUsuario;
     TextView telefoneUsuario;
     RatingBar avaliarPerfil;
+    TextView numServicosAtendidos;
+    TextView numAvaliacoes;
 
     public MainPerfilFragment() {}
 
@@ -38,6 +40,9 @@ public class MainPerfilFragment extends Fragment {
         emailUsuario = view.findViewById(R.id.tvEmailPerfil);
         telefoneUsuario = view.findViewById(R.id.tvTelefonePerfil);
         avaliarPerfil = view.findViewById(R.id.rbAvaliarPerfil);
+        numServicosAtendidos = view.findViewById(R.id.num_servicos_concluidos);
+        numAvaliacoes = view.findViewById(R.id.num_avaliacoes);
+
         FirebaseAux firebase = FirebaseAux.getInstancia();
         DatabaseReference usuarioReference = firebase.getUsuarioReference().child(firebase.getUser().getUid());
         usuarioReference.addValueEventListener(
@@ -49,6 +54,8 @@ public class MainPerfilFragment extends Fragment {
                         nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(user.getEmail());
                         telefoneUsuario.setText(user.getTelefone());
+                        numAvaliacoes.setText(String.valueOf(user.getPesoNota()));
+                        numServicosAtendidos.setText(String.valueOf(user.getListaServicos().size()));
                         if (user.getPesoNota() == 0){
                             avaliarPerfil.setRating(0);
                         }
