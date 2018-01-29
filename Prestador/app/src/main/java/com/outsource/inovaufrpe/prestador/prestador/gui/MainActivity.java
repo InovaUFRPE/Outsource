@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.carteira.gui.MainCarteiraFragment;
+import com.outsource.inovaufrpe.prestador.conversa.gui.ConversaActivity;
 import com.outsource.inovaufrpe.prestador.notificacao.gui.NotificacaoActivity;
 import com.outsource.inovaufrpe.prestador.servico.gui.MainServicosFragment;
 
@@ -124,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.notificacoesBtn) {
             startActivity(new Intent(this, NotificacaoActivity.class));
+        }
+        if (id == R.id.chatButton) {
+            startActivity(new Intent(this, ConversaActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

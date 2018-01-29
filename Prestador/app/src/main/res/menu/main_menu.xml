@@ -7,4 +7,10 @@
         android:title="notificacoes"
         app:showAsAction="ifRoom|collapseActionView" />
 
+    <item
+        android:id="@+id/chatButton"
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="Conversas"
+        app:showAsAction="ifRoom|collapseActionView" />
+
 </menu>

@@ -7,53 +7,58 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="8dp">
-
-        <TextView
-            android:id="@+id/nomeUsuarioID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/precoSugeridoID"
-            android:layout_alignBottom="@+id/precoSugeridoID"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/precoSugeridoID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/dinheiro_exemplo"
-            android:textColor="@color/colorGreen"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvMensagemID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nomeUsuarioID"
-            android:layout_marginTop="8dp"
             android:gravity="start"
             android:text="@string/mensagem"
             android:textAlignment="textStart"
-            android:textSize="16sp" />
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nomeUsuarioID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/precoSugeridoID"
+                android:layout_alignBottom="@+id/precoSugeridoID"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/precoSugeridoID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/dinheiro_exemplo"
+                android:textColor="@color/colorMoney"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tvTempoID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tvMensagemID"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:textAlignment="textEnd" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>
