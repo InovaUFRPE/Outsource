@@ -69,5 +69,6 @@ public class ConversaActivity extends AppCompatActivity {
                 return viewHolder;
             }
         };
+        recycleConversas.setAdapter(adapter);
     }
 }

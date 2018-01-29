@@ -152,7 +152,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                    databaseReferenceServico.child(estadoId).child(servicoId).child("preco").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    databaseReferenceServico.child(servicoId).child("preco").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task task) {
                             if(task.isSuccessful()){
@@ -227,7 +227,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         criarDialogAvaliarUsuario();
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                         aplicarTaxa();
-                        databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                        databaseReferenceServico.child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     }
                 } else {
                     criarDialogAvaliarUsuario();

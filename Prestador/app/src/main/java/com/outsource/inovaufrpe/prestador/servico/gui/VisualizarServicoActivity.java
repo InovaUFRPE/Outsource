@@ -322,7 +322,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void negociar() throws DatabaseException {
         servico.setOferta(Double.valueOf(precoServico.getText().toString().replace(",", ".")));
-        DatabaseReference databaseReferenceVizualizar = FirebaseDatabase.getInstance().getReference().child("vizualizar");
+        DatabaseReference databaseReferenceVizualizacao = FirebaseDatabase.getInstance().getReference().child("vizualizacao");
         databaseReferenceServico.child(servicoId).child("oferta").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -331,7 +331,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 }
             }
         });
-        databaseReferenceVizualizar.child(estadoId).child(servicoId).child("oferta").setValue(servico.getOferta());
+        databaseReferenceVizualizacao.child(estadoId).child(servicoId).child("oferta").setValue(servico.getOferta());
         databaseReferenceServico.child(servicoId).child("ofertante").setValue(firebaseAuth.getCurrentUser().getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -352,6 +352,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     tituloID.setText(servico.getNome());
                     valorID.setText(cardFormat.dinheiroFormat(String.valueOf(servico.getPreco())));
                     descricaoID.setText(servico.getDescricao());
+                    servico.setIdPrestador(servico.getOfertante());
                     estadoId = servico.getEstado();
                     definirLayout();
                     dadosUsuario();
