@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -182,5 +184,20 @@ public class MensagemActivity extends AppCompatActivity {
                 (ViewGroup.MarginLayoutParams) card.getLayoutParams();
         layoutParams.setMargins(left, 8, right, 8);
         card.requestLayout();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.opcoes_conversa_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.verServicoBtn) {
+            //abrir visualizar servico
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
