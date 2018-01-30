@@ -77,4 +77,8 @@
         <item>Em Negociação</item>
     </string-array>
     <string name="editar_servico">Editar Serviço</string>
+    <string-array name="opcoes_oferta">
+        <item>Aceitar esta oferta</item>
+        <item>Ver perfil do prestador</item>
+    </string-array>
 </resources>

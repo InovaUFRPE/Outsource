@@ -1,6 +1,7 @@
 package com.outsource.inovaufrpe.usuario.servico.gui;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -108,8 +109,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tvNotaPessoa = findViewById(R.id.tvNotaPessoa);
         tvEstadoServicoID = findViewById(R.id.tvEstadoServicoID);
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        tvNomeOfertante = findViewById(R.id.tvNomeOfertante);
-        tvOferta = findViewById(R.id.tvPrecoOrcamento);
+        tvNomeOfertante = findViewById(R.id.tvNomeOfertanteID);
+        tvOferta = findViewById(R.id.tvOfertaValorID);
         prestadorLayout = findViewById(R.id.layoutPessoa);
         tituloLayoutPessoa = findViewById(R.id.tvTituloLayout);
         layoutOfertas = findViewById(R.id.layoutOfertasID);
@@ -367,7 +368,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void mostrarOfertas() {
         Query query = databaseReference.child("oferta").child(servicoId).orderByChild("ofertaValor");
-        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Oferta, OfertaViewHolder>(Oferta.class, R.layout.card_ofertas, OfertaViewHolder.class, query) {
+        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Oferta, OfertaViewHolder>(Oferta.class, R.layout.card_perfil_negociacao, OfertaViewHolder.class, query) {
 
             @Override
             protected void populateViewHolder(OfertaViewHolder viewHolder, Oferta model, int position) {
@@ -382,7 +383,21 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 viewHolder.setOnClickListener(new OfertaViewHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        //TODO ABRIR O BAGULHO AQUI
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VisualizarServicoActivity.this);
+                        builder.setTitle("Opções de Oferta")
+                                .setItems(R.array.opcoes_oferta, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        switch (which){
+                                            case 0:
+                                                //aceitar oferta
+                                            case 1:
+                                                //criarDialogVisualizarPerfil(); TODO: passar os dados do prestador para criar este dialog
+                                        }
+                                    }
+                                });
+                        builder.create();
+                        builder.show();
                     }
                 });
                 return viewHolder;
