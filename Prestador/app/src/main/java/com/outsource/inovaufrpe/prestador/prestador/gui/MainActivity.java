@@ -2,6 +2,7 @@ package com.outsource.inovaufrpe.prestador.prestador.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fm = getSupportFragmentManager();
     private int mSelectedItem;
     private String ultimoFrag;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,5 +132,24 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, ConversaActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            finish();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Pressione mais uma vez para fechar o aplicativo", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
