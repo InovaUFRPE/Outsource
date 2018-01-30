@@ -443,7 +443,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         FirebaseUtil fu = new FirebaseUtil();
         try {
             if (estadoAtual.equals(EstadoServico.ABERTA.getValue())) {
-                databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId).child("idPrestador").setValue(firebaseAuth.getCurrentUser().getUid());
+                databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId).child("idPrestador").setValue(servico.getIdPrestador());
             }
             if (!estadoAtual.equals(estadoDestino)) {
                 fu.moverServico(databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId), databaseReference.child("vizualizacao").child(estadoDestino).child(servicoId), estadoDestino);

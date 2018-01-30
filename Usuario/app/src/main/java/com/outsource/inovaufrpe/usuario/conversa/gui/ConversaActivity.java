@@ -46,7 +46,7 @@ public class ConversaActivity extends AppCompatActivity {
         if(servicoID != null){
             query = databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("servicoID").equalTo(servicoID);
         }else{
-            query = databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("ordem-ref");
+            query = databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("ordemRef");
         }
         adapter = new FirebaseRecyclerAdapter<Conversa, ConversaViewHolder>(Conversa.class, R.layout.card_conversa, ConversaViewHolder.class, query) {
 
