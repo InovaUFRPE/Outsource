@@ -51,7 +51,11 @@
                 android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
         </activity>
         <activity android:name=".conversa.gui.MensagemActivity" />
-        <activity android:name=".conversa.gui.ConversaActivity" />
+        <activity android:name=".conversa.gui.ConversaActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
+        </activity>
         <activity android:name=".notificacao.gui.NotificacaoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

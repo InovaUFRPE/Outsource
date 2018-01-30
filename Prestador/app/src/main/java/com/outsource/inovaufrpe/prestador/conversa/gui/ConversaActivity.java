@@ -29,6 +29,7 @@ public class ConversaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversa);
+        setTitle("Conversas");
 
         recycleConversas = findViewById(R.id.rvConversasID);
         recycleConversas.setHasFixedSize(true);

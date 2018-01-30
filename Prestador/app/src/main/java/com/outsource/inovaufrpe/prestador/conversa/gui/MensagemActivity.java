@@ -26,14 +26,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
+import com.outsource.inovaufrpe.prestador.conversa.adapter.MensagemViewHolder;
 import com.outsource.inovaufrpe.prestador.conversa.dominio.Conversa;
 import com.outsource.inovaufrpe.prestador.conversa.dominio.Mensagem;
 import com.outsource.inovaufrpe.prestador.servico.gui.VisualizarServicoActivity;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
-import com.outsource.inovaufrpe.prestador.conversa.adapter.MensagemViewHolder;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MensagemActivity extends AppCompatActivity {
@@ -55,6 +56,7 @@ public class MensagemActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private CardView cardNegociacao;
     FirebaseUtil fu = new FirebaseUtil();
+    private ArrayList<String> listaAux = new ArrayList<>();
 
 
     @Override
@@ -88,6 +90,7 @@ public class MensagemActivity extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<Mensagem, MensagemViewHolder>(Mensagem.class, R.layout.card_mensagem_negociacao, MensagemViewHolder.class, query) {
             @Override
             protected void populateViewHolder(MensagemViewHolder viewHolder, Mensagem model, int position) {
+                listaAux.add(String.valueOf(position));
                 viewHolder.nomeUsuario.setText(model.getNomeAutor());
                 viewHolder.precoSugerido.setText(CardFormat.dinheiroFormat(model.getvalor()));
                 viewHolder.tvMensagem.setText(model.getTexto());
@@ -106,10 +109,12 @@ public class MensagemActivity extends AppCompatActivity {
         btenviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                escreverMensagem(etMensagem.getText().toString(), etValor.getText().toString());
-                etMensagem.setText("");
-                etValor.setText("");
+                if (!etMensagem.getText().toString().equals("")) {
+                    escreverMensagem(etMensagem.getText().toString(), etValor.getText().toString());
+                    etMensagem.setText("");
+                    etValor.setText("");
                 }
+            }
         });
 
 
@@ -138,12 +143,6 @@ public class MensagemActivity extends AppCompatActivity {
 //            }
 //        });
 
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeChanged(int positionStart, int itemCount) {
-                recycleNegociacoes.smoothScrollToPosition(adapter.getItemCount());
-            }
-        });
 
         recycleNegociacoes.setAdapter(adapter);
     }
@@ -180,8 +179,6 @@ public class MensagemActivity extends AppCompatActivity {
         databaseReference.child("conversaPrestador").child(prestadorID).child(servicoId+prestadorID).setValue(conversa);
         conversa.setNotificacao(true);
         databaseReference.child("conversaUsuario").child(usuarioID).child(servicoId+prestadorID).setValue(conversa);
-
-
     }
 
     private void setarMarginCard(CardView card, int left, int right) {

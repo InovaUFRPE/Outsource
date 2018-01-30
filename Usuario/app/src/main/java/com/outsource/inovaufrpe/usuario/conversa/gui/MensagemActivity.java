@@ -21,21 +21,16 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
-import com.outsource.inovaufrpe.usuario.conversa.dominio.Conversa;
-import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
-import com.outsource.inovaufrpe.usuario.conversa.dominio.Mensagem;
-import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
-import com.outsource.inovaufrpe.usuario.servico.gui.VisualizarServicoActivity;
-import com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity;
-import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.conversa.adapter.MensagemViewHolder;
+import com.outsource.inovaufrpe.usuario.conversa.dominio.Conversa;
+import com.outsource.inovaufrpe.usuario.conversa.dominio.Mensagem;
+import com.outsource.inovaufrpe.usuario.servico.gui.VisualizarServicoActivity;
+import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
 
 import java.sql.Timestamp;
@@ -113,9 +108,11 @@ public class MensagemActivity extends AppCompatActivity {
         btenviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                escreverMensagem(etMensagem.getText().toString(), etValor.getText().toString());
-                etMensagem.setText("");
-                etValor.setText("");
+                if (!etMensagem.getText().toString().equals("")) {
+                    escreverMensagem(etMensagem.getText().toString(), etValor.getText().toString());
+                    etMensagem.setText("");
+                    etValor.setText("");
+                }
             }
         });
 

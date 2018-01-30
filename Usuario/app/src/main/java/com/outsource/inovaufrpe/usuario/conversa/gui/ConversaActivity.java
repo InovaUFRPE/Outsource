@@ -35,6 +35,7 @@ public class ConversaActivity extends AppCompatActivity {
         servicoID = intent.getStringExtra("servicoID");
         recycleConversas = findViewById(R.id.rvConversasID);
         recycleConversas.setHasFixedSize(true);
+        setTitle("Conversas");
 
         mLayoutManager = new LinearLayoutManager(this);
         recycleConversas.setLayoutManager(mLayoutManager);
