@@ -3,7 +3,6 @@ package com.outsource.inovaufrpe.prestador.servico.gui;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.conversa.gui.MensagemActivity;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.carteira.dominio.God;
-import com.outsource.inovaufrpe.prestador.conversa.dominio.Mensagem;
 import com.outsource.inovaufrpe.prestador.notificacao.dominio.Notificacao;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Critica;
 import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
@@ -171,7 +168,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void concluir() {
         //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIAgh
-        databaseReference.child("vizualizacao").child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("servico").child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
@@ -179,17 +176,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
                         adicionar();
-                        atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                         databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         databaseReference.child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
-                        criarDialogAvaliarUsuario();
+                        criarDialogAvaliarUsuario(true);
                     }
                 } else {
-                    criarDialogAvaliarUsuario();
+                    criarDialogAvaliarUsuario(false);
                     databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     databaseReference.child("servico").child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                     databaseReference.child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
-                    databaseReference.child("vizualizacao").child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                 }
             }
 
@@ -237,8 +232,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 God carteira = new God(dataSnapshot.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").getValue(Double.class));
-                carteira.adicionar(dataSnapshot.child("vizualizacao").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
-                carteira.aplicarTaxa(dataSnapshot.child("vizualizacao").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
+                carteira.adicionar(dataSnapshot.child("vizualizacao").child("andamento").child(servicoId).child("preco").getValue(Double.class));
+                carteira.aplicarTaxa(dataSnapshot.child("vizualizacao").child("andamento").child(servicoId).child("preco").getValue(Double.class));
                 databaseReference.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
             }
 
@@ -304,9 +299,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             this.dialog.dismiss();
         }
         FirebaseUtil fu = new FirebaseUtil();
-        Toast.makeText(this, estadoAtual, Toast.LENGTH_SHORT).show();
         try {
             if (!estadoAtual.equals(estadoDestino)) {
+                databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId).child("estado").setValue(estadoDestino);
                 fu.moverServico(databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId), databaseReference.child("vizualizacao").child(estadoDestino).child(servicoId), estadoDestino);
                 databaseReference.child("servico").child(servicoId).child("estado").setValue(estadoDestino);
             }
@@ -318,11 +313,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void enviarNotificacao(int tiponotificacao){
+        long data = new Date().getTime();
         Notificacao notificacao = new Notificacao();
         notificacao.setServicoID(servico.getId());
         notificacao.setNomeServico(servico.getNome());
         notificacao.setEstado(servico.getEstado());
-        notificacao.setTempo(new Date().getTime());
+        notificacao.setTempo(data);
+        notificacao.setOrdemRef(new Timestamp(data*-1).toString());
         switch (tiponotificacao){
             case 0: //Oferta realizada
                 notificacao.setTextoNotificacao("Alguém ofertou o seu serviço!");
@@ -426,7 +423,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     /**
      * Método para chamar dialog de avaliação pós-servico
      */
-    private void criarDialogAvaliarUsuario() {
+    private void criarDialogAvaliarUsuario(final boolean conclusao) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
         @SuppressLint("InflateParams") View v1 = getLayoutInflater().inflate(R.layout.dialog_avaliacao_usuario, null);
 
@@ -445,6 +442,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 notaMedia.adicionarNota(servico.getIdCriador(),critica.getNota());
                 databaseReference.child("feedback").child("usuario").child(servico.getIdCriador()).child(databaseReference.child("feedback").child("usuario").child(servico.getIdCriador()).push().getKey()).setValue(critica);
                 enviarNotificacao(1);
+                if(conclusao){
+                    atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
+                }
                 dialog.dismiss();
             }
         });

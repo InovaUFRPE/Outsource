@@ -40,7 +40,7 @@ public class NotificacaoActivity extends AppCompatActivity {
         recycleNotificacao.setLayoutManager(mLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query query = databaseReference.child("notificacao").child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByKey();
+        Query query = databaseReference.child("notificacao").child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("ordemRef");
         adapter = new FirebaseRecyclerAdapter<Notificacao, NotificacaoViewHolder>(Notificacao.class, R.layout.card_notificacao, NotificacaoViewHolder.class, query) {
 
             @Override

@@ -12,6 +12,7 @@ public class Notificacao {
     private String nomeServico;
     private String textoNotificacao;
     private long tempo;
+    private String ordemRef;
     private int tipoNotificacao;
 
     public String getServicoID() {
@@ -52,6 +53,14 @@ public class Notificacao {
 
     public void setTempo(long tempo) {
         this.tempo = tempo;
+    }
+
+    public String getOrdemRef() {
+        return ordemRef;
+    }
+
+    public void setOrdemRef(String ordemRef) {
+        this.ordemRef = ordemRef;
     }
 
     public int getTipoNotificacao() {
