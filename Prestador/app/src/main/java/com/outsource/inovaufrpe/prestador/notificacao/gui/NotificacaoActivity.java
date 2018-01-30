@@ -30,6 +30,7 @@ public class NotificacaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notificacao);
+        setTitle(R.string.notificacoes);
 
         recycleNotificacao = findViewById(R.id.rvNotificacaoID);
         recycleNotificacao.setHasFixedSize(true);

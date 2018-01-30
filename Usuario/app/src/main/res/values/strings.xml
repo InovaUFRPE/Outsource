@@ -80,5 +80,6 @@
     <string-array name="opcoes_oferta">
         <item>Aceitar esta oferta</item>
         <item>Ver perfil do prestador</item>
+        <item>Enviar mensagem</item>
     </string-array>
 </resources>

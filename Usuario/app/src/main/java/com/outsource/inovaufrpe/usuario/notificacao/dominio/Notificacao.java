@@ -59,19 +59,6 @@ public class Notificacao {
     }
 
     public void setTipoNotificacao(int tipoNotificacao) {
-        switch (tipoNotificacao){
-            case 0: //Oferta aceita
-                this.setTextoNotificacao("Um usuário aceitou a sua oferta!");
-                break;
-            case 1://Conclusão
-                this.setTextoNotificacao("O prestador concluiu um dos seus serviços!");
-                break;
-            case 2://Oferta recusada
-                this.setTextoNotificacao("O usuário aceitou a oferta de outro Prestador.");
-                break;
-            case 3:
-                break;
-        }
         this.tipoNotificacao = tipoNotificacao;
     }
 }

@@ -37,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
 import com.outsource.inovaufrpe.usuario.conversa.gui.ConversaActivity;
+import com.outsource.inovaufrpe.usuario.conversa.gui.MensagemActivity;
 import com.outsource.inovaufrpe.usuario.notificacao.dominio.Notificacao;
 import com.outsource.inovaufrpe.usuario.servico.adapter.OfertaViewHolder;
 import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
@@ -204,7 +205,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void concluir() {
-        //TODO: CORRIGIR A AVALIAÇÃO DE USUARIO TARDIA
         databaseReference.child("vizualizacao").child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -272,7 +272,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for(DataSnapshot data: dataSnapshot.getChildren()){
-                                String id = data.getValue(Oferta.class).getPrestadorId();
+                                String id = data.getKey();
                                 if(id!= null && id != servico.getIdPrestador()){
                                     enviarNotificacao(2,id);
                                 }
@@ -389,6 +389,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                                             case 1:
                                                 criarDialogVisualizarPerfil(getItem(position).getPrestadorId(), getItem(position).getPrestadorNome());
                                                 break;
+                                            case 2:
+                                                Intent it = new Intent(VisualizarServicoActivity.this, MensagemActivity.class);
+                                                it.putExtra("servicoID", servicoId);
+                                                it.putExtra("prestadorID", getItem(position).getPrestadorId());
+                                                it.putExtra("nomeServico", nomeServico);
+                                                it.putExtra("usuarioID", firebaseAuth.getCurrentUser().getUid());
+                                                it.putExtra("estado", estadoId);
+                                                startActivity(it);
+                                                break;
                                         }
                                     }
                                 });
@@ -433,6 +442,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         }
         FirebaseUtil fu = new FirebaseUtil();
         try {
+            if (estadoAtual.equals(EstadoServico.ABERTA.getValue())) {
+                databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId).child("idPrestador").setValue(firebaseAuth.getCurrentUser().getUid());
+            }
             if (!estadoAtual.equals(estadoDestino)) {
                 fu.moverServico(databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId), databaseReference.child("vizualizacao").child(estadoDestino).child(servicoId), estadoDestino);
                 databaseReference.child("servico").child(servicoId).child("estado").setValue(estadoDestino);
@@ -449,6 +461,20 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         notificacao.setServicoID(servico.getId());
         notificacao.setNomeServico(servico.getNome());
         notificacao.setEstado(servico.getEstado());
+        switch (tiponotificacao){
+            case 0: //Oferta aceita
+                notificacao.setTextoNotificacao("Um usuário aceitou a sua oferta!");
+                break;
+            case 1://Conclusão
+                notificacao.setTextoNotificacao("O prestador concluiu um dos seus serviços!");
+                break;
+            case 2://Oferta recusada
+                notificacao.setTextoNotificacao("O usuário aceitou a oferta de outro Prestador.");
+                break;
+            case 3://Servico Concluido
+                notificacao.setTextoNotificacao("O usuario marcou o servico como Concluido!");
+                break;
+        }
         notificacao.setTipoNotificacao(tiponotificacao);
         databaseReference.child("notificacao").child("prestador").child(idPrestador).push().setValue(notificacao);
 
@@ -504,7 +530,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
         avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
-        nomeUsuario.setText(tvNomePessoa.getText().toString());
+        nomeUsuario.setText(nomePrestador);
+        //TODO configurar nota para ofertante
         if (peso == 0){
             avaliarPerfil.setRating(0);
         }else {
@@ -557,6 +584,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 NotaMedia notaMedia = new NotaMedia();
                 notaMedia.adicionarNota(servico.getIdPrestador(),critica.getNota());
                 databaseReference.child("feedback").child("prestador").child(servico.getIdPrestador()).child(databaseReference.child("feedback").child("prestador").child(servico.getIdPrestador()).push().getKey()).setValue(critica);
+                enviarNotificacao(3,servico.getIdPrestador());
                 dialog.dismiss();
             }
         });
@@ -565,26 +593,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         mBuilder.setView(v1);
         dialog = mBuilder.create();
         dialog.show();
-    }
-
-    private void adicionarMensagem(String texto, String valor) {
-        Mensagem mensagem = new Mensagem();
-        Date data = new Date();
-        String novaData = new Timestamp(data.getTime()).toString();
-        mensagem.setTempo(data.getTime());
-        mensagem.setTexto(texto);
-        mensagem.setAutor(firebaseAuth.getCurrentUser().getUid());
-        mensagem.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
-        mensagem.setvalor(valor);
-        novaData = novaData.replace(".", "");
-        databaseReference.child("mensagem").child(servicoId).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task task) {
-                if(!task.isSuccessful()){
-                    Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     @Override

@@ -63,18 +63,6 @@ public class Notificacao {
     }
 
     public void setTipoNotificacao(int tipoNotificacao) {
-        switch (tipoNotificacao){
-            case 0: //Oferta realizada
-                this.setTextoNotificacao("Alguém ofertou o seu serviço!");
-                break;
-            case 1://Conclusão
-                this.setTextoNotificacao("O prestador concluiu um dos seus serviços!");
-                break;
-            case 2://
-                break;
-            case 3:
-                break;
-        }
         this.tipoNotificacao = tipoNotificacao;
     }
 }
