@@ -205,7 +205,6 @@ public class EditarServicoActivity extends AppCompatActivity {
                 servico.setNome(etNomeServicoID.getText().toString().trim());
                 servico.setDescricao(etDescricaoServicoID.getText().toString().trim());
                 servico.setPreco(Double.valueOf(etPrecoServicoID.getText().toString().trim()));
-                servico.setOferta(Double.valueOf(etPrecoServicoID.getText().toString().trim()));
                 servico.setData(servico.getData());
                 servico.setEstado(estadoId);
                 servico.setIdCriador(firebaseAuth.getCurrentUser().getUid());

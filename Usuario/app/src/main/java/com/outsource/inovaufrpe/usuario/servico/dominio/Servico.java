@@ -9,8 +9,6 @@ public class Servico {
     private String nome;
     private String descricao;
     private God preco;
-    private Double oferta;
-    private String ofertante;
     private String data;
     private double latitude;
     private double longitude;
@@ -67,22 +65,6 @@ public class Servico {
 
     public void setPreco(Double preco) {
         this.preco = new God(preco);
-    }
-
-    public Double getOferta() {
-        return this.oferta;
-    }
-
-    public void setOferta(Double oferta) {
-        this.oferta = oferta;
-    }
-
-    public String getOfertante() {
-        return ofertante;
-    }
-
-    public void setOfertante(String ofertante) {
-        this.ofertante = ofertante;
     }
 
     public String getData() {

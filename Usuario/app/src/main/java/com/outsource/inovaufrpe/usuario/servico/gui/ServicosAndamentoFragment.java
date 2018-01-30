@@ -145,7 +145,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
+                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
                 if (model.isUrgente()) {
                     viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));

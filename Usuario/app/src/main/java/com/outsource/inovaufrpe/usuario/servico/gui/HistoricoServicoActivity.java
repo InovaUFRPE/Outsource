@@ -51,7 +51,7 @@ public class HistoricoServicoActivity extends AppCompatActivity {
 
     }
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("servico").child("concluido");
+        databaseReference = FirebaseDatabase.getInstance().getReference("vizualizacao").child("concluido");
         Query query = databaseReference.orderByChild("idPrestador").equalTo(prestadorId);
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
@@ -62,7 +62,7 @@ public class HistoricoServicoActivity extends AppCompatActivity {
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
+                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
 
             }
 

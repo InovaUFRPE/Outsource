@@ -38,7 +38,7 @@ public class ConversaActivity extends AppCompatActivity {
         recycleConversas.setLayoutManager(mLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query query = databaseReference.child("conversaPrestador").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("ordem-ref");
+        Query query = databaseReference.child("conversaPrestador").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("ordemRef");
         adapter = new FirebaseRecyclerAdapter<Conversa, ConversaViewHolder>(Conversa.class, R.layout.card_conversa, ConversaViewHolder.class, query) {
 
             @Override

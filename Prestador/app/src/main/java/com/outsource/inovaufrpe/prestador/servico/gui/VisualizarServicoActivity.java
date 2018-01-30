@@ -125,7 +125,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 criarDialogNegociacao();
                 final DecimalFormat df = new DecimalFormat("####0.00");
-                precoServico.setText(servico.getOferta().toString());
+                precoServico.setText(servico.getPreco().toString());
                 solicNovoOrca.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -135,6 +135,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         oferta1.setOfertaValor(Double.parseDouble(precoServico.getText().toString()));
                         oferta1.setTempo(new Date().getTime());
                         databaseReference.child("oferta").child(servicoId).child(oferta1.getPrestadorId()).setValue(oferta1);
+                        enviarNotificacao(0);
                         dialog.dismiss();
                     }
                 });
@@ -173,26 +174,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 //            }
 //        });
 
-        btAceitarOferta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())) {
-                    databaseReference.child("servico").child(servicoId).child("preco").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
-                            if(task.isSuccessful()){
-                                atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
-                            }else{
-                                Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                } else {
-                    Toast.makeText(VisualizarServicoActivity.this, "Você quem realizou a ultima oferta!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         solicitanteLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,7 +194,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         });
 
-        FirebaseDatabase.getInstance().getReference().child("usuario").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 nomeSolicitante = dataSnapshot.child("nome").getValue(String.class)+" "+dataSnapshot.child("sobrenome").getValue(String.class);
@@ -229,7 +210,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void concluir() {
         //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIAgh
-        FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("vizualizacao").child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
@@ -239,15 +220,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         adicionar();
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                         databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
-                        FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                        databaseReference.child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         criarDialogAvaliarUsuario();
                     }
                 } else {
                     criarDialogAvaliarUsuario();
                     databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     databaseReference.child("servico").child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
-                    FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
-                    FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
+                    databaseReference.child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                    databaseReference.child("vizualizacao").child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                 }
             }
 
@@ -268,7 +249,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     private void definirLayout(){
         if (estadoId.equals(EstadoServico.ABERTA.getValue())) {
             tvEstadoServicoID.setText(R.string.aberta);
-            findViewById(R.id.layoutPessoa).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
@@ -292,7 +272,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void adicionar() {
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -309,38 +288,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         });
     }
 
-    private void dadosNegociacao() {
-        if(servico.getOfertante().equals(firebaseAuth.getCurrentUser().getUid())){
-            tvNomeOfertante.setText("Você");
-        }else{
-            tvNomeOfertante.setText(tvNomePessoa.getText().toString());
-        }
-        tvOferta.setText(cardFormat.dinheiroFormat(servico.getOferta().toString()));
-    }
-
-    private void negociar() throws DatabaseException {
-        servico.setOferta(Double.valueOf(precoServico.getText().toString().replace(",", ".")));
-        DatabaseReference databaseReferenceVizualizacao = FirebaseDatabase.getInstance().getReference().child("vizualizacao");
-        databaseReference.child("servico").child(servicoId).child("oferta").setValue(servico.getOferta()).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (!task.isSuccessful()) {
-                    throw new DatabaseException(task.getException().getMessage());
-                }
-            }
-        });
-        databaseReferenceVizualizacao.child(estadoId).child(servicoId).child("oferta").setValue(servico.getOferta());
-        databaseReference.child("servico").child(servicoId).child("ofertante").setValue(firebaseAuth.getCurrentUser().getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (!task.isSuccessful()) {
-                    throw new DatabaseException(task.getException().getMessage());
-                }
-            }
-        });
-
-    }
-
     private void dadosServico() {
         databaseReference.child("servico").child(servicoId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -350,7 +297,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     tituloID.setText(servico.getNome());
                     valorID.setText(cardFormat.dinheiroFormat(String.valueOf(servico.getPreco())));
                     descricaoID.setText(servico.getDescricao());
-                    servico.setIdPrestador(servico.getOfertante());
                     estadoId = servico.getEstado();
                     definirLayout();
                     dadosUsuario();
@@ -368,8 +314,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
 
     private void dadosUsuario() {
-        DatabaseReference databaseReferenceUsuario = FirebaseDatabase.getInstance().getReference().child("usuario");
-        databaseReferenceUsuario.child(servico.getIdCriador()).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("usuario").child(servico.getIdCriador()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String s = dataSnapshot.child("nome").getValue(String.class) + " " + dataSnapshot.child("sobrenome").getValue(String.class);
@@ -398,14 +343,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             this.dialog.dismiss();
         }
         FirebaseUtil fu = new FirebaseUtil();
-        DatabaseReference databaseReferenceVizualizacao = FirebaseDatabase.getInstance().getReference().child("vizualizacao");
         Toast.makeText(this, estadoAtual, Toast.LENGTH_SHORT).show();
         try {
             if (estadoAtual.equals(EstadoServico.ABERTA.getValue())) {
-                databaseReferenceVizualizacao.child(estadoAtual).child(servicoId).child("idPrestador").setValue(firebaseAuth.getCurrentUser().getUid());
+                databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId).child("idPrestador").setValue(firebaseAuth.getCurrentUser().getUid());
             }
             if (!estadoAtual.equals(estadoDestino)) {
-                fu.moverServico(databaseReferenceVizualizacao.child(estadoAtual).child(servicoId), databaseReferenceVizualizacao.child(estadoDestino).child(servicoId), estadoDestino);
+                fu.moverServico(databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId), databaseReference.child("vizualizacao").child(estadoDestino).child(servicoId), estadoDestino);
                 databaseReference.child("servico").child(servicoId).child("estado").setValue(estadoDestino);
             }
 
@@ -416,14 +360,14 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void enviarNotificacao(int tiponotificacao){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         Notificacao notificacao = new Notificacao();
         notificacao.setServicoID(servico.getId());
         notificacao.setNomeServico(servico.getNome());
         notificacao.setEstado(servico.getEstado());
+        notificacao.setTempo(new Date().getTime());
         notificacao.setTipoNotificacao(tiponotificacao);
 
-        databaseReference.child("Notificacao").child("usuario").child(servico.getIdCriador()).push().setValue(notificacao);
+        databaseReference.child("notificacao").child("usuario").child(servico.getIdCriador()).push().setValue(notificacao);
 
     }
 
@@ -488,7 +432,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         mRecyclerView.setFocusable(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(VisualizarServicoActivity.this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         Query query = databaseReference.child("feedback").child("usuario").child(servico.getIdCriador()).orderByChild("data");
 
         adapter = new FirebaseRecyclerAdapter<Critica, CriticaViewHolder>(Critica.class, R.layout.card_critica, CriticaViewHolder.class, query) {
@@ -551,7 +494,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         mensagem.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
         mensagem.setvalor(valor);
         novaData = novaData.replace(".", "");
-        FirebaseDatabase.getInstance().getReference().child("mensagem").child(servicoId).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("mensagem").child(servicoId).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if(!task.isSuccessful()){
