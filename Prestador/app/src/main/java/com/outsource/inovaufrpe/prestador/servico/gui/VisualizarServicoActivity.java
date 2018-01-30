@@ -238,11 +238,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     if (dataSnapshot.child("concluido").getValue().equals(firebaseAuth.getCurrentUser().getUid())) {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
-                        criarDialogAvaliarUsuario();
                         adicionar();
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                         databaseReferenceServico.child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                        criarDialogAvaliarUsuario();
                     }
                 } else {
                     criarDialogAvaliarUsuario();

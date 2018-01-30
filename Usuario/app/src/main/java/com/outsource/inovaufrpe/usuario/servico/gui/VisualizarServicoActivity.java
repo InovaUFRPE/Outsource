@@ -224,16 +224,16 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     if (dataSnapshot.child("concluido").getValue().toString().equals(firebaseAuth.getCurrentUser().getUid())) {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
-                        criarDialogAvaliarUsuario();
                         atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                         aplicarTaxa();
                         databaseReferenceServico.child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                        criarDialogAvaliarUsuario();
                     }
                 } else {
                     criarDialogAvaliarUsuario();
-                    databaseReferenceServico.child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
-                    databaseReferenceServico.child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
+                    databaseReferenceServico.child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                    databaseReferenceServico.child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                     FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     FirebaseDatabase.getInstance().getReference().child("vizualizacao").child(estadoId).child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                 }
@@ -271,7 +271,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                God.setFundos(dataSnapshot.child("servico").child("andamento").child(servicoId).child("oferta").getValue(Double.class));
+                God.setFundos(dataSnapshot.child("servico").child(servicoId).child("oferta").getValue(Double.class));
             }
 
             @Override

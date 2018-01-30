@@ -19,13 +19,13 @@ public class NotaMedia {
 
     public void adicionarNota(final String solicitanteId, final int nota) {
         solicitanteID = solicitanteId;
-        FirebaseDatabase.getInstance().getReference().child("prestador").child(solicitanteId).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("usuario").child(solicitanteId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 notaMedia = dataSnapshot.child("nota").getValue(int.class);
                 peso = dataSnapshot.child("pesoNota").getValue(int.class);
-                FirebaseDatabase.getInstance().getReference().child("prestador").child(solicitanteId).child("nota").setValue(notaMedia+nota);
-                FirebaseDatabase.getInstance().getReference().child("prestador").child(solicitanteId).child("pesoNota").setValue(peso+1);
+                FirebaseDatabase.getInstance().getReference().child("usuario").child(solicitanteId).child("nota").setValue(notaMedia+nota);
+                FirebaseDatabase.getInstance().getReference().child("usuario").child(solicitanteId).child("pesoNota").setValue(peso+1);
             }
 
             @Override
