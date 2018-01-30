@@ -74,12 +74,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSolicitarOrcamento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/solicitar_orcamento" />
-
     <!--<com.outsource.inovaufrpe.usuario.utils.SwipeButton-->
     <!--android:id="@+id/swipe_btn"-->
     <!--android:layout_width="match_parent"-->

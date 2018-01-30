@@ -8,12 +8,14 @@ package com.outsource.inovaufrpe.prestador.notificacao.dominio;
 //        estadoId = intent.getStringExtra("estado");
 //        nomeServico = intent.getStringExtra("nomeServico");
 
+
 public class Notificacao {
 
     private String servicoID;
     private String estado;
     private String nomeServico;
     private String textoNotificacao;
+    private long tempo;
     private int tipoNotificacao;
 
     public String getServicoID() {
@@ -48,6 +50,14 @@ public class Notificacao {
         this.textoNotificacao = textoNotificacao;
     }
 
+    public long getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(long tempo) {
+        this.tempo = tempo;
+    }
+
     public int getTipoNotificacao() {
         return tipoNotificacao;
     }
@@ -68,3 +78,4 @@ public class Notificacao {
         this.tipoNotificacao = tipoNotificacao;
     }
 }
+

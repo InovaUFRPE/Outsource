@@ -136,11 +136,16 @@
     </LinearLayout>
     <!--Fim Layout Solicitante-->
 
+
+
     <!-- Layout Prestador -->
     <LinearLayout
         android:id="@+id/layoutNegociacoes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -153,9 +158,9 @@
             android:textStyle="bold" />
 
         <!--<include-->
-            <!--layout="@layout/card_perfil_negociacao"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
+        <!--layout="@layout/card_perfil_negociacao"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
         <Button
             android:id="@+id/btConversasID"
             android:layout_width="match_parent"
@@ -166,10 +171,22 @@
     <!-- Fim Layout Prestador -->
 
 
+    <LinearLayout
+        android:id="@+id/layoutOfertasID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvOfertasID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/layoutBotoesBottom"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="10"
         android:orientation="vertical">
 

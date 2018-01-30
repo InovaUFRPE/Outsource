@@ -21,7 +21,7 @@ import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
-import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
+import com.outsource.inovaufrpe.usuario.servico.adapter.ServicoListHolder;
 
 
 /**

@@ -104,6 +104,11 @@ public class MensagemActivity extends AppCompatActivity {
                     setarMarginCard(cardNegociacao, 16, 100);
                 }
             }
+
+            @Override
+            public int getItemCount() {
+                return super.getItemCount();
+            }
         };
 
         btenviar.setOnClickListener(new View.OnClickListener() {

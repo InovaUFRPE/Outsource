@@ -18,10 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.usuario.R;
-import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
-import com.outsource.inovaufrpe.usuario.utils.ServicoListHolder;
+import com.outsource.inovaufrpe.usuario.servico.adapter.ServicoListHolder;
 
 
 public class ServicosConcluidosFragment extends Fragment {

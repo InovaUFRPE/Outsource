@@ -4,9 +4,6 @@ package com.outsource.inovaufrpe.usuario.notificacao.dominio;
  * Created by Pichau on 29/01/2018.
  */
 
-//servicoId = intent.getStringExtra("servicoID");
-//        estadoId = intent.getStringExtra("estado");
-//        nomeServico = intent.getStringExtra("nomeServico");
 
 public class Notificacao {
 
@@ -14,6 +11,7 @@ public class Notificacao {
     private String estado;
     private String nomeServico;
     private String textoNotificacao;
+    private long tempo;
     private int tipoNotificacao;
 
     public String getServicoID() {
@@ -46,6 +44,14 @@ public class Notificacao {
 
     public void setTextoNotificacao(String textoNotificacao) {
         this.textoNotificacao = textoNotificacao;
+    }
+
+    public long getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(long tempo) {
+        this.tempo = tempo;
     }
 
     public int getTipoNotificacao() {

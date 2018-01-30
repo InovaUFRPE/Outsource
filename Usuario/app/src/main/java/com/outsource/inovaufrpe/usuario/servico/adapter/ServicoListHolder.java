@@ -1,4 +1,4 @@
-package com.outsource.inovaufrpe.usuario.utils;
+package com.outsource.inovaufrpe.usuario.servico.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
