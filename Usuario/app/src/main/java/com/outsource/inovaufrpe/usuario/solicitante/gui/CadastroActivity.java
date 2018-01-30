@@ -48,35 +48,47 @@ public class CadastroActivity extends Activity {
     }
 
     private void cadastrar() {
-        user = firebase.getUser();
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(etNome.getText().toString()).build();
-        user.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
+        String erro = "Este campo não pode ser nulo";
 
-                            Usuario usuario = new Usuario();
-                            usuario.setId(user.getUid());
-                            usuario.setNome(etNome.getText().toString());
-                            usuario.setSobrenome(etSobrenome.getText().toString());
-                            usuario.setEmail(etEmail.getText().toString());
-                            usuario.setTelefone(etTelefone.getText().toString().trim());
-                            usuario.setCarteira(Double.valueOf("0"));
-                            usuario.setNota(0);
-                            usuario.setPesoNota(0);
-                            firebase.getUsuarioReference().child(user.getUid()).setValue(usuario);
-                            startActivity(new Intent(CadastroActivity.this, MainActivity.class));
-                            finish();
+        if (etNome.getText().toString().trim().equals("")) {
+            etNome.setError(erro);
+        } else if (etSobrenome.getText().toString().trim().equals("")) {
+            etSobrenome.setError(erro);
+        } else if (etEmail.getText().toString().trim().equals("")) {
+            etEmail.setError(erro);
+        } else if (etTelefone.getText().toString().trim().equals("")) {
+            etTelefone.setError(erro);
+        } else {
+            user = firebase.getUser();
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(etNome.getText().toString()).build();
+            user.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+
+                                Usuario usuario = new Usuario();
+                                usuario.setId(user.getUid());
+                                usuario.setNome(etNome.getText().toString());
+                                usuario.setSobrenome(etSobrenome.getText().toString());
+                                usuario.setEmail(etEmail.getText().toString());
+                                usuario.setTelefone(etTelefone.getText().toString().trim());
+                                usuario.setCarteira(Double.valueOf("0"));
+                                usuario.setNota(0);
+                                usuario.setPesoNota(0);
+                                firebase.getUsuarioReference().child(user.getUid()).setValue(usuario);
+                                startActivity(new Intent(CadastroActivity.this, MainActivity.class));
+                                finish();
 
 
-                        } else {
-                            Toast.makeText(CadastroActivity.this, "Falha no Cadastro" + task.getException(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(CadastroActivity.this, "Falha no Cadastro" + task.getException(), Toast.LENGTH_SHORT).show();
+                            }
+
+
                         }
-
-
-                    }
-                });
+                    });
+        }
     }
 }

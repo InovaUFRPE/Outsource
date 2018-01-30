@@ -167,12 +167,6 @@
             android:layout_height="wrap_content"
             android:text="Conversar" />
 
-        <!--<include-->
-            <!--layout="@layout/card_perfil_negociacao"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-
-
     </LinearLayout>
     <!-- Fim Layout Solicitante -->
 

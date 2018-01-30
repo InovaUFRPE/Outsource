@@ -44,37 +44,48 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void cadastrar() {
-        user = firebase.getUser();
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(etNome.getText().toString()).build();
-        user.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Prestador prestador = new Prestador();
-                            prestador.setId(user.getUid());
-                            prestador.setNome(etNome.getText().toString());
-                            prestador.setSobrenome(etSobrenome.getText().toString());
-                            prestador.setEmail(etEmail.getText().toString());
-                            prestador.setTelefone(etTelefone.getText().toString().trim());
-                            prestador.setCarteira(Double.valueOf("0"));
-                            prestador.setNota(0);
-                            prestador.setPesoNota(0);
-                            firebase.getPrestadorReference().child(user.getUid()).setValue(prestador);
-                            startActivity(new Intent(CadastroActivity.this, MainActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(CadastroActivity.this, "Falha no Cadastro" + task.getException(), Toast.LENGTH_SHORT).show();
+        String erro = "Este campo não pode ser nulo";
+
+        if (etNome.getText().toString().trim().equals("")) {
+            etNome.setError(erro);
+        } else if (etSobrenome.getText().toString().trim().equals("")) {
+            etSobrenome.setError(erro);
+        } else if (etEmail.getText().toString().trim().equals("")) {
+            etEmail.setError(erro);
+        } else if (etTelefone.getText().toString().trim().equals("")) {
+            etTelefone.setError(erro);
+        } else {
+
+            user = firebase.getUser();
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(etNome.getText().toString()).build();
+            user.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Prestador prestador = new Prestador();
+                                prestador.setId(user.getUid());
+                                prestador.setNome(etNome.getText().toString());
+                                prestador.setSobrenome(etSobrenome.getText().toString());
+                                prestador.setEmail(etEmail.getText().toString());
+                                prestador.setTelefone(etTelefone.getText().toString().trim());
+                                prestador.setCarteira(Double.valueOf("0"));
+                                prestador.setNota(0);
+                                prestador.setPesoNota(0);
+                                firebase.getPrestadorReference().child(user.getUid()).setValue(prestador);
+                                startActivity(new Intent(CadastroActivity.this, MainActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(CadastroActivity.this, "Falha no Cadastro" + task.getException(), Toast.LENGTH_SHORT).show();
+                            }
+
                         }
-
-
-                    }
-                });
+                    });
+        }
 
     }
 }
