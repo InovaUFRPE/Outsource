@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.AppCompat.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/purple_background"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context="com.outsource.inovaufrpe.prestador.prestador.gui.LoginActivity">
@@ -18,8 +19,12 @@
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:padding="16dp"
-        card_view:cardCornerRadius="4dp">
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="8dp"
+        tools:targetApi="o">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,8 +38,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/numero_do_telefone"
                 android:inputType="phone"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorGray" />
+                android:textColor="@color/colorBlack" />
 
             <EditText
                 android:id="@+id/etCodigoID"
@@ -59,7 +63,8 @@
                 android:layout_margin="20dp"
                 android:text="@string/ou"
                 android:textAlignment="center"
-                android:textColor="@color/colorGray" />
+                android:textAllCaps="true"
+                android:textColor="@color/com_facebook_button_background_color_disabled" />
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btFacebookID"
@@ -67,6 +72,7 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
     </android.support.v7.widget.CardView>
 
 </LinearLayout>
