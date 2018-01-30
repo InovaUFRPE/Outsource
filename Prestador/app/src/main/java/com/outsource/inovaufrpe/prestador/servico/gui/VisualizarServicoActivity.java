@@ -111,7 +111,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         btConcluir = findViewById(R.id.btnConcluirServico);
         btAceitarOferta = findViewById(R.id.btAceitarNegociacao);
         LinearLayout solicitanteLayout = findViewById(R.id.layoutPessoa);
-        LinearLayout negociacaoLayout = findViewById(R.id.layoutNegociacoes);
 
         ActionBar ab = getSupportActionBar();
         ab.setSubtitle(nomeServico);
