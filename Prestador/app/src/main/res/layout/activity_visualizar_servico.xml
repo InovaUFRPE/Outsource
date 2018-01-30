@@ -145,7 +145,7 @@
     </LinearLayout>
     <!--Fim Layout Prestador-->
 
-    <!-- Layout solicitante -->
+    <!-- Layout solicitante ->
     <LinearLayout
         android:id="@+id/layoutNegociacoes"
         android:layout_width="match_parent"
@@ -168,7 +168,7 @@
             android:text="Conversar" />
 
     </LinearLayout>
-    <!-- Fim Layout Solicitante -->
+    <!- Fim Layout Solicitante -->
 
 
     <RelativeLayout

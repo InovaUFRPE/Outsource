@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,7 +69,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     EditText mensagem;
     Button cancelarNegociacao;
     Button btNegociar;
-    Button btMensagem;
     Button btAceitarOferta;
     Button btConcluir;
     String servicoId;
@@ -108,7 +109,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tvEstadoServicoID = findViewById(R.id.tvEstadoServicoID);
         btNegociar = findViewById(R.id.btnNegociar);
         btConcluir = findViewById(R.id.btnConcluirServico);
-        btMensagem = findViewById(R.id.btMensagemID);
         btAceitarOferta = findViewById(R.id.btAceitarNegociacao);
         LinearLayout solicitanteLayout = findViewById(R.id.layoutPessoa);
         LinearLayout negociacaoLayout = findViewById(R.id.layoutNegociacoes);
@@ -153,19 +153,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 criarDialogVisualizarPerfil();
-            }
-        });
-
-        btMensagem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(VisualizarServicoActivity.this, MensagemActivity.class);
-                intent.putExtra("servicoID", servicoId);
-                intent.putExtra("prestadorID",  firebaseAuth.getCurrentUser().getUid());
-                intent.putExtra("usuarioID", servico.getIdCriador());
-                intent.putExtra("nomeServico",  servico.getNome());
-                intent.putExtra("estado", servico.getEstado());
-                startActivity(intent);
             }
         });
 
@@ -469,22 +456,26 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())){
-            getMenuInflater().inflate(R.menu.cancelar_menu, menu);
-        }
+        getMenuInflater().inflate(R.menu.chat_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.cancelarBtn){
-            cancelarServico();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.chatSolicitanteButton){
+            Intent intent = new Intent(VisualizarServicoActivity.this, MensagemActivity.class);
+            intent.putExtra("servicoID", servicoId);
+            intent.putExtra("prestadorID",  firebaseAuth.getCurrentUser().getUid());
+            intent.putExtra("usuarioID", servico.getIdCriador());
+            intent.putExtra("nomeServico",  servico.getNome());
+            intent.putExtra("estado", servico.getEstado());
+            startActivity(intent);
         }
         return super.onContextItemSelected(item);
     }
-
+/*
     public void cancelarServico(){
         servico.setIdPrestador("");
         servico.setOfertante("");
