@@ -26,11 +26,11 @@ import com.outsource.inovaufrpe.prestador.servico.adapter.ServicoListHolder;
 
 public class ServicosAndamentoFragment extends Fragment {
 
-    private RecyclerView mRecyclerViewNegociacao;
+//    private RecyclerView mRecyclerViewNegociacao;
     private RecyclerView mRecyclerViewAndamento;
     CardFormat cardFormat = new CardFormat();
 
-    private FirebaseRecyclerAdapter adapter1;
+//    private FirebaseRecyclerAdapter adapter1;
     private FirebaseRecyclerAdapter adapter2;
 
     private TextView tvNenhumServico;
@@ -49,17 +49,17 @@ public class ServicosAndamentoFragment extends Fragment {
         tvNenhumServico = view.findViewById(R.id.nenhum_servico);
         tvNenhumServico.setVisibility(View.GONE);
 
-        mRecyclerViewNegociacao = view.findViewById(R.id.RecycleID);
+//        mRecyclerViewNegociacao = view.findViewById(R.id.RecycleID);
         mRecyclerViewAndamento = view.findViewById(R.id.Recycle2ID);
 
-        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(getActivity());
+//        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(getActivity());
         RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getActivity());
-        mRecyclerViewNegociacao.setLayoutManager(mLayoutManager1);
+//        mRecyclerViewNegociacao.setLayoutManager(mLayoutManager1);
         mRecyclerViewAndamento.setLayoutManager(mLayoutManager2);
 
         adaptador();
 
-        Spinner spinner1 = view.findViewById(R.id.spinner1);
+        /*Spinner spinner1 = view.findViewById(R.id.spinner1);
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -87,7 +87,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 mRecyclerViewNegociacao.setVisibility(View.GONE);
                 mRecyclerViewAndamento.setVisibility(View.GONE);
             }
-        });
+        });*/
 
         return view;
 
@@ -95,10 +95,10 @@ public class ServicosAndamentoFragment extends Fragment {
 
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query queryNegociacao = databaseReference.child("vizualizacao").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+//        Query queryNegociacao = databaseReference.child("vizualizacao").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
         Query queryAndamento = databaseReference.child("vizualizacao").child("andamento").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
 
-        adapter1 = new FirebaseRecyclerAdapter<ServicoView, ServicoListHolder>(ServicoView.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
+        /*adapter1 = new FirebaseRecyclerAdapter<ServicoView, ServicoListHolder>(ServicoView.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
 
             @Override
             protected void populateViewHolder(ServicoListHolder viewHolder, ServicoView model, int position) {
@@ -144,7 +144,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 return super.getItemCount();
             }
 
-        };
+        };*/
 
 
         adapter2 = new FirebaseRecyclerAdapter<ServicoView, ServicoListHolder>(ServicoView.class, R.layout.card_servico, ServicoListHolder.class, queryAndamento) {
@@ -201,7 +201,7 @@ public class ServicosAndamentoFragment extends Fragment {
         };
 
 
-        mRecyclerViewNegociacao.setAdapter(adapter1);
+//        mRecyclerViewNegociacao.setAdapter(adapter1);
         mRecyclerViewAndamento.setAdapter(adapter2);
     }
 

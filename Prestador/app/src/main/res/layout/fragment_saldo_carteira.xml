@@ -50,18 +50,6 @@
                 android:textSize="70sp"
                 tools:ignore="RelativeOverlap" />
 
-            <Button
-                android:id="@+id/btAdicionarMoedaID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@color/colorTransparent"
-                android:text="@string/adicionar"
-                android:textColor="@color/colorWhite"
-                tools:ignore="RelativeOverlap" />
-
         </RelativeLayout>
     </LinearLayout>
 

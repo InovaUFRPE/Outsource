@@ -17,7 +17,7 @@
         android:layout_marginRight="19dp"
         android:ems="10"
         android:hint="@string/preco"
-        android:inputType="textPersonName" />
+        android:inputType="number" />
 
     <Button
         android:id="@+id/btConfirmarID"

@@ -34,7 +34,6 @@
         <activity
             android:name=".prestador.gui.MainActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".carteira.gui.AdicionarMoedaActivity" />
         <activity android:name=".servico.gui.VisualizarServicoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

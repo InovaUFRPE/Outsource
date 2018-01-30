@@ -24,7 +24,6 @@ import java.text.DecimalFormat;
 
 public class SaldoFragment extends android.support.v4.app.Fragment {
     TextView tvMoedaCarteiraID;
-    Button btAdicionarMoedaID;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -41,13 +40,6 @@ public class SaldoFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_saldo_carteira, container, false);
         preencheDados();
         tvMoedaCarteiraID = view.findViewById(R.id.tvMoedaCarteiraID);
-        btAdicionarMoedaID = view.findViewById(R.id.btAdicionarMoedaID);
-        btAdicionarMoedaID.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), AdicionarMoedaActivity.class));
-            }
-        });
         return view;
     }
 

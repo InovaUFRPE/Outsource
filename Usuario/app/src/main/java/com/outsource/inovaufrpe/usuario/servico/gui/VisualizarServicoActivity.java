@@ -165,7 +165,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task task) {
                             if(task.isSuccessful()){
                                 descontar();
-                                atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
                             }else{
                                 Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
                             }
@@ -264,8 +263,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 God carteira = new God(dataSnapshot.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").getValue(Double.class));
-                carteira.subtrair(dataSnapshot.child("vizualizacao").child("negociacao").child(servicoId).child("oferta").getValue(Double.class));
-                databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
+                Double oferta = dataSnapshot.child("vizualizacao").child("negociacao").child(servicoId).child("oferta").getValue(Double.class);
+                if (carteira.getMoeda() > oferta){
+                    carteira.subtrair(oferta);
+                    databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
+                    atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
+
+                }else {
+                    Toast.makeText(VisualizarServicoActivity.this,"O saldo na carteira é insuficiente.",Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

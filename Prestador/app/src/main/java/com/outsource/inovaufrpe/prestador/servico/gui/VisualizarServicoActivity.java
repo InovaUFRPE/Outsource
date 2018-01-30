@@ -268,7 +268,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     private void definirLayout(){
         if (estadoId.equals(EstadoServico.ABERTA.getValue())) {
             tvEstadoServicoID.setText(R.string.aberta);
-            findViewById(R.id.layoutNegociacoes).setVisibility(View.GONE);
+            findViewById(R.id.layoutPessoa).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
             findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
