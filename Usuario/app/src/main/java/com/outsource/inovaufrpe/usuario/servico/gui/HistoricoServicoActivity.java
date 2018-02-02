@@ -26,7 +26,6 @@ public class HistoricoServicoActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    CardFormat cardFormat = new CardFormat();
     String nomePrestador;
     String prestadorId;
 
@@ -51,7 +50,7 @@ public class HistoricoServicoActivity extends AppCompatActivity {
 
     }
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("vizualizacao").child("concluido");
+        databaseReference = FirebaseDatabase.getInstance().getReference("visualizacao").child("concluido");
         Query query = databaseReference.orderByChild("idPrestador").equalTo(prestadorId);
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
@@ -61,8 +60,13 @@ public class HistoricoServicoActivity extends AppCompatActivity {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
+                viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM"));
+                viewHolder.valor.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
+                if (model.isUrgente()) {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
+                } else {
+                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                }
 
             }
 

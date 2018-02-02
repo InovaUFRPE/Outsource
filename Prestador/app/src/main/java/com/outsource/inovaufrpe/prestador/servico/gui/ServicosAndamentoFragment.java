@@ -28,7 +28,6 @@ public class ServicosAndamentoFragment extends Fragment {
 
 //    private RecyclerView mRecyclerViewNegociacao;
     private RecyclerView mRecyclerViewAndamento;
-    CardFormat cardFormat = new CardFormat();
 
 //    private FirebaseRecyclerAdapter adapter1;
     private FirebaseRecyclerAdapter adapter2;
@@ -95,8 +94,8 @@ public class ServicosAndamentoFragment extends Fragment {
 
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
-//        Query queryNegociacao = databaseReference.child("vizualizacao").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        Query queryAndamento = databaseReference.child("vizualizacao").child("andamento").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+//        Query queryNegociacao = databaseReference.child("visualizacao").child("negociacao").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
+        Query queryAndamento = databaseReference.child("visualizacao").child("andamento").orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
 
         /*adapter1 = new FirebaseRecyclerAdapter<ServicoView, ServicoListHolder>(ServicoView.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
 
@@ -159,8 +158,8 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM/yyyy"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
+                viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM/yyyy"));
+                viewHolder.valor.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
 
                 if (model.isUrgente()) {
                     viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));

@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity;
 
 import java.sql.Timestamp;
@@ -83,7 +84,7 @@ public class EditarServicoActivity extends AppCompatActivity {
 
         switchTipoServico = findViewById(R.id.switchTipoServico);
 
-        databaseReferenceServico = FirebaseDatabase.getInstance().getReference().child("vizualizacao");
+        databaseReferenceServico = FirebaseDatabase.getInstance().getReference().child("visualizacao");
         databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -219,8 +220,26 @@ public class EditarServicoActivity extends AppCompatActivity {
                     servico.setUrgente(false);
                 }
 
-                databaseReference.child("servico").child(estadoId).child(servicoId).setValue(servico);
-                databaseReference.child("servico").child(estadoId).child(servicoId).child("ordem-ref").setValue(gambi + new Timestamp(-1 * data.getTime()).toString());
+                ServicoView servicoView = dataSnapshot.getValue(ServicoView.class);
+                servicoView.setNome(etNomeServicoID.getText().toString().trim());
+                servicoView.setPreco(Double.valueOf(etPrecoServicoID.getText().toString().trim()));
+                servicoView.setData(servicoView.getData());
+                servicoView.setEstado(estadoId);
+                servicoView.setIdCriador(firebaseAuth.getCurrentUser().getUid());
+                servicoView.setLatitude(latLng.latitude);
+                servicoView.setLongitude(latLng.longitude);
+
+                if (switchTipoServico.isChecked()) {
+                    gambi = "0";
+                    servicoView.setUrgente(true);
+                } else {
+                    gambi = "1";
+                    servicoView.setUrgente(false);
+                }
+
+                databaseReference.child("servico").child(servicoId).setValue(servico);
+                databaseReference.child("visualizacao").child(estadoId).child(servicoId).setValue(servicoView);
+                databaseReference.child("visualizacao").child(estadoId).child(servicoId).child("ordemRef").setValue(gambi + new Timestamp(-1 * data.getTime()).toString());
             }
 
             @Override

@@ -72,7 +72,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        databaseReference = FirebaseDatabase.getInstance().getReference("vizualizacao").child("aberto");
+        databaseReference = FirebaseDatabase.getInstance().getReference("visualizacao").child("aberto");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         tvNenhumServico = layout.findViewById(R.id.nenhum_servico);
         String s = getContext().getString(R.string.nenhum_servico) + " novo";

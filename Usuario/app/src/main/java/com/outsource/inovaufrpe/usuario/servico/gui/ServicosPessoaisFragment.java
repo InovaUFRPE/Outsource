@@ -75,7 +75,7 @@ public class ServicosPessoaisFragment extends Fragment {
     }
 
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("vizualizacao").child("aberto");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("visualizacao").child("aberto");
         Query query = databaseReference.orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, query) {
 
@@ -86,7 +86,13 @@ public class ServicosPessoaisFragment extends Fragment {
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
                 viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM"));
-                viewHolder.valor.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
+
+                if(model.getPreco().doubleValue() == Double.parseDouble("0")){
+                    viewHolder.valor.setText("A combinar");
+                }else {
+                    viewHolder.valor.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
+                }
+
                 if (model.isUrgente()) {
                     viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
                 } else {

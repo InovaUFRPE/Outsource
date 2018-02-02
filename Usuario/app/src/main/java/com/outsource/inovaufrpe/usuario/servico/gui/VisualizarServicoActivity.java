@@ -43,6 +43,7 @@ import com.outsource.inovaufrpe.usuario.servico.adapter.OfertaViewHolder;
 import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Oferta;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
+import com.outsource.inovaufrpe.usuario.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Critica;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.CriticaViewHolder;
@@ -79,11 +80,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     RatingBar avaliarPerfil;
     FirebaseAuth firebaseAuth;
     Servico servico;
+    ServicoView servicoView;
     DatabaseReference databaseReference;
     ValueEventListener listenerServico;
     String nomeSolicitante;
     String nomeServico;
-    CardFormat cardFormat = new CardFormat();
     int peso;
     int somatorio;
     LinearLayout prestadorLayout;
@@ -213,14 +214,14 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     } else {
                         aplicarTaxa();
                         databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
-                        databaseReference.child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                        databaseReference.child("visualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         criarDialogAvaliarUsuario(true);
                     }
                 } else {
                     criarDialogAvaliarUsuario(false);
                     databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     databaseReference.child("servico").child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
-                    databaseReference.child("vizualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                    databaseReference.child("visualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                 }
             }
 
@@ -243,7 +244,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 if (carteira.getMoeda() > oferta){
                     carteira.subtrair(oferta);
                     databaseReference.child("usuario").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
-                    atualizarEstadoServico(servico.getEstado(), EstadoServico.ANDAMENTO.getValue());
+                    atualizarEstadoServico(estadoId, EstadoServico.ANDAMENTO.getValue());
 
                 }else {
                     Toast.makeText(VisualizarServicoActivity.this,"O saldo na carteira é insuficiente.",Toast.LENGTH_LONG).show();
@@ -256,7 +257,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         });
     }
 
-    private void aceitarOferta(Oferta oferta){
+    private void aceitarOferta(final Oferta oferta){
         servico.setIdPrestador(oferta.getPrestadorId());
         servico.setPreco(oferta.getOfertaValor());
         databaseReference.child("servico").child(servicoId).setValue(servico).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -274,6 +275,19 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                                     enviarNotificacao(2,id);
                                 }
                             }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    databaseReference.child("visualizacao").child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            servicoView.setPreco(oferta.getOfertaValor());
+                            servicoView.setIdPrestador(oferta.getPrestadorId());
+                            databaseReference.child("visualizacao").child(estadoId).child(servicoId).setValue(servicoView);
                         }
 
                         @Override
@@ -309,7 +323,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 if (servico != null) {
                     estadoId = servico.getEstado();
                     tituloID.setText(servico.getNome());
-                    valorID.setText(cardFormat.dinheiroFormat(servico.getPreco().toString()));
+                    valorID.setText(CardFormat.dinheiroFormat(servico.getPreco().toString()));
                     tvEstadoServicoID.setText(estadoId);
                     descricaoID.setText(servico.getDescricao());
                     estadoId = servico.getEstado();
@@ -328,6 +342,17 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         };
         databaseReference.child("servico").child(servicoId).addValueEventListener(listenerServico);
+        databaseReference.child("visualizacao").child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                servicoView = dataSnapshot.getValue(ServicoView.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void definirLayout() {
@@ -370,7 +395,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     public void onItemClick(View view, final int position) {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(VisualizarServicoActivity.this);
-                        builder.setTitle("Opções de Oferta")
+                        builder.setTitle(R.string.opcao_oferta)
                                 .setItems(R.array.opcoes_oferta, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         switch (which){
@@ -434,10 +459,10 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         FirebaseUtil fu = new FirebaseUtil();
         try {
             if (estadoAtual.equals(EstadoServico.ABERTA.getValue())) {
-                databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId).child("idPrestador").setValue(servico.getIdPrestador());
+                databaseReference.child("visualizacao").child(estadoAtual).child(servicoId).child("idPrestador").setValue(servico.getIdPrestador());
             }
             if (!estadoAtual.equals(estadoDestino)) {
-                fu.moverServico(databaseReference.child("vizualizacao").child(estadoAtual).child(servicoId), databaseReference.child("vizualizacao").child(estadoDestino).child(servicoId), estadoDestino);
+                fu.moverServico(databaseReference.child("visualizacao").child(estadoAtual).child(servicoId), databaseReference.child("visualizacao").child(estadoDestino).child(servicoId), estadoDestino);
                 databaseReference.child("servico").child(servicoId).child("estado").setValue(estadoDestino);
             }
 
@@ -614,8 +639,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     public void excluirServico(){
-        databaseReference.child("servico").child(estadoId).child(servicoId).removeValue();
-        FirebaseAux.getInstancia().getDatabaseReference().child("usuario").child(FirebaseAux.getInstancia().getFirebaseAuth().getCurrentUser().getUid())
-                .child("servicos").child(servicoId).removeValue();
+        databaseReference.child("servico").child(servicoId).removeValue();
+        databaseReference.child("visualizacao").child(estadoId).child(servicoId).removeValue();
     }
 }

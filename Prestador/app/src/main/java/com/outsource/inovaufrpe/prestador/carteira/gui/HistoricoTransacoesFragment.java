@@ -21,7 +21,6 @@ import com.outsource.inovaufrpe.prestador.utils.HistoricoServicoListHolder;
 
 public class HistoricoTransacoesFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    CardFormat cardFormat = new CardFormat();
 
     private FirebaseRecyclerAdapter adapter;
     DatabaseReference databaseReference;
@@ -49,15 +48,15 @@ public class HistoricoTransacoesFragment extends Fragment {
     }
 
     private void adaptador() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("vizualizacao").child("concluido");
+        databaseReference = FirebaseDatabase.getInstance().getReference("visualizacao").child("concluido");
         Query query = databaseReference.orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
         adapter = new FirebaseRecyclerAdapter<Servico, HistoricoServicoListHolder>(Servico.class, R.layout.table_historico_negociacoes_row, HistoricoServicoListHolder.class, query) {
 
             @Override
             protected void populateViewHolder(HistoricoServicoListHolder viewHolder, Servico model, int position) {
                 viewHolder.nomeServico.setText(model.getNome());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getDataf(),"dd/MM"));
-                viewHolder.preco.setText(cardFormat.dinheiroFormat(model.getPreco().toString()));
+                viewHolder.data.setText(CardFormat.dataFormat(model.getDataf(),"dd/MM"));
+                viewHolder.preco.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
 
             }
 

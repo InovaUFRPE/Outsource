@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
@@ -33,14 +34,15 @@ public class MainPerfilFragment extends Fragment {
     TextView telefoneUsuario;
     RatingBar avaliarPerfil;
     TextView numServicosAtendidos;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
     TextView numAvaliacoes;
 
 
     public MainPerfilFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class MainPerfilFragment extends Fragment {
         numServicosAtendidos = view.findViewById(R.id.num_servicos_atendidos);
         numAvaliacoes = view.findViewById(R.id.num_avaliacoes);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference usuarioReference = databaseReference.child("prestador").child(usuarioAtual.getUid());
         usuarioReference.addValueEventListener(
@@ -66,7 +68,17 @@ public class MainPerfilFragment extends Fragment {
                         emailUsuario.setText(prestador.getEmail());
                         telefoneUsuario.setText(prestador.getTelefone());
                         numAvaliacoes.setText(String.valueOf(prestador.getPesoNota()));
-                        numServicosAtendidos.setText(String.valueOf(prestador.getListaServicos().size()));
+                        databaseReference.child("servico").orderByChild("idPrestador").equalTo(prestador.getId()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                numServicosAtendidos.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                         if(prestador.getPesoNota() == 0){
                             avaliarPerfil.setRating(0);
                         }else{
@@ -84,6 +96,7 @@ public class MainPerfilFragment extends Fragment {
 
         return view;
     }
+
 
     @Override
     public void onResume() {

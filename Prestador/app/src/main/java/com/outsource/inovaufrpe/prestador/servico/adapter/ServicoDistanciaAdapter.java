@@ -22,7 +22,6 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
 
     private List<ServicoView> servicos;
     private Context context;
-    private CardFormat cardFormat;
     private RelativeLayout barraTipoServico;
 
 
@@ -36,7 +35,6 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
     public ServicoDistanciaAdapter(List<ServicoView> servicos, Context context, OnItemClicked onClick){
         this.servicos = servicos;
         this.context = context;
-        cardFormat = new CardFormat();
         this.onClick = onClick;
     }
     @Override
@@ -61,8 +59,8 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
         viewHolder.linearLayout.setVisibility(View.VISIBLE);
         viewHolder.titulo.setText(servico.getNome());
         viewHolder.status.setText(servico.getEstado());
-        viewHolder.valor.setText(cardFormat.dinheiroFormat(servico.getPreco().toString()));
-        viewHolder.data.setText(cardFormat.dataFormat(servico.getData(),"dd/MM/yyyy"));
+        viewHolder.valor.setText(CardFormat.dinheiroFormat(servico.getPreco().toString()));
+        viewHolder.data.setText(CardFormat.dataFormat(servico.getData(),"dd/MM/yyyy"));
         viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
             @Override
             public void onItemClick(View view, int position) {

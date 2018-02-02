@@ -41,7 +41,6 @@
     <string name="negociar">Negociar</string>
     <string name="concluir_servico">Concluir Serviço</string>
     <string name="aceitar_oferta">Aceitar Oferta</string>
-    <string name="mensagem">Comentário</string>
     <string name="user_usuario_exemplo">Gabriel Lourenço</string>
     <string name="avaliar_usuario">Avaliar usuário</string>
     <string name="cancelar_negociacao">Cancelar negociação</string>
@@ -77,9 +76,63 @@
         <item>Em Negociação</item>
     </string-array>
     <string name="editar_servico">Editar Serviço</string>
+    <string name="opcao_oferta">Opções de Oferta</string>
     <string-array name="opcoes_oferta">
         <item>Aceitar esta oferta</item>
         <item>Ver perfil do prestador</item>
         <item>Enviar mensagem</item>
     </string-array>
+
+    <!--Strings Database-->
+    <string name="visualizacao">visualizacao</string>
+    <string name="servico">servico</string>
+    <string name="usuario">usuario</string>
+    <string name="prestador">prestador</string>
+    <string name="oferta">oferta</string>
+    <string name="notificacao">notificacao</string>
+    <string name="feedback">feedback</string>
+    <string name="mensagem">mensagem</string>
+    <string name="conversaUsuario">conversaUsuario</string>
+    <string name="conversaPrestador">conversaPrestador</string>
+    <string name="estadoServico">estadoServico</string>
+    <string name="ordemRef">ordemRef</string>
+    <string name="prestadorID">prestadorID</string>
+    <string name="servicoID">servicoID</string>
+    <string name="servicoNome">servicoNome</string>
+    <string name="tempo">tempo</string>
+    <string name="ultimaMensagem">ultimaMensagem</string>
+    <string name="usuarioID">usuarioID</string>
+    <string name="comentario">comentario</string>
+    <string name="comentadorNome">comentadorNome</string>
+    <string name="notaB">nota</string>
+    <string name="autor">autor</string>
+    <string name="nomeAutor">nomeAutor</string>
+    <string name="texto">texto</string>
+    <string name="valor">valor</string>
+    <string name="estadoB">estado</string>
+    <string name="nomeServico">nomeServico</string>
+    <string name="textoNotificacao">textoNotificacao</string>
+    <string name="tipoNotificacao">tipoNotificacao</string>
+    <string name="ofertaValor">ofertaValor</string>
+    <string name="prestadorId">prestadorId</string>
+    <string name="prestadorNome">prestadorNome</string>
+    <string name="carteira">carteira</string>
+    <string name="emailB">email</string>
+    <string name="id">id</string>
+    <string name="pesoNota">pesoNota</string>
+    <string name="sobreNome">sobreNome</string>
+    <string name="telefone">telefone</string>
+    <string name="concluido">concluido</string>
+    <string name="data">data</string>
+    <string name="dataf">dataf</string>
+    <string name="descricaoB">descricao</string>
+    <string name="idCriador">idCriador</string>
+    <string name="idPrestador">idPrestador</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+    <string name="nomeB">nome</string>
+    <string name="precoB">preco</string>
+    <string name="urgente">urgente</string>
+    <string name="aberto">aberto</string>
+    <string name="andamento">andamento</string>
 </resources>

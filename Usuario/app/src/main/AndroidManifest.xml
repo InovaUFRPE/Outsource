@@ -3,6 +3,8 @@
     package="com.outsource.inovaufrpe.usuario">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:name=".utils.FirebaseApp"

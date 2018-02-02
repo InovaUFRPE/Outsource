@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
@@ -43,6 +44,7 @@ public class MainPerfilFragment extends Fragment {
         numServicosAtendidos = view.findViewById(R.id.num_servicos_concluidos);
         numAvaliacoes = view.findViewById(R.id.num_avaliacoes);
 
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseAux firebase = FirebaseAux.getInstancia();
         DatabaseReference usuarioReference = firebase.getUsuarioReference().child(firebase.getUser().getUid());
         usuarioReference.addValueEventListener(
@@ -55,7 +57,17 @@ public class MainPerfilFragment extends Fragment {
                         emailUsuario.setText(user.getEmail());
                         telefoneUsuario.setText(user.getTelefone());
                         numAvaliacoes.setText(String.valueOf(user.getPesoNota()));
-                        numServicosAtendidos.setText(String.valueOf(user.getListaServicos().size()));
+                        databaseReference.child("servico").orderByChild("concluido").equalTo(user.getId()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                numServicosAtendidos.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                         if (user.getPesoNota() == 0){
                             avaliarPerfil.setRating(0);
                         }
