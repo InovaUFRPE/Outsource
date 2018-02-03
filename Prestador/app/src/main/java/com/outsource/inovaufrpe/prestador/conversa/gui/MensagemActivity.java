@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -29,6 +30,7 @@ import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.conversa.adapter.MensagemViewHolder;
 import com.outsource.inovaufrpe.prestador.conversa.dominio.Conversa;
 import com.outsource.inovaufrpe.prestador.conversa.dominio.Mensagem;
+import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.gui.VisualizarServicoActivity;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
@@ -74,11 +76,27 @@ public class MensagemActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setSubtitle(nomeServico);
 
-        recycleNegociacoes = findViewById(R.id.recycleNegociacoesID);
-        btenviar = findViewById(R.id.btEnviarID);
-        etMensagem = findViewById(R.id.etMensagemID);
-        etValor = findViewById(R.id.etValorID);
 
+        LinearLayout layout = findViewById(R.id.layout_chatbox);
+        if (estado.equals(EstadoServico.CONCLUIDA.getValue())){
+            layout.setVisibility(View.GONE);
+        }else {
+            btenviar = findViewById(R.id.btEnviarID);
+            etMensagem = findViewById(R.id.etMensagemID);
+            etValor = findViewById(R.id.etValorID);
+            btenviar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!etMensagem.getText().toString().equals("")) {
+                        escreverMensagem(etMensagem.getText().toString(), etValor.getText().toString());
+                        etMensagem.setText("");
+                        etValor.setText("");
+                    }
+                }
+            });
+        }
+
+        recycleNegociacoes = findViewById(R.id.recycleNegociacoesID);
         recycleNegociacoes.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -87,6 +105,7 @@ public class MensagemActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         Query query = databaseReference.child("mensagem").child(servicoId).child(prestadorID).orderByKey();
+
         adapter = new FirebaseRecyclerAdapter<Mensagem, MensagemViewHolder>(Mensagem.class, R.layout.card_mensagem_negociacao, MensagemViewHolder.class, query) {
             @Override
             protected void populateViewHolder(MensagemViewHolder viewHolder, Mensagem model, int position) {
@@ -111,16 +130,7 @@ public class MensagemActivity extends AppCompatActivity {
             }
         };
 
-        btenviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!etMensagem.getText().toString().equals("")) {
-                    escreverMensagem(etMensagem.getText().toString(), etValor.getText().toString());
-                    etMensagem.setText("");
-                    etValor.setText("");
-                }
-            }
-        });
+
 
 
 //        cancelarNegociacao.setOnClickListener(new View.OnClickListener() {

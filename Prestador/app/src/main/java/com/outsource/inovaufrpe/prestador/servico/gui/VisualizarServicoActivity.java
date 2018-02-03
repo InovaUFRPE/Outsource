@@ -176,16 +176,18 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     if (dataSnapshot.child("concluido").getValue().equals(firebaseAuth.getCurrentUser().getUid())) {
                         Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
                     } else {
-                        adicionar();
+                        adicionarCarteira();
                         databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         databaseReference.child("visualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         criarDialogAvaliarUsuario(true);
                     }
                 } else {
+                    adicionarCarteira();
                     criarDialogAvaliarUsuario(false);
                     databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     databaseReference.child("servico").child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                     databaseReference.child("visualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
+                    btConcluir.setVisibility(View.GONE);
                 }
             }
 
@@ -228,7 +230,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         this.dialog.dismiss();
     }
 
-    private void adicionar() {
+    private void adicionarCarteira() {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -267,7 +269,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         });
-        databaseReference.child("vizualizar").child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("visualizar").child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 servicoView = dataSnapshot.getValue(ServicoView.class);

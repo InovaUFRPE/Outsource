@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -29,6 +30,7 @@ import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.conversa.adapter.MensagemViewHolder;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Conversa;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Mensagem;
+import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.gui.VisualizarServicoActivity;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
@@ -74,11 +76,28 @@ public class MensagemActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setSubtitle(nomeServico);
 
-        btenviar = findViewById(R.id.btEnviarID);
-        etMensagem = findViewById(R.id.etMensagemID);
-        etValor = findViewById(R.id.etValorID);
-        recycleNegociacoes = findViewById(R.id.recycleNegociacoesID);
+        LinearLayout layout = findViewById(R.id.layout_chatbox);
+        Toast.makeText(this,estado,Toast.LENGTH_LONG).show();
+        if (estado.equals("concluido")){
+            layout.setVisibility(View.GONE);
+        }else {
+            btenviar = findViewById(R.id.btEnviarID);
+            etMensagem = findViewById(R.id.etMensagemID);
+            etValor = findViewById(R.id.etValorID);
+            btenviar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!etMensagem.getText().toString().equals("")) {
+                        escreverMensagem(etMensagem.getText().toString(), etValor.getText().toString());
+                        etMensagem.setText("");
+                        etValor.setText("");
+                    }
+                }
+            });
+        }
 
+
+        recycleNegociacoes = findViewById(R.id.recycleNegociacoesID);
         recycleNegociacoes.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -105,16 +124,6 @@ public class MensagemActivity extends AppCompatActivity {
             }
         };
 
-        btenviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!etMensagem.getText().toString().equals("")) {
-                    escreverMensagem(etMensagem.getText().toString(), etValor.getText().toString());
-                    etMensagem.setText("");
-                    etValor.setText("");
-                }
-            }
-        });
 
 //        cancelarNegociacao.setOnClickListener(new View.OnClickListener() {
 //            @Override
