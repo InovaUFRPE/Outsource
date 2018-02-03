@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +33,7 @@ import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.gui.VisualizarServicoActivity;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
+import com.outsource.inovaufrpe.prestador.utils.Utils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -177,7 +177,7 @@ public class MensagemActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task task) {
                 if(!task.isSuccessful()){
-                    Toast.makeText(MensagemActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(MensagemActivity.this, "Ocorreu um erro, tente novamente");
                 }
             }
         });

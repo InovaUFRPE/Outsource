@@ -1,7 +1,5 @@
 package com.outsource.inovaufrpe.usuario.utils;
 
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;

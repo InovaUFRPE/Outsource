@@ -21,7 +21,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -32,8 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
-import com.outsource.inovaufrpe.prestador.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.prestador.servico.adapter.ServicoDistanciaAdapter;
+import com.outsource.inovaufrpe.prestador.servico.dominio.ServicoView;
+import com.outsource.inovaufrpe.prestador.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,7 +119,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 tvNenhumServico.setVisibility(View.VISIBLE);
-                Toast.makeText(getActivity(), "Erro ao carregar dados", Toast.LENGTH_SHORT).show();
+                Utils.criarToast(getActivity(), "Erro ao carregar os dados");
             }
         };
 

@@ -21,7 +21,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,9 +46,9 @@ import com.outsource.inovaufrpe.usuario.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Critica;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.CriticaViewHolder;
-import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
 import com.outsource.inovaufrpe.usuario.utils.NotaMedia;
+import com.outsource.inovaufrpe.usuario.utils.Utils;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -210,7 +209,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
                     if (dataSnapshot.child("concluido").getValue().toString().equals(firebaseAuth.getCurrentUser().getUid())) {
-                        Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
+                        Utils.criarToast(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido");
                     } else {
                         aplicarTaxa();
                         databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
@@ -254,7 +253,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     atualizarEstadoServico(estadoId, EstadoServico.ANDAMENTO.getValue());
 
                 }else {
-                    Toast.makeText(VisualizarServicoActivity.this,"O saldo na carteira é insuficiente.",Toast.LENGTH_LONG).show();
+                    Utils.criarToast(VisualizarServicoActivity.this,"O saldo na carteira é insuficiente.");
                 }
             }
 
@@ -287,7 +286,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         }
                     });
                 }else{
-                    Toast.makeText(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente");
                 }
             }
         });
@@ -461,7 +460,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
 
         } catch (DatabaseException e) {
-            Toast.makeText(VisualizarServicoActivity.this, "Falha na solicitacao" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Utils.criarToast(VisualizarServicoActivity.this, "Falha na solicitacao" + e.getMessage());
         }
         Snackbar.make(view, "Serviço em processo de " + estadoDestino, Snackbar.LENGTH_LONG).show();
     }

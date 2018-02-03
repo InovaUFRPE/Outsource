@@ -7,16 +7,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.conversa.adapter.ConversaViewHolder;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Conversa;
-import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 
 public class ConversaActivity extends AppCompatActivity {

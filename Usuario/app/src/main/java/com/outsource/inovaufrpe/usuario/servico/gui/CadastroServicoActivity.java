@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -35,6 +34,7 @@ import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity;
+import com.outsource.inovaufrpe.usuario.utils.Utils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -154,7 +154,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
 
     public void confirmar() {
         if(latLng == null){
-            Toast.makeText(this, "Selecione um local para o serviço!", Toast.LENGTH_SHORT).show();
+            Utils.criarToast(this, "Selecione um local para o serviço!");
         }else {
             criaServico();
             startActivity(new Intent(this, MainActivity.class));
@@ -203,7 +203,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(!task.isSuccessful()){
-                    Toast.makeText(CadastroServicoActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(CadastroServicoActivity.this, task.getException().getMessage());
                 }
             }
         });
@@ -212,7 +212,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(!task.isSuccessful()){
-                    Toast.makeText(CadastroServicoActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(CadastroServicoActivity.this, task.getException().getMessage());
                 }
             }
         });

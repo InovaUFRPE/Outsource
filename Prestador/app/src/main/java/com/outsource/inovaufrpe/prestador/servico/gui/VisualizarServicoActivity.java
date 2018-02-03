@@ -18,7 +18,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.Task;
@@ -30,20 +29,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.outsource.inovaufrpe.prestador.conversa.gui.MensagemActivity;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.carteira.dominio.God;
+import com.outsource.inovaufrpe.prestador.conversa.gui.MensagemActivity;
 import com.outsource.inovaufrpe.prestador.notificacao.dominio.Notificacao;
+import com.outsource.inovaufrpe.prestador.prestador.adapter.CriticaViewHolder;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Critica;
 import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Oferta;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
-import com.outsource.inovaufrpe.prestador.prestador.adapter.CriticaViewHolder;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
 import com.outsource.inovaufrpe.prestador.utils.NotaMedia;
+import com.outsource.inovaufrpe.prestador.utils.Utils;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -174,7 +174,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("concluido")) {
                     if (dataSnapshot.child("concluido").getValue().equals(firebaseAuth.getCurrentUser().getUid())) {
-                        Toast.makeText(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido", Toast.LENGTH_SHORT).show();
+                        Utils.criarToast(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido");
                     } else {
                         adicionarCarteira();
                         databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
@@ -321,7 +321,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
 
         } catch (DatabaseException e) {
-            Toast.makeText(VisualizarServicoActivity.this, "Falha na solicitacao" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Utils.criarToast(VisualizarServicoActivity.this, "Falha na solicitação");
         }
         Snackbar.make(view, "Serviço em processo de " + estadoDestino, Snackbar.LENGTH_LONG).show();
     }

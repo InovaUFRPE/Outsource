@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,6 +15,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
+import com.outsource.inovaufrpe.prestador.utils.Utils;
 
 public class CadastroActivity extends AppCompatActivity {
     private EditText etNome;
@@ -80,7 +80,7 @@ public class CadastroActivity extends AppCompatActivity {
                                 startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                                 finish();
                             } else {
-                                Toast.makeText(CadastroActivity.this, "Falha no Cadastro" + task.getException(), Toast.LENGTH_SHORT).show();
+                                Utils.criarToast(CadastroActivity.this, "Falha no Cadastro");
                             }
 
                         }

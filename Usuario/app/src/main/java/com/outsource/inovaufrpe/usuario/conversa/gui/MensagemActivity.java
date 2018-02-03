@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,10 +29,10 @@ import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.conversa.adapter.MensagemViewHolder;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Conversa;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Mensagem;
-import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.gui.VisualizarServicoActivity;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
+import com.outsource.inovaufrpe.usuario.utils.Utils;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -77,7 +76,7 @@ public class MensagemActivity extends AppCompatActivity {
         ab.setSubtitle(nomeServico);
 
         LinearLayout layout = findViewById(R.id.layout_chatbox);
-        Toast.makeText(this,estado,Toast.LENGTH_LONG).show();
+        Utils.criarToast(this, estado);
         if (estado.equals("concluido")){
             layout.setVisibility(View.GONE);
         }else {
@@ -168,7 +167,7 @@ public class MensagemActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task task) {
                 if(!task.isSuccessful()){
-                    Toast.makeText(MensagemActivity.this, "Ocorreu um erro, tente novamente", Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(MensagemActivity.this, "Ocorreu um erro, tente novamente");
                 }
             }
         });

@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.solicitante.dominio.Usuario;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
+import com.outsource.inovaufrpe.usuario.utils.Utils;
 
 public class EditarPerfilActivity extends AppCompatActivity {
     private EditText etAtualizaNome;
@@ -115,7 +115,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(EditarPerfilActivity.this, "Conta desativada com sucesso.", Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(EditarPerfilActivity.this, "Conta desativada com sucesso.");
                     finish();
                     startActivity(new Intent(EditarPerfilActivity.this, LoginActivity.class));
                 }
@@ -124,7 +124,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     public void Logout() {
-        Toast.makeText(EditarPerfilActivity.this, "Saiu com sucesso.", Toast.LENGTH_SHORT).show();
+        Utils.criarToast(EditarPerfilActivity.this, "Saiu com sucesso.");
         firebase.getFirebaseAuth().signOut();
         LoginManager.getInstance().logOut();
         finish();

@@ -1,9 +1,7 @@
 package com.outsource.inovaufrpe.prestador.prestador.gui;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -17,13 +15,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.carteira.gui.MainCarteiraFragment;
 import com.outsource.inovaufrpe.prestador.conversa.gui.ConversaActivity;
 import com.outsource.inovaufrpe.prestador.notificacao.gui.NotificacaoActivity;
 import com.outsource.inovaufrpe.prestador.servico.gui.MainServicosFragment;
+import com.outsource.inovaufrpe.prestador.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
     private static final String SELECTED_ITEM = "arg_selected_item";
@@ -152,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Pressione mais uma vez para fechar o aplicativo", Toast.LENGTH_SHORT).show();
+        Utils.criarToast(this, "Pressione mais uma vez para fechar o aplicativo");
 
         new Handler().postDelayed(new Runnable() {
 

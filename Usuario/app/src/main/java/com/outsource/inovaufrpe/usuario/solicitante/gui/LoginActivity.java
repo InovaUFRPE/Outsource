@@ -2,17 +2,12 @@ package com.outsource.inovaufrpe.usuario.solicitante.gui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -37,9 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseAux;
+import com.outsource.inovaufrpe.usuario.utils.Utils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
@@ -86,16 +80,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                            Utils.criarToast(LoginActivity.this, "Logado com sucesso");
                             usuarioLogado();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("kkj", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Utils.criarToast(LoginActivity.this, "Ocorreu um erro na autenticação");
                         }
-
-                        // ...
                     }
                 });
     }
@@ -140,13 +131,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Log.w("TAG", "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    Toast.makeText(LoginActivity.this, "Formato de Telefone Inválido", Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(LoginActivity.this, "Formato de Telefone Inválido");
                 } else if (e instanceof FirebaseTooManyRequestsException) {
-                    Toast.makeText(LoginActivity.this, "Erro 2", Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(LoginActivity.this, "Erro código 002");
                 }
-
-                // Show a message and update the UI
-                // ...
             }
 
             @Override
@@ -181,7 +169,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                            Utils.criarToast(LoginActivity.this, "Logado com sucesso");
                             usuarioLogado();
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -245,7 +233,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                     @Override
                     public void onError(FacebookException error) {
-                        Toast.makeText(LoginActivity.this, "Falha ao logar: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                        Utils.criarToast(LoginActivity.this, "Falha ao logar: " + error.getMessage());
                     }
                 });
                 break;

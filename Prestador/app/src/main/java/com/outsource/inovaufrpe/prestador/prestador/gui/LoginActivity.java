@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -33,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
+import com.outsource.inovaufrpe.prestador.utils.Utils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     @Override
                     public void onError(FacebookException error) {
-                        Toast.makeText(LoginActivity.this, "Falha ao logar: " + error.toString(), Toast.LENGTH_LONG).show();
+                        Utils.criarToast(LoginActivity.this, "Falha ao logar: " + error.toString());
 
                     }
                 });
@@ -115,16 +115,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                            Utils.criarToast(LoginActivity.this, "Logado com sucesso");
                             usuarioLogado();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("kkj", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Utils.criarToast(LoginActivity.this, "Ocorreu um erro na autenticação");
                         }
-
-                        // ...
                     }
                 });
     }
@@ -169,13 +166,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.w("TAG", "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    Toast.makeText(LoginActivity.this, "Formato de Telefone Inválido", Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(LoginActivity.this, "Formato de Telefone Inválido");
                 } else if (e instanceof FirebaseTooManyRequestsException) {
-                    Toast.makeText(LoginActivity.this, "Erro 2", Toast.LENGTH_SHORT).show();
+                    Utils.criarToast(LoginActivity.this, "Erro codigo 002");
                 }
-
-                // Show a message and update the UI
-                // ...
             }
 
             @Override
@@ -210,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                            Utils.criarToast(LoginActivity.this, "Logado com sucesso");
                             usuarioLogado();
                         } else {
                             // Sign in failed, display a message and update the UI

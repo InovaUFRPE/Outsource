@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -35,6 +34,7 @@ import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.usuario.solicitante.gui.MainActivity;
+import com.outsource.inovaufrpe.usuario.utils.Utils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -188,7 +188,7 @@ public class EditarServicoActivity extends AppCompatActivity {
 
     public void confirmar() {
         if(latLng == null){
-            Toast.makeText(this, "Selecione um local para o serviço!", Toast.LENGTH_SHORT).show();
+            Utils.criarToast(this,"Selecione um local para o serviço!");
         }else {
             atualizaServico();
             finish();
