@@ -111,7 +111,6 @@ public class MensagemActivity extends AppCompatActivity {
             protected void populateViewHolder(MensagemViewHolder viewHolder, Mensagem model, int position) {
                 listaAux.add(String.valueOf(position));
                 viewHolder.nomeUsuario.setText(model.getNomeAutor());
-                viewHolder.precoSugerido.setText(CardFormat.dinheiroFormat(model.getvalor()));
                 viewHolder.tvMensagem.setText(model.getTexto());
                 viewHolder.tvTempo.setText(CardFormat.tempoFormat(model.getTempo()));
                 cardNegociacao = viewHolder.cardServico;
@@ -121,6 +120,12 @@ public class MensagemActivity extends AppCompatActivity {
                     cardNegociacao.setCardBackgroundColor(getResources().getColor(R.color.colorIsabelline));
                 } else {
                     setarMarginCard(cardNegociacao, 16, 100);
+                }
+
+                if (model.getvalor().equals("")) {
+                    viewHolder.precoSugerido.setVisibility(View.GONE);
+                } else {
+                    viewHolder.precoSugerido.setText(CardFormat.dinheiroFormat(model.getvalor()));
                 }
             }
 

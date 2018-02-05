@@ -76,7 +76,6 @@ public class MensagemActivity extends AppCompatActivity {
         ab.setSubtitle(nomeServico);
 
         LinearLayout layout = findViewById(R.id.layout_chatbox);
-        Utils.criarToast(this, estado);
         if (estado.equals("concluido")){
             layout.setVisibility(View.GONE);
         }else {
@@ -109,7 +108,6 @@ public class MensagemActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(MensagemViewHolder viewHolder, Mensagem model, int position) {
                 viewHolder.nomeUsuario.setText(model.getNomeAutor());
-                viewHolder.precoSugerido.setText(CardFormat.dinheiroFormat(model.getvalor()));
                 viewHolder.tvMensagem.setText(model.getTexto());
                 viewHolder.tvTempo.setText(CardFormat.tempoFormat(model.getTempo()));
                 cardNegociacao = viewHolder.cardServico;
@@ -119,6 +117,12 @@ public class MensagemActivity extends AppCompatActivity {
                     cardNegociacao.setCardBackgroundColor(getResources().getColor(R.color.colorIsabelline));
                 } else {
                     setarMarginCard(cardNegociacao, 16, 100);
+                }
+
+                if (model.getvalor().equals("")) {
+                    viewHolder.precoSugerido.setVisibility(View.GONE);
+                } else {
+                    viewHolder.precoSugerido.setText(CardFormat.dinheiroFormat(model.getvalor()));
                 }
             }
         };
