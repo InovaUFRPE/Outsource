@@ -40,7 +40,7 @@ import java.util.Date;
 
 public class MensagemActivity extends AppCompatActivity {
 
-    RecyclerView recycleNegociacoes;
+    private RecyclerView recycleNegociacoes;
     private FirebaseRecyclerAdapter adapter;
     private ValueEventListener valueEventListener;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -50,7 +50,7 @@ public class MensagemActivity extends AppCompatActivity {
     String servicoId;
     String myUserID;
     String nomePrestador;
-    Button cancelarNegociacao;
+//    Button cancelarNegociacao;
     private DatabaseReference databaseReference;
     private CardView cardNegociacao;
     FirebaseUtil fu = new FirebaseUtil();
@@ -77,6 +77,7 @@ public class MensagemActivity extends AppCompatActivity {
         ab.setSubtitle(nomeServico);
 
         LinearLayout layout = findViewById(R.id.layout_chatbox);
+
         if (estado.equals(EstadoServico.CONCLUIDA.getValue())) {
             layout.setVisibility(View.GONE);
         }else {
@@ -130,6 +131,14 @@ public class MensagemActivity extends AppCompatActivity {
                 }
             }
         };
+
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                recycleNegociacoes.smoothScrollToPosition(adapter.getItemCount());
+            }
+        });
 
 
 //        cancelarNegociacao.setOnClickListener(new View.OnClickListener() {
