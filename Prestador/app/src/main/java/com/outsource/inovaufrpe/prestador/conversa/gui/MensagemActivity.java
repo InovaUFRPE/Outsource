@@ -80,10 +80,13 @@ public class MensagemActivity extends AppCompatActivity {
         LinearLayout layout = findViewById(R.id.layout_chatbox);
         if (estado.equals(EstadoServico.CONCLUIDA.getValue())){
             layout.setVisibility(View.GONE);
-        }else {
+        } else {
+            etValor = findViewById(R.id.etValorID);
+            if (estado.equals(EstadoServico.ANDAMENTO.getValue())) {
+                etValor.setVisibility(View.GONE);
+            }
             btenviar = findViewById(R.id.btEnviarID);
             etMensagem = findViewById(R.id.etMensagemID);
-            etValor = findViewById(R.id.etValorID);
             btenviar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

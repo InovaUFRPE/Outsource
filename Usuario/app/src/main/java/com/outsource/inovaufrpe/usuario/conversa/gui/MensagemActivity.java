@@ -29,6 +29,7 @@ import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.conversa.adapter.MensagemViewHolder;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Conversa;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Mensagem;
+import com.outsource.inovaufrpe.usuario.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.usuario.servico.gui.VisualizarServicoActivity;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
@@ -76,12 +77,15 @@ public class MensagemActivity extends AppCompatActivity {
         ab.setSubtitle(nomeServico);
 
         LinearLayout layout = findViewById(R.id.layout_chatbox);
-        if (estado.equals("concluido")){
+        if (estado.equals(EstadoServico.CONCLUIDA.getValue())) {
             layout.setVisibility(View.GONE);
         }else {
+            etValor = findViewById(R.id.etValorID);
+            if (estado.equals(EstadoServico.ANDAMENTO.getValue())) {
+                etValor.setVisibility(View.GONE);
+            }
             btenviar = findViewById(R.id.btEnviarID);
             etMensagem = findViewById(R.id.etMensagemID);
-            etValor = findViewById(R.id.etValorID);
             btenviar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

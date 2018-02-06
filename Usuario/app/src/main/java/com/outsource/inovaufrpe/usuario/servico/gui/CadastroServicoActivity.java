@@ -77,6 +77,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 ObjectAnimator colorFade;
+                Utils.esconderTeclado(CadastroServicoActivity.this);
                 if(isChecked) {
                     colorFade = ObjectAnimator.ofObject(servicoBar, "backgroundColor", new ArgbEvaluator(), getResources().getColor(R.color.colorGreen), getResources().getColor(R.color.colorDanger));
                     wellServicoUrgencia.setVisibility(View.VISIBLE);
