@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.gui.LoginActivity;
+import com.outsource.inovaufrpe.prestador.utils.Sessao;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -23,6 +24,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                 mostrarLogin();
             }
         }, DOIS_MIL);
+
+        Sessao sessao = Sessao.getInstancia(this.getApplicationContext());
+        sessao.setFiltro("");
+        sessao.setRange(10);
+        sessao.setUrgencia(true);
+        sessao.salvarSessao();
     }
 
     private void mostrarLogin() {

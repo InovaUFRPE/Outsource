@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.adapter.ServicoDistanciaAdapter;
 import com.outsource.inovaufrpe.prestador.servico.dominio.ServicoView;
+import com.outsource.inovaufrpe.prestador.utils.Sessao;
 import com.outsource.inovaufrpe.prestador.utils.Utils;
 
 import java.util.ArrayList;
@@ -50,10 +51,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
     private TextView tvDistancia;
     private final int MY_PERMISSIONS_REQUEST = 0;
     private FloatingActionButton filtroBtn;
-    private boolean urgencia = true;
-    private int sbValor = 10;
-    private String stringFiltro = "";
-
+    private Sessao sessao;
     private TextView tvNenhumServico;
 
 
@@ -80,6 +78,8 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         tvNenhumServico.setVisibility(View.GONE);
         filtroBtn = layout.findViewById(R.id.filtrarBtn);
 
+        sessao = Sessao.getInstancia(getContext());
+
         filtroBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,13 +95,13 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     ServicoView servico = dados.getValue(ServicoView.class);
                     float[] result = new float[2];
                     Location.distanceBetween(servico.getLatitude(), servico.getLongitude(), locationUsuario.getLatitude(), locationUsuario.getLongitude(), result);
-                    if (result[0] < sbValor * 1000) {
-                        if(stringFiltro.isEmpty()){
+                    if (result[0] < sessao.getRange() * 1000) {
+                        if(sessao.getFiltro().isEmpty()){
                             servicos.add(servico);
                         }else{
                             StringBuilder sb = new StringBuilder();
                             sb.append(servico.getDescricao()).append(servico.getNome());
-                            if(sb.toString().toUpperCase().contains(stringFiltro.toUpperCase())){
+                            if(sb.toString().toUpperCase().contains(sessao.getFiltro().toUpperCase())){
                                 servicos.add(servico);
                             }
                         }
@@ -144,7 +144,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     public void onSuccess(Location location) {
                         if (location != null) {
                             locationUsuario = location;
-                            if (urgencia){
+                            if (sessao.isUrgencia()){
                                 databaseReference.orderByChild("ordemRef").addValueEventListener(valueEventListener);
                             }else{
                                 databaseReference.orderByChild("ordemRef").startAt("1").addValueEventListener(valueEventListener);
@@ -189,6 +189,12 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         cbUrgente = v1.findViewById(R.id.cbUrgenteID);
         etFiltro = v1.findViewById(R.id.etFiltroID);
         tvDistancia = v1.findViewById(R.id.tvDistanciaID);
+
+        //sessao
+        sbDistancia.setProgress(sessao.getRange());
+        cbUrgente.setChecked(sessao.isUrgencia());
+        etFiltro.setText(sessao.getFiltro());
+
         tvDistancia.setText("Distância: " + sbDistancia.getProgress() + " Km");
         sbDistancia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -209,9 +215,12 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         mBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         adaptador();
-                        urgencia = cbUrgente.isChecked();
-                        sbValor = sbDistancia.getProgress();
-                        stringFiltro = etFiltro.getText().toString();
+                        sessao.setUrgencia(cbUrgente.isChecked());
+                        sessao.setRange(sbDistancia.getProgress());
+                        sessao.setFiltro(etFiltro.getText().toString());
+                        sessao.salvarSessao();
+                        dialog.cancel();
+                        Utils.esconderTeclado(getActivity());
                     }
                 });
         mBuilder.setView(v1);
