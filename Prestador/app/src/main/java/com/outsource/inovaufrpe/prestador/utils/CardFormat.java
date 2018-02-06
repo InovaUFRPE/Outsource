@@ -41,8 +41,12 @@ public class CardFormat {
     }
 
     public static String tempoFormat(long tempo) {
-
-        return DateUtils.getRelativeTimeSpanString(tempo).toString();
-
+        String r;
+        if (DateUtils.getRelativeTimeSpanString(tempo).toString().substring(0,1).equals("0")) {
+            r = "agora";
+        } else {
+            r = DateUtils.getRelativeTimeSpanString(tempo).toString();
+        }
+        return r;
     }
 }

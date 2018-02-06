@@ -2,6 +2,8 @@ package com.outsource.inovaufrpe.usuario.utils;
 
 import android.text.format.DateUtils;
 
+import com.outsource.inovaufrpe.usuario.R;
+
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -37,8 +39,13 @@ public class CardFormat {
     }
 
     public static String tempoFormat(long tempo) {
-
-        return DateUtils.getRelativeTimeSpanString(tempo).toString();
+        String r;
+        if (DateUtils.getRelativeTimeSpanString(tempo).toString().substring(0,1).equals("0")) {
+            r = "agora";
+        } else {
+            r = DateUtils.getRelativeTimeSpanString(tempo).toString();
+        }
+        return r;
 
     }
 }
