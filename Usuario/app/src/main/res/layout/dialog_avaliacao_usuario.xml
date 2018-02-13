@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="28dp"
-        android:hint="@string/mensagem"
-        android:inputType="textMultiLine" />
+        android:hint="@string/comentarios"
+        android:inputType="textMultiLine|textCapSentences" />
 
     <Button
         android:id="@+id/btnAvaliarConcluir"
