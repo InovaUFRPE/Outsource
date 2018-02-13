@@ -29,8 +29,7 @@
                 android:layout_alignParentTop="true"
                 android:textColor="@color/colorBlack"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                tools:text="5555" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -41,7 +40,6 @@
             android:layout_alignLeft="@+id/layoutNomeServico"
             android:layout_alignStart="@+id/layoutNomeServico"
             android:layout_below="@+id/layoutNomeServico"
-            android:text="@string/mensagem"
             android:textAlignment="textStart"
             android:gravity="start"
             android:textColor="@color/colorBlack"
@@ -51,8 +49,7 @@
             android:id="@+id/tvTempoID"
             android:layout_below="@+id/tvTextoNotificacaoID"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

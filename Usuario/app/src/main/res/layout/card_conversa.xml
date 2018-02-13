@@ -26,8 +26,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                tools:text="5555" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvTempoID"

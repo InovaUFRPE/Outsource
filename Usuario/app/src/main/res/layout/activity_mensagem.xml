@@ -76,6 +76,7 @@
     <include
         android:id="@+id/toastFixed"
         layout="@layout/toast_fixed_alerta"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/recycleNegociacoesID"
         app:layout_constraintTop_toTopOf="@+id/view" />
 </android.support.constraint.ConstraintLayout>

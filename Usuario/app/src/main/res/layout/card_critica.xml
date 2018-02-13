@@ -27,15 +27,13 @@
                 android:text="@+id/tvComentadorID"
                 android:textColor="@color/colorBlack"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                tools:text="5555" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvNotaID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/nota"
                 android:textAlignment="textEnd"
                 android:layout_gravity="end"
                 android:textColor="@color/colorBlack"
@@ -57,7 +55,6 @@
             android:layout_alignLeft="@+id/nomeServico"
             android:layout_alignStart="@+id/nomeServico"
             android:layout_below="@+id/nomeServico"
-            android:text="@string/mensagem"
             android:textAlignment="textStart"
             android:gravity="start"
             android:textColor="@color/colorBlack"

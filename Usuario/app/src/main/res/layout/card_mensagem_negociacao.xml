@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/mensagem"
             android:textAlignment="textStart"
             android:textColor="@color/colorBlack"
             android:textSize="18sp" />
@@ -46,7 +45,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/dinheiro_exemplo"
                 android:textColor="@color/colorMoney"
                 android:textSize="20sp"
                 android:textStyle="bold" />

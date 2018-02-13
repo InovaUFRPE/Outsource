@@ -20,7 +20,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/nome_do_servico"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -32,7 +31,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="end"
-            android:text="@string/dinheiro_exemplo"
             android:textAlignment="textEnd"
             android:textSize="28sp"
             tools:ignore="RelativeOverlap" />
@@ -44,7 +42,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tvNomeServico"
-            android:text="@string/estado"
             android:textSize="20sp" />
     </RelativeLayout>
 
@@ -69,8 +66,7 @@
         <TextView
             android:id="@+id/tvDescricaoServico"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lorem_ipsum" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -107,7 +103,6 @@
                 android:id="@+id/tvNomePessoa"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:text="@string/prestador_nome_exemplo"
                 android:textSize="20sp" />
 
             <ImageView
@@ -129,7 +124,6 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_toRightOf="@+id/imageView"
-                android:text="@string/nota_exemplo"
                 android:textSize="16sp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
