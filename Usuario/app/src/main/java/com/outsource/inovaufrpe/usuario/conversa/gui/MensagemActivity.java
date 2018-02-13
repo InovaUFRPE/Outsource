@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -78,8 +80,15 @@ public class MensagemActivity extends AppCompatActivity {
 
         LinearLayout layout = findViewById(R.id.layout_chatbox);
 
+        recycleNegociacoes = findViewById(R.id.recycleNegociacoesID);
+
         if (estado.equals(EstadoServico.CONCLUIDA.getValue())) {
             layout.setVisibility(View.GONE);
+            RelativeLayout aviso = findViewById(R.id.toastFixed);
+            aviso.setVisibility(View.VISIBLE);
+            TextView toastTV = findViewById(R.id.toastMessage);
+            toastTV.setText("Este serviço foi concluído, não é possível enviar mensagens");
+            recycleNegociacoes.setPadding(0,150,0,0);
         }else {
             etValor = findViewById(R.id.etValorID);
             if (estado.equals(EstadoServico.ANDAMENTO.getValue())) {
