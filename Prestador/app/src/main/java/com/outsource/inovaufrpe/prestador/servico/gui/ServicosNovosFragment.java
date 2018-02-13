@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -80,6 +81,8 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
 
         sessao = Sessao.getInstancia(getContext());
 
+        final String stringUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         filtroBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,15 +97,17 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                 for (DataSnapshot dados : dataSnapshot.getChildren()) {
                     ServicoView servico = dados.getValue(ServicoView.class);
                     float[] result = new float[2];
-                    Location.distanceBetween(servico.getLatitude(), servico.getLongitude(), locationUsuario.getLatitude(), locationUsuario.getLongitude(), result);
-                    if (result[0] < sessao.getRange() * 1000) {
-                        if(sessao.getFiltro().isEmpty()){
-                            servicos.add(servico);
-                        }else{
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(servico.getDescricao()).append(servico.getNome());
-                            if(sb.toString().toUpperCase().contains(sessao.getFiltro().toUpperCase())){
+                    if (!servico.getIdCriador().equals(stringUserId)) {
+                        Location.distanceBetween(servico.getLatitude(), servico.getLongitude(), locationUsuario.getLatitude(), locationUsuario.getLongitude(), result);
+                        if (result[0] < sessao.getRange() * 1000) {
+                            if(sessao.getFiltro().isEmpty()) {
                                 servicos.add(servico);
+                            } else {
+                                StringBuilder sb = new StringBuilder();
+                                sb.append(servico.getDescricao()).append(servico.getNome());
+                                if(sb.toString().toUpperCase().contains(sessao.getFiltro().toUpperCase())) {
+                                    servicos.add(servico);
+                                }
                             }
                         }
                     }
