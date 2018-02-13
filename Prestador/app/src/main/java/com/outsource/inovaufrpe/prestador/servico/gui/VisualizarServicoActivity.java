@@ -465,6 +465,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         mBuilder.setView(v1);
         dialog = mBuilder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
     }

@@ -175,7 +175,9 @@ public class MainActivity extends AppCompatActivity {
                         finishAffinity();
                     }
                 });
-        builder.create();
-        builder.show();
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 }
