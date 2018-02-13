@@ -88,7 +88,7 @@ public class ServicosPessoaisFragment extends Fragment {
                 viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM"));
 
                 if(model.getPreco().doubleValue() == Double.parseDouble("0")){
-                    viewHolder.valor.setText("A combinar");
+                    viewHolder.valor.setText("A comb.");
                 }else {
                     viewHolder.valor.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
                 }

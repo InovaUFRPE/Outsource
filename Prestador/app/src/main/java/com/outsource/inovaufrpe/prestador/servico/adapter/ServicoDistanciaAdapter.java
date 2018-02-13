@@ -59,7 +59,6 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
         viewHolder.linearLayout.setVisibility(View.VISIBLE);
         viewHolder.titulo.setText(servico.getNome());
         viewHolder.status.setText(servico.getEstado());
-        viewHolder.valor.setText(CardFormat.dinheiroFormat(servico.getPreco().toString()));
         viewHolder.data.setText(CardFormat.dataFormat(servico.getData(),"dd/MM/yyyy"));
         viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
             @Override
@@ -68,6 +67,11 @@ public class ServicoDistanciaAdapter extends RecyclerView.Adapter {
             }
         });
 
+        if(servico.getPreco().doubleValue() == Double.parseDouble("0")){
+            viewHolder.valor.setText("A comb.");
+        }else {
+            viewHolder.valor.setText(CardFormat.dinheiroFormat(servico.getPreco().toString()));
+        }
         Resources res = viewHolder.itemView.getResources();
         if (servico.isUrgente()) {
             viewHolder.barraTipoServico.setBackgroundColor(res.getColor(R.color.colorDanger));

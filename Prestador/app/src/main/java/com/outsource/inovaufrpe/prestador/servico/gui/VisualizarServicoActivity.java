@@ -254,7 +254,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 servico = dataSnapshot.getValue(Servico.class);
                 if (servico != null) {
                     tituloID.setText(servico.getNome());
-                    valorID.setText(CardFormat.dinheiroFormat(String.valueOf(servico.getPreco())));
+                    if (servico.getPreco() == 0) {
+                        valorID.setText("A comb.");
+                    } else {
+                        valorID.setText(CardFormat.dinheiroFormat(String.valueOf(servico.getPreco())));
+                    }
                     descricaoID.setText(servico.getDescricao());
                     estadoId = servico.getEstado();
                     definirLayout();

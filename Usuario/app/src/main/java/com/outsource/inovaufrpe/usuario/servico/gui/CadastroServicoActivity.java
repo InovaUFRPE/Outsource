@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -48,6 +49,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
     private TextView tvData;
     private RelativeLayout servicoBar;
     private Switch switchTipoServico;
+    private CheckBox ckbCombinarPreco;
 
     Button placePickerID;
     LatLng latLng = null;
@@ -108,6 +110,23 @@ public class CadastroServicoActivity extends AppCompatActivity {
                 } else {
                     tvCifrao.setTextColor(getResources().getColor(R.color.colorGreen));
                     tvCifrao.setAlpha(1.0f);
+                }
+            }
+        });
+
+        ckbCombinarPreco = findViewById(R.id.ckbCombinarPreco);
+
+        ckbCombinarPreco.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    tvCifrao.setVisibility(View.INVISIBLE);
+                    etPrecoServicoID.setText("0");
+                    etPrecoServicoID.setVisibility(View.INVISIBLE);
+                } else {
+                    tvCifrao.setVisibility(View.VISIBLE);
+                    etPrecoServicoID.setText("");
+                    etPrecoServicoID.setVisibility(View.VISIBLE);
                 }
             }
         });

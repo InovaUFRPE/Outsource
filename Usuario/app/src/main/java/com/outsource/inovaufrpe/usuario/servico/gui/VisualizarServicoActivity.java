@@ -313,7 +313,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 if (servico != null) {
                     estadoId = servico.getEstado();
                     tituloID.setText(servico.getNome());
-                    valorID.setText(CardFormat.dinheiroFormat(servico.getPreco().toString()));
+                    if (servico.getPreco() == 0) {
+                        valorID.setText("A comb.");
+                    } else {
+                        valorID.setText(CardFormat.dinheiroFormat(String.valueOf(servico.getPreco())));
+                    }
                     tvEstadoServicoID.setText(estadoId);
                     descricaoID.setText(servico.getDescricao());
                     estadoId = servico.getEstado();

@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -55,6 +56,7 @@ public class EditarServicoActivity extends AppCompatActivity {
     String servicoId;
     String estadoId;
     LatLng latLngInicial;
+    private CheckBox ckbCombinarPreco;
 
     Button placePickerID;
     LatLng latLng = null;
@@ -83,6 +85,8 @@ public class EditarServicoActivity extends AppCompatActivity {
         final TextView tvCifrao = findViewById(R.id.tvCifrao);
 
         switchTipoServico = findViewById(R.id.switchTipoServico);
+        ckbCombinarPreco = findViewById(R.id.ckbCombinarPreco);
+
 
         databaseReferenceServico = FirebaseDatabase.getInstance().getReference().child("visualizacao");
         databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,6 +98,9 @@ public class EditarServicoActivity extends AppCompatActivity {
                 etPrecoServicoID.setText(servico.getPreco().toString());
                 if(servico.isUrgente()){
                     switchTipoServico.setChecked(true);
+                }
+                if(servico.getPreco() == 0){
+                    ckbCombinarPreco.setChecked(true);
                 }
                 latLngInicial = new LatLng(servico.getLatitude(), servico.getLongitude());
             }
@@ -119,6 +126,21 @@ public class EditarServicoActivity extends AppCompatActivity {
                 }
                 colorFade.setDuration(400);
                 colorFade.start();
+            }
+        });
+
+        ckbCombinarPreco.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    tvCifrao.setVisibility(View.INVISIBLE);
+                    etPrecoServicoID.setText("0");
+                    etPrecoServicoID.setVisibility(View.INVISIBLE);
+                } else {
+                    tvCifrao.setVisibility(View.VISIBLE);
+                    etPrecoServicoID.setText("");
+                    etPrecoServicoID.setVisibility(View.VISIBLE);
+                }
             }
         });
 
