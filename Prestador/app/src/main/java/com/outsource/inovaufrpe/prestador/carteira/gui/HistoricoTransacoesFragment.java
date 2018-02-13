@@ -50,7 +50,7 @@ public class HistoricoTransacoesFragment extends Fragment {
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference("visualizacao").child("concluido");
         Query query = databaseReference.orderByChild("idPrestador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        adapter = new FirebaseRecyclerAdapter<Servico, HistoricoServicoListHolder>(Servico.class, R.layout.table_historico_negociacoes_row, HistoricoServicoListHolder.class, query) {
+        adapter = new FirebaseRecyclerAdapter<Servico, HistoricoServicoListHolder>(Servico.class, R.layout.row_historico_negociacoes, HistoricoServicoListHolder.class, query) {
 
             @Override
             protected void populateViewHolder(HistoricoServicoListHolder viewHolder, Servico model, int position) {

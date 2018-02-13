@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvDataServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="18 DEZ"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/colorTextMuted"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvNomeServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:text="Nome do serviço realizado"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvPrecoServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:text="R$ 26,00"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp" />
+</LinearLayout>

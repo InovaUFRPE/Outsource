@@ -13,5 +13,7 @@
     <color name="colorGreenAlpha">#2640F99B</color>
     <color name="colorIsabelline">#F6F7EB</color>
     <color name="colorMoney">#06D6A0</color>
+    <color name="colorToast">#f1f1f1</color>
+    <color name="colorTextMuted">#75000000</color>
     <color name="colorTransparent">#00000000</color>
 </resources>

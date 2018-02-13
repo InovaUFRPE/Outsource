@@ -6,12 +6,14 @@
     <color name="colorPrimaryDark">#3f1177</color>
     <color name="colorAccent">#ffea00</color>
     <color name="colorDanger">#EF3E36</color>
-    <color name="colorBlack">#212121</color>
+    <color name="colorBlack">#DE000000</color>
     <color name="colorGray">#f4f5f7</color>
     <color name="colorWhite">#FAFAFF</color>
     <color name="colorGreen">#40F99B</color>
     <color name="colorGreenAlpha">#2640F99B</color>
     <color name="colorIsabelline">#F6F7EB</color>
     <color name="colorMoney">#06D6A0</color>
+    <color name="colorToast">#f1f1f1</color>
+    <color name="colorTextMuted">#75000000</color>
     <color name="colorTransparent">#00000000</color>
 </resources>
