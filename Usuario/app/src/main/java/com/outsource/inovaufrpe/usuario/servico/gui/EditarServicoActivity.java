@@ -116,6 +116,7 @@ public class EditarServicoActivity extends AppCompatActivity {
         switchTipoServico.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                Utils.esconderTeclado(EditarServicoActivity.this);
                 ObjectAnimator colorFade;
                 if(isChecked) {
                     colorFade = ObjectAnimator.ofObject(servicoBar, "backgroundColor", new ArgbEvaluator(), getResources().getColor(R.color.colorGreen), getResources().getColor(R.color.colorDanger));
@@ -132,6 +133,7 @@ public class EditarServicoActivity extends AppCompatActivity {
         ckbCombinarPreco.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                Utils.esconderTeclado(EditarServicoActivity.this);
                 if (isChecked) {
                     tvCifrao.setVisibility(View.INVISIBLE);
                     etPrecoServicoID.setText("0");

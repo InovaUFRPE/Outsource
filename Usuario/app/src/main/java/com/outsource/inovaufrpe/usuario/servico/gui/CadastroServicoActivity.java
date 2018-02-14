@@ -119,6 +119,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
         ckbCombinarPreco.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                Utils.esconderTeclado(CadastroServicoActivity.this);
                 if (isChecked) {
                     tvCifrao.setVisibility(View.INVISIBLE);
                     etPrecoServicoID.setText("0");
