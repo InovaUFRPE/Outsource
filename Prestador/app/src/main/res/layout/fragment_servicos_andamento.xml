@@ -24,17 +24,19 @@
         android:layout_marginVertical="8dp"
         android:entries="@array/tipos_servicos_andamento"
         android:padding="16dp"
-        tools:targetApi="o" />-->
+        tools:targetApi="o" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/RecycleID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/Recycle2ID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp"
+        android:clipToPadding="false" />
 
     <TextView
         android:id="@+id/nenhum_servico"
