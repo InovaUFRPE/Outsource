@@ -10,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="18 DEZ"
         android:layout_marginRight="8dp"
         android:textColor="@color/colorTextMuted"
         android:textSize="16sp" />
@@ -20,7 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:text="Nome do serviço realizado"
         android:textColor="@color/colorBlack"
         android:textSize="16sp" />
 
@@ -30,7 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="end"
-        android:text="R$ 26,00"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorDanger"
         android:textSize="16sp" />
 </LinearLayout>

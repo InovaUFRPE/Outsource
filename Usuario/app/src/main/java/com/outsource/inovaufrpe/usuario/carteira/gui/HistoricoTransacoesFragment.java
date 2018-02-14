@@ -54,7 +54,8 @@ public class HistoricoTransacoesFragment extends Fragment {
             protected void populateViewHolder(HistoricoServicoListHolder viewHolder, Servico model, int position) {
                 viewHolder.nomeServico.setText(model.getNome());
                 viewHolder.data.setText(CardFormat.dataFormat(model.getDataf(),"dd/MM"));
-                viewHolder.preco.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
+                String s = "- " + CardFormat.dinheiroFormat(model.getPreco().toString());
+                viewHolder.preco.setText(s);
 
             }
 
