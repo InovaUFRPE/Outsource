@@ -17,6 +17,7 @@ public class Prestador {
     private List<Servico> listaServicos = new ArrayList<Servico>();
     private God carteira;
     private int pesoNota;
+    private String foto;
 
     public Prestador() {
     }
@@ -99,5 +100,13 @@ public class Prestador {
 
     public void setPesoNota(int pesoNota) {
         this.pesoNota = pesoNota;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

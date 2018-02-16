@@ -1,5 +1,7 @@
 package com.outsource.inovaufrpe.usuario.solicitante.dominio;
 
+import android.net.Uri;
+
 import com.outsource.inovaufrpe.usuario.carteira.dominio.God;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ public class Usuario {
     private List<String> listaServicos = new ArrayList<>();
     private God carteira;
     private int pesoNota;
+    private String foto;
 
     public Usuario() {
     }
@@ -99,5 +102,13 @@ public class Usuario {
 
     public void setPesoNota(int pesoNota) {
         this.pesoNota = pesoNota;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

@@ -36,6 +36,10 @@ public class CadastroActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmailID);
         etTelefone = findViewById(R.id.etTelefoneID);
         Button btCadastrar = findViewById(R.id.btCadastrarID);
+        Intent it = getIntent();
+        etNome.setText(it.getStringExtra("pNome"));
+        etSobrenome.setText(it.getStringExtra("uNome"));
+        etEmail.setText(it.getStringExtra("email"));
 
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override

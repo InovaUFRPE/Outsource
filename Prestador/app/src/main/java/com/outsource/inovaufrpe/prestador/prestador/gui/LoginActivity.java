@@ -1,5 +1,6 @@
 package com.outsource.inovaufrpe.prestador.prestador.gui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,12 +9,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,16 +28,21 @@ import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 import com.outsource.inovaufrpe.prestador.utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +56,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CallbackManager callbackManager;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
-    private FirebaseAux firebase = FirebaseAux.getInstancia();
+    private String pNome;
+    private String uNome;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +80,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void checaSessao() {
-        if (firebase.getUser() != null) {
-            finish();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            final ProgressDialog dialog = ProgressDialog.show(LoginActivity.this, "",
+                    "Carregando dados...", true);
+            DatabaseReference prest = FirebaseDatabase.getInstance().getReference().child("prestador");
+            prest.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.hasChild(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        finish();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    } else {
+                        FirebaseAuth.getInstance().signOut();
+                        LoginManager.getInstance().logOut();
+                        dialog.dismiss();
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 
@@ -109,7 +139,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void LoginFacebook(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        firebase.getFirebaseAuth().signInWithCredential(credential)
+        getUserDetailsFromFB(token);
+        FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -199,7 +230,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginCelular(PhoneAuthCredential credential) {
-        firebase.getFirebaseAuth().signInWithCredential(credential)
+        FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -224,17 +255,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void usuarioLogado() {
-        String usuarioId = firebase.getUser().getUid();
-        DatabaseReference users = firebase.getPrestadorReference();
+        String usuarioId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference users = FirebaseDatabase.getInstance().getReference().child("prestador");
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(firebase.getUser().getUid())) {
+                if (snapshot.hasChild(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                     finish();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else {
+                    Intent it = new Intent(LoginActivity.this, CadastroActivity.class);
+                    it.putExtra("pNome", pNome);
+                    it.putExtra("uNome", uNome);
+                    it.putExtra("email", email);
                     finish();
-                    startActivity(new Intent(LoginActivity.this, CadastroActivity.class));
+                    startActivity(it);
                 }
             }
 
@@ -243,6 +278,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         });
+    }
+
+    public void getUserDetailsFromFB(AccessToken accessToken) {
+
+        GraphRequest req=GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                try{
+                    email =  object.getString("email");
+                    pNome = object.getString("first_name");
+                    uNome = object.getString("last_name");
+
+                }catch (JSONException e)
+                {
+                    Toast.makeText(getApplicationContext(),"graph request error : "+e.getMessage(),Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "email,first_name,last_name");
+        req.setParameters(parameters);
+        req.executeAsync();
     }
 
 }

@@ -2,7 +2,9 @@ package com.outsource.inovaufrpe.prestador.servico.gui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -18,8 +20,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -44,10 +48,13 @@ import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
 import com.outsource.inovaufrpe.prestador.utils.NotaMedia;
 import com.outsource.inovaufrpe.prestador.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class VisualizarServicoActivity extends AppCompatActivity {
 
@@ -80,6 +87,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     ServicoView servicoView;
     int peso;
     int somatorio;
+    String uriFotoPrestador;
     private Task<Void> oferta;
 
 
@@ -131,7 +139,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         oferta1.setPrestadorId(firebaseAuth.getCurrentUser().getUid());
                         oferta1.setOfertaValor(Double.parseDouble(precoServico.getText().toString()));
                         oferta1.setTempo(new Date().getTime());
-                        databaseReference.child("oferta").child(servicoId).child(oferta1.getPrestadorId()).setValue(oferta1);
+                        databaseReference.child("oferta").child(servicoId).child(oferta1.getPrestadorId()).setValue(oferta1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(VisualizarServicoActivity.this, "Orçamento enviado com sucesso!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         enviarNotificacao(0);
                         dialog.dismiss();
                     }
@@ -295,6 +308,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 tvNomePessoa.setText(s);
                 somatorio = dataSnapshot.child("nota").getValue(int.class);
                 peso = dataSnapshot.child("pesoNota").getValue(int.class);
+                uriFotoPrestador = dataSnapshot.child("foto").getValue(String.class);
                 if(peso != 0) {
                     tvNotaPessoa.setText(String.format("%.02f", (float)somatorio / peso));
                 }else{
@@ -387,6 +401,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         TextView nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
         RatingBar avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
         nomeUsuario.setText(tvNomePessoa.getText().toString());
+        Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoPrestador)).centerCrop().fit().into((CircleImageView) v1.findViewById(R.id.profile_image));
         if (peso == 0){
             avaliarPerfil.setRating(0);
         }else{

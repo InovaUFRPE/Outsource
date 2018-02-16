@@ -35,11 +35,13 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:11.2.2'
     compile 'com.google.firebase:firebase-core:11.2.2'
     compile 'com.google.firebase:firebase-database:11.2.2'
+    compile 'com.google.firebase:firebase-storage:11.2.2'
     compile 'com.google.android.gms:play-services-auth:11.2.2'
     compile 'com.google.android.gms:play-services-location:11.2.2'
     compile 'com.google.android.gms:play-services-places:11.2.2'
     compile 'com.firebaseui:firebase-ui-database:0.5.1'
     compile 'com.android.support:support-v13:26.1.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
     compile 'de.hdodenhof:circleimageview:2.2.0'
 }

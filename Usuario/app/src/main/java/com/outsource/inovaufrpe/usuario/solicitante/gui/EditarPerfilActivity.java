@@ -14,6 +14,7 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,36 +80,42 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
     public void Atualizar() {
         user = firebase.getUser();
-        user.updateEmail(etAtualizaEmail.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        final String nome = etAtualizaNome.getText().toString().trim();
+        final String sobrenome = etAtualizaSobrenome.getText().toString().trim();
+        final String email = etAtualizaEmail.getText().toString().trim();
+        final String telefone = etAtualizaTelefone.getText().toString().trim();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(nome)
+                .build();
+        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    final Usuario usuario = new Usuario();
-                    usuario.setId(user.getUid());
-                    usuario.setNome(etAtualizaNome.getText().toString().trim());
-                    usuario.setSobrenome(etAtualizaSobrenome.getText().toString().trim());
-                    usuario.setEmail(etAtualizaEmail.getText().toString().trim());
-                    usuario.setTelefone(etAtualizaTelefone.getText().toString().trim());
-                    firebase.getUsuarioReference().child(user.getUid()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Double moeda = dataSnapshot.child("carteira").getValue(Double.class);
-                            usuario.setCarteira(moeda);
-                            usuario.setNota(dataSnapshot.child("nota").getValue(float.class));
-                            usuario.setPesoNota(dataSnapshot.child("pesoNota").getValue(int.class));
-                            firebase.getUsuarioReference().child(usuario.getId()).setValue(usuario);
-                        }
+                final Usuario usuario = new Usuario();
+                usuario.setId(user.getUid());
+                usuario.setNome(nome);
+                usuario.setSobrenome(sobrenome);
+                usuario.setEmail(email);
+                usuario.setTelefone(telefone);
+                firebase.getUsuarioReference().child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Double moeda = dataSnapshot.child("carteira").getValue(Double.class);
+                        usuario.setCarteira(moeda);
+                        usuario.setNota(dataSnapshot.child("nota").getValue(float.class));
+                        usuario.setPesoNota(dataSnapshot.child("pesoNota").getValue(int.class));
+                        firebase.getUsuarioReference().child(usuario.getId()).setValue(usuario);
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
-                    finish();
-                    startActivity(new Intent(EditarPerfilActivity.this, MainActivity.class));
-                }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+                finish();
+                startActivity(new Intent(EditarPerfilActivity.this, MainActivity.class));
             }
         });
     }
+
 
     public void Deletar() {
         firebase.getUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -3,6 +3,7 @@ package com.outsource.inovaufrpe.usuario.servico.gui;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -49,9 +50,12 @@ import com.outsource.inovaufrpe.usuario.utils.CriticaViewHolder;
 import com.outsource.inovaufrpe.usuario.utils.FirebaseUtil;
 import com.outsource.inovaufrpe.usuario.utils.NotaMedia;
 import com.outsource.inovaufrpe.usuario.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Timestamp;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class VisualizarServicoActivity extends AppCompatActivity {
 
@@ -84,6 +88,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     ValueEventListener listenerServico;
     String nomeSolicitante;
     String nomeServico;
+    String uriFotoPrestador;
     int peso;
     int somatorio;
     LinearLayout prestadorLayout;
@@ -429,6 +434,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 tvNomePessoa.setText(s);
                 somatorio = dataSnapshot.child("nota").getValue(int.class);
                 peso = dataSnapshot.child("pesoNota").getValue(int.class);
+                uriFotoPrestador = dataSnapshot.child("foto").getValue(String.class);
                 if(peso != 0) {
                     tvNotaPessoa.setText(String.format("%.02f", (float)somatorio / peso));
                 }else{
@@ -546,7 +552,10 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
         avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
+        Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoPrestador)).centerCrop().fit().into((CircleImageView) v1.findViewById(R.id.profile_image));
         nomeUsuario.setText(nomePrestador);
+
+
         //TODO configurar nota para ofertante
         if (peso == 0){
             avaliarPerfil.setRating(0);
@@ -554,7 +563,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString().replace(",",".")));
         }
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
-
         mRecyclerView.setFocusable(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(VisualizarServicoActivity.this);
         mRecyclerView.setLayoutManager(mLayoutManager);
