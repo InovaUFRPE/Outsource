@@ -92,7 +92,7 @@ public class MainPerfilFragment extends Fragment {
                         String nomeCompleto = prestador.getNome()+" "+prestador.getSobrenome();
                         nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(prestador.getEmail());
-                        if(prestador.getFoto() != null || !prestador.getFoto().isEmpty()) {
+                        if(prestador.getFoto() != null && !prestador.getFoto().isEmpty()) {
                             Picasso.with(getActivity()).load(Uri.parse(prestador.getFoto())).fit().centerCrop().into(foto_perfil);
                         }
                         telefoneUsuario.setText(prestador.getTelefone());

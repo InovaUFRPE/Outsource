@@ -87,7 +87,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     ServicoView servicoView;
     int peso;
     int somatorio;
-    String uriFotoPrestador;
+    String uriFotoUsuario;
     private Task<Void> oferta;
 
 
@@ -308,7 +308,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 tvNomePessoa.setText(s);
                 somatorio = dataSnapshot.child("nota").getValue(int.class);
                 peso = dataSnapshot.child("pesoNota").getValue(int.class);
-                uriFotoPrestador = dataSnapshot.child("foto").getValue(String.class);
+                uriFotoUsuario = dataSnapshot.child("foto").getValue(String.class);
                 if(peso != 0) {
                     tvNotaPessoa.setText(String.format("%.02f", (float)somatorio / peso));
                 }else{
@@ -401,7 +401,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         TextView nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
         RatingBar avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
         nomeUsuario.setText(tvNomePessoa.getText().toString());
-        Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoPrestador)).centerCrop().fit().into((CircleImageView) v1.findViewById(R.id.profile_image));
+        if(uriFotoUsuario != null && !uriFotoUsuario.isEmpty()) {
+            Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoUsuario)).centerCrop().fit().into((CircleImageView) v1.findViewById(R.id.profile_image));
+        }
         if (peso == 0){
             avaliarPerfil.setRating(0);
         }else{

@@ -528,8 +528,40 @@ public class VisualizarServicoActivity extends AppCompatActivity {
      */
     private void criarDialogVisualizarPerfil(final String idPrestador, final String nomePrestador) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(VisualizarServicoActivity.this);
-        @SuppressLint("InflateParams") View v1 = getLayoutInflater().inflate(R.layout.dialog_visualizar_perfil, null);
+        @SuppressLint("InflateParams") final View v1 = getLayoutInflater().inflate(R.layout.dialog_visualizar_perfil, null);
         FirebaseRecyclerAdapter adapter;
+
+        nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
+        avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
+
+        databaseReference.child("prestador").child(idPrestador).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nomeUsuario.setText(dataSnapshot.child("nome").getValue(String.class) + dataSnapshot.child("sobrenome").getValue(String.class));
+                somatorio = dataSnapshot.child("nota").getValue(int.class);
+                peso = dataSnapshot.child("pesoNota").getValue(int.class);
+                uriFotoPrestador = dataSnapshot.child("foto").getValue(String.class);
+
+                if(uriFotoPrestador != null && !uriFotoPrestador.isEmpty()) {
+                    Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoPrestador)).centerCrop().fit().into((CircleImageView) v1.findViewById(R.id.profile_image));
+                }
+
+                //TODO configurar nota para ofertante
+                if (peso == 0){
+                    avaliarPerfil.setRating(0);
+                }else {
+                    avaliarPerfil.setRating((float)somatorio / peso);
+                }
+                /*if (servico.getOfertante() != null) {
+                    dadosNegociacao();
+                }*/
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         ImageButton closeBtn = v1.findViewById(R.id.closeBtn);
         ImageButton chatBtn = v1.findViewById(R.id.chatButton);
@@ -550,18 +582,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         });
 
-        nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
-        avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
-        Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoPrestador)).centerCrop().fit().into((CircleImageView) v1.findViewById(R.id.profile_image));
-        nomeUsuario.setText(nomePrestador);
 
-
-        //TODO configurar nota para ofertante
-        if (peso == 0){
-            avaliarPerfil.setRating(0);
-        }else {
-            avaliarPerfil.setRating(Float.parseFloat(tvNotaPessoa.getText().toString().replace(",",".")));
-        }
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
         mRecyclerView.setFocusable(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(VisualizarServicoActivity.this);

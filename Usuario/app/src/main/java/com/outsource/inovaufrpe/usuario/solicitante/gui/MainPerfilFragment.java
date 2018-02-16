@@ -83,7 +83,7 @@ public class MainPerfilFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Usuario user = dataSnapshot.getValue(Usuario.class);
                         String nomeCompleto = user.getNome() + " " + user.getSobrenome();
-                        if(user.getFoto() != null || !user.getFoto().isEmpty()) {
+                        if(user.getFoto() != null && !user.getFoto().isEmpty()) {
                             Picasso.with(getActivity()).load(Uri.parse(user.getFoto())).fit().centerCrop().into(foto_perfil);
                         }
                         nomeUsuario.setText(nomeCompleto);
