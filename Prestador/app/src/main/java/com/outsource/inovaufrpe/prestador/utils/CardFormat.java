@@ -40,6 +40,23 @@ public class CardFormat {
         return nData;
     }
 
+    public static StringBuilder dataFormatMes(String data, String pattern){
+        String nData;
+        StringBuilder nData2 = null;
+        try {
+            DateFormat dateFormat = new SimpleDateFormat(pattern);
+            DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            nData = dateFormat.format(dateFormat2.parse(data));
+            nData2 = new StringBuilder(nData);
+            nData2.delete(3,5);
+            nData2.append(Utils.meses(Integer.valueOf(nData.substring(3))));
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return nData2;
+    }
+
     public static String tempoFormat(long tempo) {
         String r;
         if (DateUtils.getRelativeTimeSpanString(tempo).toString().substring(0,1).equals("0")) {

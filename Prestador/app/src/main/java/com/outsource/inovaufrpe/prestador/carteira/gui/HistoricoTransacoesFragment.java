@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.outsource.inovaufrpe.prestador.R;
+import com.outsource.inovaufrpe.prestador.carteira.dominio.God;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.HistoricoServicoListHolder;
@@ -55,8 +56,8 @@ public class HistoricoTransacoesFragment extends Fragment {
             @Override
             protected void populateViewHolder(HistoricoServicoListHolder viewHolder, Servico model, int position) {
                 viewHolder.nomeServico.setText(model.getNome());
-                viewHolder.data.setText(CardFormat.dataFormat(model.getDataf(),"dd/MM"));
-                String s = "+ " + CardFormat.dinheiroFormat(model.getPreco().toString());
+                viewHolder.data.setText(CardFormat.dataFormatMes(model.getDataf(),"dd/MM"));
+                String s = "+ " + CardFormat.dinheiroFormat(String.valueOf(model.getPreco()*(1- God.getTAXA())));
                 viewHolder.preco.setText(s);
 
             }

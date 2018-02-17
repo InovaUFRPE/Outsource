@@ -5,6 +5,9 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Utils {
     public static void esconderTeclado(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -18,5 +21,10 @@ public class Utils {
     }
     public static void criarToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+    public static String meses(int indice){
+        ArrayList<String> mes = new ArrayList<>();
+        mes.addAll(Arrays.asList("Jan","Feb","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"));
+        return mes.get(indice);
     }
 }

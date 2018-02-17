@@ -47,11 +47,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
         </activity>
-        <activity android:name=".servico.gui.HistoricoServicoActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.outsource.inovaufrpe.prestador.prestador.gui.MainActivity" />
-        </activity>
         <activity android:name=".conversa.gui.MensagemActivity" />
         <activity android:name=".conversa.gui.ConversaActivity">
             <meta-data

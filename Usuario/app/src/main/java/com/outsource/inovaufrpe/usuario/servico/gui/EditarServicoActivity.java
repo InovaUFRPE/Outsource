@@ -92,10 +92,13 @@ public class EditarServicoActivity extends AppCompatActivity {
         databaseReferenceServico.child(estadoId).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Servico servico = dataSnapshot.getValue(Servico.class);
+                ServicoView servico = dataSnapshot.getValue(ServicoView.class);
                 etNomeServicoID.setText(servico.getNome());
                 etDescricaoServicoID.setText(servico.getDescricao());
                 etPrecoServicoID.setText(servico.getPreco().toString());
+                latLng = new LatLng(servico.getLatitude(), servico.getLongitude());
+                placePickerID.setText(servico.getEndereco());
+
                 if(servico.isUrgente()){
                     switchTipoServico.setChecked(true);
                 }
@@ -213,11 +216,17 @@ public class EditarServicoActivity extends AppCompatActivity {
     public void confirmar() {
         if(latLng == null){
             Utils.criarToast(this,"Selecione um local para o serviço!");
-        }else {
-            atualizaServico();
-            finish();
-            startActivity(new Intent(this, MainActivity.class));
+            return;
+        }if (etNomeServicoID.getText().toString().trim().isEmpty()) {
+            Utils.criarToast(this,"Dê um nome para este serviço.");
+            return;
+        }if (etPrecoServicoID.getText().toString().trim().isEmpty()) {
+            Utils.criarToast(this,"Dê um preço para este serviço.");
+            return;
         }
+        atualizaServico();
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     private void atualizaServico() {
@@ -235,6 +244,7 @@ public class EditarServicoActivity extends AppCompatActivity {
                 servico.setIdCriador(firebaseAuth.getCurrentUser().getUid());
                 servico.setLatitude(latLng.latitude);
                 servico.setLongitude(latLng.longitude);
+                servico.setEndereco(placePickerID.getText().toString());
 
                 if (switchTipoServico.isChecked()) {
                     gambi = "0";
@@ -252,6 +262,7 @@ public class EditarServicoActivity extends AppCompatActivity {
                 servicoView.setIdCriador(firebaseAuth.getCurrentUser().getUid());
                 servicoView.setLatitude(latLng.latitude);
                 servicoView.setLongitude(latLng.longitude);
+                servicoView.setEndereco(placePickerID.getText().toString());
 
                 if (switchTipoServico.isChecked()) {
                     gambi = "0";

@@ -148,6 +148,9 @@ public class MainPerfilFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
         if(requestCode == GALLERY_INTENT ){
+            if (data == null){
+                return;
+            }
             pbFoto.setVisibility(View.VISIBLE);
             pbFoto.setIndeterminate(true);
             Uri uri = data.getData();

@@ -15,6 +15,7 @@ public class Servico {
     private String estado;
     private boolean urgente;
     private String dataf;
+    private String endereco;
 
     public Servico() {
     }
@@ -113,6 +114,14 @@ public class Servico {
 
     public void setDataf(String dataf) {
         this.dataf = dataf;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 }
 

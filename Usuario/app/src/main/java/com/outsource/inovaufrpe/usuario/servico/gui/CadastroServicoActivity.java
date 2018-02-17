@@ -176,10 +176,17 @@ public class CadastroServicoActivity extends AppCompatActivity {
     public void confirmar() {
         if(latLng == null){
             Utils.criarToast(this, "Selecione um local para o serviço!");
-        }else {
-            criaServico();
-            startActivity(new Intent(this, MainActivity.class));
+            return;
+        }if (etNomeServicoID.getText().toString().trim().isEmpty()) {
+            Utils.criarToast(this,"Dê um nome para este serviço.");
+            return;
+        }if (etPrecoServicoID.getText().toString().trim().isEmpty()) {
+            Utils.criarToast(this,"Dê um preço para este serviço.");
+            return;
         }
+        criaServico();
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     private Servico criaServico() {
@@ -196,6 +203,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
         servico.setIdCriador(firebaseAuth.getCurrentUser().getUid());
         servico.setLatitude(latLng.latitude);
         servico.setLongitude(latLng.longitude);
+        servico.setEndereco(placePickerID.getText().toString());
 
 
         ServicoView servicoView = new ServicoView();
@@ -211,12 +219,14 @@ public class CadastroServicoActivity extends AppCompatActivity {
 
         servicoView.setId(servico.getId());
         servicoView.setNome(servico.getNome());
+        servicoView.setDescricao(servico.getDescricao());
         servicoView.setEstado(servico.getEstado());
         servicoView.setPreco(servico.getPreco());
         servicoView.setData(servico.getData());
         servicoView.setIdCriador(servico.getIdCriador());
         servicoView.setLatitude(servico.getLatitude());
         servicoView.setLongitude(servico.getLongitude());
+        servicoView.setEndereco(placePickerID.getText().toString());
         servicoView.setOrdemRef(gambi + new Timestamp(-1 * data.getTime()).toString());
 
 

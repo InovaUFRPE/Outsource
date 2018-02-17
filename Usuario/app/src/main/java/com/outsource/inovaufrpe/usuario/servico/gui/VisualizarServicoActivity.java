@@ -184,7 +184,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     if (dataSnapshot.child("concluido").getValue().toString().equals(firebaseAuth.getCurrentUser().getUid())) {
                         Utils.criarToast(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido");
                     } else {
-                        aplicarTaxa();
                         databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         databaseReference.child("visualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         criarDialogAvaliarUsuario(true);
@@ -261,19 +260,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 }else{
                     Utils.criarToast(VisualizarServicoActivity.this, "Ocorreu um erro, tente novamente");
                 }
-            }
-        });
-    }
-
-    private void aplicarTaxa(){
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                God.setFundos(dataSnapshot.child("servico").child(servicoId).child("preco").getValue(Double.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }

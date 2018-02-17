@@ -70,7 +70,7 @@ public class ServicosConcluidosFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM"));
+                viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM/yyyy"));
                 viewHolder.valor.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
 
                 if (model.isUrgente()) {

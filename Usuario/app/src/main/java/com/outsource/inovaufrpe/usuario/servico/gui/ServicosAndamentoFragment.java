@@ -26,10 +26,8 @@ import com.outsource.inovaufrpe.usuario.servico.adapter.ServicoListHolder;
 
 public class ServicosAndamentoFragment extends Fragment {
 
-//    private RecyclerView mRecyclerViewNegociacao;
     private RecyclerView mRecyclerViewAndamento;
 
-//    private FirebaseRecyclerAdapter adapter1;
     private FirebaseRecyclerAdapter adapter2;
 
     private TextView tvNenhumServico;
@@ -48,38 +46,12 @@ public class ServicosAndamentoFragment extends Fragment {
         tvNenhumServico = view.findViewById(R.id.nenhum_servico);
         tvNenhumServico.setVisibility(View.GONE);
 
-//        mRecyclerViewNegociacao = view.findViewById(R.id.RecycleID);
         mRecyclerViewAndamento = view.findViewById(R.id.Recycle2ID);
 
-//        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(getActivity());
         RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getActivity());
-//        mRecyclerViewNegociacao.setLayoutManager(mLayoutManager1);
         mRecyclerViewAndamento.setLayoutManager(mLayoutManager2);
 
         adaptador();
-
-        /*Spinner spinner1 = view.findViewById(R.id.spinner1);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                switch (pos) {
-                    case 0:
-                        mRecyclerViewNegociacao.setVisibility(View.GONE);
-                        mRecyclerViewAndamento.setVisibility(View.VISIBLE);
-                        break;
-                    case 1:
-                        mRecyclerViewNegociacao.setVisibility(View.VISIBLE);
-                        mRecyclerViewAndamento.setVisibility(View.GONE);
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                mRecyclerViewNegociacao.setVisibility(View.GONE);
-                mRecyclerViewAndamento.setVisibility(View.GONE);
-            }
-        });*/
 
         return view;
 
@@ -87,49 +59,7 @@ public class ServicosAndamentoFragment extends Fragment {
 
     private void adaptador() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
-//        Query queryNegociacao = databaseReference.child("visualizacao").child("negociacao").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
         Query queryAndamento = databaseReference.child("visualizacao").child("andamento").orderByChild("idCriador").equalTo(firebaseAuth.getCurrentUser().getUid());
-        /*adapter1 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryNegociacao) {
-
-            @Override
-            protected void populateViewHolder(ServicoListHolder viewHolder, Servico model, int position) {
-                if (this.getItemCount() < 0) {
-                    tvNenhumServico.setVisibility(View.VISIBLE);
-                    return;
-                }
-                viewHolder.mainLayout.setVisibility(View.VISIBLE);
-                viewHolder.linearLayout.setVisibility(View.VISIBLE);
-                viewHolder.titulo.setText(model.getNome());
-                viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(cardFormat.dataFormat(model.getData(),"dd/MM"));
-                viewHolder.valor.setText(cardFormat.dinheiroFormat(model.getOferta().toString()));
-
-                if (model.isUrgente()) {
-                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorDanger));
-                } else {
-                    viewHolder.barraTipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-                }
-
-            }
-
-            @Override
-            public ServicoListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-                final ServicoListHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                viewHolder.setOnClickListener(new ServicoListHolder.ClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent it = new Intent(getActivity(), VisualizarServicoActivity.class);
-                        Servico servico = (Servico) adapter1.getItem(position);
-                        it.putExtra("servicoID", servico.getId());
-                        it.putExtra("estado", servico.getEstado());
-                        startActivity(it);
-                    }
-
-                });
-                return viewHolder;
-            }
-
-        };*/
 
         adapter2 = new FirebaseRecyclerAdapter<Servico, ServicoListHolder>(Servico.class, R.layout.card_servico, ServicoListHolder.class, queryAndamento) {
 
@@ -143,7 +73,7 @@ public class ServicosAndamentoFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM"));
+                viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM/yyyy"));
                 viewHolder.valor.setText(CardFormat.dinheiroFormat(model.getPreco().toString()));
 
                 if (model.isUrgente()) {
@@ -184,7 +114,6 @@ public class ServicosAndamentoFragment extends Fragment {
 
         };
 
-//        mRecyclerViewNegociacao.setAdapter(adapter1);
         mRecyclerViewAndamento.setAdapter(adapter2);
     }
 

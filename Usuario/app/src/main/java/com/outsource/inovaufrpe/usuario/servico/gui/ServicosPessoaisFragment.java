@@ -85,7 +85,7 @@ public class ServicosPessoaisFragment extends Fragment {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.titulo.setText(model.getNome());
                 viewHolder.status.setText(model.getEstado());
-                viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM"));
+                viewHolder.data.setText(CardFormat.dataFormat(model.getData(),"dd/MM/yyyy"));
 
                 if(model.getPreco().doubleValue() == Double.parseDouble("0")){
                     viewHolder.valor.setText("A comb.");

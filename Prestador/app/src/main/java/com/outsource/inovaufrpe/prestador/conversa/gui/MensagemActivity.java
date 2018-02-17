@@ -150,34 +150,6 @@ public class MensagemActivity extends AppCompatActivity {
             }
         });
 
-
-
-//        cancelarNegociacao.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                databaseReference.child("servico").child(estadoID).child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        Servico servico = dataSnapshot.getValue(Servico.class);
-//                        servico.setOfertante("");
-//                        servico.setOferta(servico.getPreco());
-//                        fu.moverServico(databaseReference.child("servico").child(estadoID).child(servicoId),
-//                                databaseReference.child("servico").child(EstadoServico.ABERTA.getValue()).child(servicoId),
-//                                EstadoServico.ABERTA.getValue());
-//                        databaseReference.child("servico").child(estadoID).child(servicoId).setValue(servico);
-//                        databaseReference.child("servico").child(estadoID).child(servicoId).child("idPrestador").removeValue();
-//                        startActivity(new Intent(MensagemActivity.this, MainActivity.class));
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//            }
-//        });
-
-
         recycleNegociacoes.setAdapter(adapter);
     }
 

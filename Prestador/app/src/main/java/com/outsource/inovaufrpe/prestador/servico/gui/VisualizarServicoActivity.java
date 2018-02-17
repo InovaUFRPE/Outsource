@@ -188,13 +188,13 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     if (dataSnapshot.child("concluido").getValue().equals(firebaseAuth.getCurrentUser().getUid())) {
                         Utils.criarToast(VisualizarServicoActivity.this, "Você já marcou este serviço como concluido");
                     } else {
-                        adicionarCarteira();
+                        aplicarTaxa();
                         databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         databaseReference.child("visualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                         criarDialogAvaliarUsuario(true);
                     }
                 } else {
-                    adicionarCarteira();
+                    aplicarTaxa();
                     criarDialogAvaliarUsuario(false);
                     databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     databaseReference.child("servico").child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
@@ -230,7 +230,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             tvEstadoServicoID.setText(R.string.em_andamento);
             findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
         } else {
-            tvEstadoServicoID.setText(R.string.finalizada);
+            tvEstadoServicoID.setText(R.string.concluido);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
         }
     }
@@ -239,14 +239,20 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         this.dialog.dismiss();
     }
 
-    private void adicionarCarteira() {
+    private void aplicarTaxa() {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 God carteira = new God(dataSnapshot.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").getValue(Double.class));
                 carteira.adicionar(dataSnapshot.child("visualizacao").child("andamento").child(servicoId).child("preco").getValue(Double.class));
-                carteira.aplicarTaxa(dataSnapshot.child("visualizacao").child("andamento").child(servicoId).child("preco").getValue(Double.class));
+                God.setFundos(dataSnapshot.child("visualizacao").child("andamento").child(servicoId).child("preco").getValue(Double.class));
                 databaseReference.child("prestador").child(firebaseAuth.getCurrentUser().getUid()).child("carteira").setValue(carteira.getMoeda());
+                if (dataSnapshot.child("fundos").child("valor").getValue(double.class) == null) {
+                    databaseReference.child("fundos").child("valor").setValue(God.getFundos());
+                } else {
+                    double fundos = God.getFundos()+dataSnapshot.child("fundos").getValue(Double.class);
+                    databaseReference.child("fundos").child("valor").setValue(fundos);
+                }
             }
 
             @Override
@@ -408,22 +414,11 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
         ImageButton closeBtn = v1.findViewById(R.id.closeBtn);
-        ImageButton chatBtn = v1.findViewById(R.id.chatButton);
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-            }
-        });
-
-        chatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(VisualizarServicoActivity.this,HistoricoServicoActivity.class);
-                intent.putExtra("solicitanteNome",tvNomePessoa.getText().toString());
-                intent.putExtra("ID",servico.getIdCriador());
-                startActivity(intent);
             }
         });
 
@@ -507,13 +502,4 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         }
         return super.onContextItemSelected(item);
     }
-/*
-    public void cancelarServico(){
-        servico.setIdPrestador("");
-        servico.setOfertante("");
-        servico.setOferta(Double.valueOf(0));
-        atualizarEstadoServico(estadoId,EstadoServico.ABERTA.getValue());
-        finish();
-        startActivity(new Intent(VisualizarServicoActivity.this, MainActivity.class));
-    }*/
 }

@@ -17,33 +17,19 @@ public class God {
         return this.gods;
     }
 
-    private static Double getTAXA() {
+    public static Double getTAXA() {
         return TAXA;
     }
 
     public void adicionar(Double mais) {
-        this.gods = this.gods + mais;
-    }
-    public void subtrair(Double menos) {
-        this.gods = this.gods - menos;
-    }
-    public void multiplicar(Double vezes) {
-        this.gods = this.gods * vezes;
-    }
-    public void dividir(Double divisor) {
-        this.gods = this.gods / divisor;
+        this.gods = this.gods + mais*(1 - getTAXA());
     }
 
-    public Double getFundos() {
+    public static Double getFundos() {
         return fundos;
     }
 
     public static void setFundos(Double maisFundos) {
-        fundos += (maisFundos * getTAXA());
-    }
-
-    public double aplicarTaxa(Double valor){
-        double novoValor = this.gods - (valor*(TAXA));
-        return novoValor;
+        fundos = (maisFundos * getTAXA());
     }
 }
