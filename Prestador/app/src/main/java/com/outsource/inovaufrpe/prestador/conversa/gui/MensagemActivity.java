@@ -182,7 +182,7 @@ public class MensagemActivity extends AppCompatActivity {
         conversa.setTempo(data.getTime());
         conversa.setUltimaMensagem(mensagem.getTexto());
         conversa.setOrdemRef(new Timestamp(-1 * data.getTime()).toString());
-        databaseReference.child("conversaPrestador").child(prestadorID).child(servicoId+prestadorID).setValue(conversa);
+        databaseReference.child("conversaPrestador").child(prestadorID).child(servicoId).setValue(conversa);
         conversa.setNotificacao(true);
         databaseReference.child("conversaUsuario").child(usuarioID).child(servicoId+prestadorID).setValue(conversa);
     }
@@ -208,6 +208,7 @@ public class MensagemActivity extends AppCompatActivity {
             it.putExtra("servicoID", servicoId);
             it.putExtra("nomeServico",nomeServico);
             it.putExtra("estado", estado);
+            it.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(it);
         }
         return super.onOptionsItemSelected(item);

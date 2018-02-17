@@ -469,6 +469,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 databaseReference.child("feedback").child("usuario").child(servico.getIdCriador()).child(databaseReference.child("feedback").child("usuario").child(servico.getIdCriador()).push().getKey()).setValue(critica);
                 enviarNotificacao(1);
                 if(conclusao){
+                    databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()+servico.getIdPrestador()).child("estadoServico").setValue("concluido");
+                    databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()).child("estadoServico").setValue("concluido");
                     atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                 }
                 dialog.dismiss();

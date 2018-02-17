@@ -496,8 +496,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 if(uriFotoPrestador != null && !uriFotoPrestador.isEmpty()) {
                     Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoPrestador)).centerCrop().fit().into((CircleImageView) v1.findViewById(R.id.profile_image));
                 }
-
-                //TODO configurar nota para ofertante
                 if (peso == 0){
                     avaliarPerfil.setRating(0);
                 }else {
@@ -581,6 +579,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 databaseReference.child("feedback").child("prestador").child(servico.getIdPrestador()).child(databaseReference.child("feedback").child("prestador").child(servico.getIdPrestador()).push().getKey()).setValue(critica);
                 enviarNotificacao(3,servico.getIdPrestador());
                 if(conclusao) {
+                    databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()+servico.getIdPrestador()).child("estadoServico").setValue("concluido");
+                    databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()).child("estadoServico").setValue("concluido");
                     atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                 }
                 dialog.dismiss();
