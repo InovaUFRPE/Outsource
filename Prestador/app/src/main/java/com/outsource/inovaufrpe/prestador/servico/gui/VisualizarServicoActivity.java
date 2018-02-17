@@ -48,6 +48,8 @@ import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
 import com.outsource.inovaufrpe.prestador.utils.NotaMedia;
 import com.outsource.inovaufrpe.prestador.utils.Utils;
+import com.outsource.inovaufrpe.prestador.utils.swipebutton.SwipeButton;
+import com.outsource.inovaufrpe.prestador.utils.swipebutton.interfaces.OnActiveListener;
 import com.squareup.picasso.Picasso;
 
 import java.sql.Timestamp;
@@ -74,8 +76,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     EditText mensagem;
     Button cancelarNegociacao;
     Button btNegociar;
-    Button btAceitarOferta;
-    Button btConcluir;
+    SwipeButton swipeConcluir;
     String servicoId;
     String estadoId;
     FirebaseAuth firebaseAuth;
@@ -114,8 +115,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tvOferta = findViewById(R.id.tvPrecoOrcamento);
         tvEstadoServicoID = findViewById(R.id.tvEstadoServicoID);
         btNegociar = findViewById(R.id.btnNegociar);
-        btConcluir = findViewById(R.id.btnConcluirServico);
-        btAceitarOferta = findViewById(R.id.btAceitarNegociacao);
+        swipeConcluir = findViewById(R.id.btnConcluirServico);
         LinearLayout solicitanteLayout = findViewById(R.id.layoutPessoa);
 
         ActionBar ab = getSupportActionBar();
@@ -152,9 +152,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             }
         });
 
-        btConcluir.setOnClickListener(new View.OnClickListener() {
+        swipeConcluir.setOnActiveListener(new OnActiveListener() {
             @Override
-            public void onClick(View view) {
+            public void onActive() {
                 concluir();
             }
         });
@@ -181,7 +181,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     }
 
     private void concluir() {
-        //CORRIGIR A AVALIZAÇÃO DE USUARIO TARDIAgh
         databaseReference.child("servico").child(servicoId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -200,7 +199,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     databaseReference.child("servico").child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
                     databaseReference.child("servico").child(servicoId).child("concluido").setValue(firebaseAuth.getCurrentUser().getUid());
                     databaseReference.child("visualizacao").child(estadoId).child(servicoId).child("dataf").setValue(new Timestamp(new Date().getTime()).toString());
-                    btConcluir.setVisibility(View.GONE);
+                    swipeConcluir.setVisibility(View.GONE);
                 }
             }
 
@@ -222,7 +221,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         if (estadoId.equals(EstadoServico.ABERTA.getValue())) {
             tvEstadoServicoID.setText(R.string.aberta);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
-            findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
         } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_negociacao);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
@@ -231,11 +229,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_andamento);
             findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
-            findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
         } else {
             tvEstadoServicoID.setText(R.string.finalizada);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
-            findViewById(R.id.layoutBtnAceitarOferta).setVisibility(View.GONE);
         }
     }
 

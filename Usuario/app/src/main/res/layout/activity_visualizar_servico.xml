@@ -197,52 +197,18 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layoutBtnNegociar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/screenEnd"
-            android:background="@color/colorPrimary">
-
-            <Button
-                android:id="@+id/btnNegociar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorTransparent"
-                android:text="@string/negociar"
-                android:textColor="@color/colorWhite" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/layoutBtnConcluir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/screenEnd"
-            android:background="@color/colorGreen">
+            android:layout_above="@id/screenEnd">
 
-            <Button
+            <com.outsource.inovaufrpe.usuario.utils.swipebutton.SwipeButton
                 android:id="@+id/btnConcluirServico"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorTransparent"
-                android:text="@string/concluir_servico"
-                android:textColor="@color/colorPrimaryDark" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutBtnAceitarOferta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/layoutBtnNegociar"
-            android:background="@color/colorGreen"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btAceitarNegociacao"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorTransparent"
-                android:text="@string/aceitar_oferta"
-                android:textColor="@color/colorPrimaryDark" />
+                android:layout_height="90dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                />
         </LinearLayout>
 
         <View

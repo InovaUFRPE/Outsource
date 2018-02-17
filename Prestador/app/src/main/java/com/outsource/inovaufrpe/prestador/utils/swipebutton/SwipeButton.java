@@ -1,4 +1,4 @@
-package com.outsource.inovaufrpe.usuario.utils.swipebutton;
+package com.outsource.inovaufrpe.prestador.utils.swipebutton;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,9 +21,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.outsource.inovaufrpe.usuario.R;
-import com.outsource.inovaufrpe.usuario.utils.swipebutton.interfaces.OnActiveListener;
-import com.outsource.inovaufrpe.usuario.utils.swipebutton.interfaces.OnStateChangeListener;
+import com.outsource.inovaufrpe.prestador.R;
+import com.outsource.inovaufrpe.prestador.utils.swipebutton.interfaces.OnActiveListener;
+import com.outsource.inovaufrpe.prestador.utils.swipebutton.interfaces.OnStateChangeListener;
 
 public class SwipeButton extends RelativeLayout {
     private ImageView slidingButton;
