@@ -310,20 +310,18 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
     private void definirLayout() {
         if (estadoId.equals(EstadoServico.CONCLUIDA.getValue())) {
-            layoutOfertas.setVisibility(View.GONE);
             tituloLayoutPessoa.setText(R.string.executado_por);
-            negociacaoLayout.setVisibility(View.GONE);
-            findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
+            prestadorLayout.setVisibility(View.VISIBLE);
         } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
-            layoutOfertas.setVisibility(View.GONE);
             tvEstadoServicoID.setText(R.string.em_andamento);
             tituloLayoutPessoa.setText(R.string.executado_por);
-            negociacaoLayout.setVisibility(View.GONE);
+            prestadorLayout.setVisibility(View.VISIBLE);
+            findViewById(R.id.layoutBotoesBottom).setVisibility(View.VISIBLE);
         } else {
             mostrarOfertas();
             tvEstadoServicoID.setText(R.string.aberta);
-            prestadorLayout.setVisibility(View.GONE);
-            findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
+            layoutOfertas.setVisibility(View.VISIBLE);
+            negociacaoLayout.setVisibility(View.VISIBLE);
         }
     }
 

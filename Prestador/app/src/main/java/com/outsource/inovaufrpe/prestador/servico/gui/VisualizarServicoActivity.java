@@ -220,18 +220,21 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     private void definirLayout(){
         if (estadoId.equals(EstadoServico.ABERTA.getValue())) {
             tvEstadoServicoID.setText(R.string.aberta);
-            findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
-        } else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
+            findViewById(R.id.layoutBotoesBottom).setVisibility(View.VISIBLE);
+            findViewById(R.id.layoutBtnNegociar).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnNegociar).setVisibility(View.VISIBLE);
+        } /*else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_negociacao);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
             findViewById(R.id.btnNegociar).setVisibility(View.GONE);
 
-        } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
+        }*/ else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_andamento);
-            findViewById(R.id.layoutBtnNegociar).setVisibility(View.GONE);
+            findViewById(R.id.layoutBotoesBottom).setVisibility(View.VISIBLE);
+            findViewById(R.id.layoutBtnConcluir).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnConcluirServico).setVisibility(View.VISIBLE);
         } else {
             tvEstadoServicoID.setText(R.string.concluido);
-            findViewById(R.id.layoutBotoesBottom).setVisibility(View.GONE);
         }
     }
 

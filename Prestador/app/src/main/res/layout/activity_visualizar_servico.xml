@@ -136,14 +136,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/layoutBtnNegociar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/screenEnd"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/btnNegociar"
@@ -151,14 +153,16 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorTransparent"
                 android:text="@string/negociar"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layoutBtnConcluir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/screenEnd">
+            android:layout_above="@id/screenEnd"
+            android:visibility="gone">
 
             <com.outsource.inovaufrpe.prestador.utils.swipebutton.SwipeButton
                 android:id="@+id/btnConcluirServico"
