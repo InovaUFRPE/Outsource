@@ -52,17 +52,6 @@
             android:hint="Comentário"
             android:inputType="textMultiLine|textCapSentences" />
 
-        <EditText
-            android:id="@+id/etValorID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:digits="0123456789"
-            android:hint="@string/preco"
-            android:inputType="numberDecimal"
-            android:maxLength="5"
-            android:textColor="@color/colorMoney"
-            android:textStyle="bold" />
-
         <ImageButton
             android:id="@+id/btEnviarID"
             android:layout_width="48dp"

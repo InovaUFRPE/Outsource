@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#4a148c</color>
     <color name="colorObscurePrimary">#150627</color>
-    <color name="colorLightPrimary">#5A2996</color>
+    <color name="colorLightPrimary">#5a2996</color>
     <color name="colorPrimaryDark">#3f1177</color>
     <color name="colorAccent">#ffea00</color>
     <color name="colorDanger">#EF3E36</color>
@@ -12,7 +12,7 @@
     <color name="colorGreen">#40F99B</color>
     <color name="colorGreenAlpha">#2640F99B</color>
     <color name="colorIsabelline">#F6F7EB</color>
-    <color name="colorMoney">#06D6A0</color>
+    <color name="colorMoney">#06d6a0</color>
     <color name="colorToast">#f1f1f1</color>
     <color name="colorTextMuted">#75000000</color>
     <color name="colorTransparent">#00000000</color>

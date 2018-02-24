@@ -71,6 +71,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     TextView tvNomeOfertante;
     TextView tvOferta;
     TextView tvEstadoServicoID;
+    TextView tvValorOfertaID;
+    TextView tvTempoOfertaID;
     Button solicNovoOrca;
     EditText precoServico;
     EditText mensagem;
@@ -85,7 +87,6 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     ValueEventListener listenerServico;
     String nomeSolicitante;
     String nomeServico;
-    ServicoView servicoView;
     int peso;
     int somatorio;
     String uriFotoUsuario;
@@ -116,11 +117,14 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         tvEstadoServicoID = findViewById(R.id.tvEstadoServicoID);
         btNegociar = findViewById(R.id.btnNegociar);
         swipeConcluir = findViewById(R.id.btnConcluirServico);
+        tvValorOfertaID = findViewById(R.id.tvValorOfertaID);
+        tvTempoOfertaID = findViewById(R.id.tvTempoOfertaID);
         LinearLayout solicitanteLayout = findViewById(R.id.layoutPessoa);
 
         ActionBar ab = getSupportActionBar();
         ab.setSubtitle(nomeServico);
 
+        findViewById(R.id.layoutOfertaID).setVisibility(View.GONE);
         tituloLayoutPessoa.setText(R.string.solicitado_por);
 
         dadosServico();
@@ -223,12 +227,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.VISIBLE);
             findViewById(R.id.layoutBtnNegociar).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNegociar).setVisibility(View.VISIBLE);
-        } /*else if (estadoId.equals(EstadoServico.NEGOCIACAO.getValue())) {
-            tvEstadoServicoID.setText(R.string.em_negociacao);
-            findViewById(R.id.layoutBtnConcluir).setVisibility(View.GONE);
-            findViewById(R.id.btnNegociar).setVisibility(View.GONE);
-
-        }*/ else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
+            checaOferta();
+        } else if (estadoId.equals(EstadoServico.ANDAMENTO.getValue())) {
             tvEstadoServicoID.setText(R.string.em_andamento);
             findViewById(R.id.layoutBotoesBottom).setVisibility(View.VISIBLE);
             findViewById(R.id.layoutBtnConcluir).setVisibility(View.VISIBLE);
@@ -238,8 +238,23 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         }
     }
 
-    private void encerraDialog() {
-        this.dialog.dismiss();
+    private void checaOferta() {
+        databaseReference.child("oferta").child(servicoId).child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("ofertaValor")) {
+                    findViewById(R.id.layoutOfertaID).setVisibility(View.VISIBLE);
+                    tvValorOfertaID.setText(CardFormat.dinheiroFormat(String.valueOf(dataSnapshot.child("ofertaValor").getValue(long.class))));
+                    tvTempoOfertaID.setText(CardFormat.tempoFormat(dataSnapshot.child("tempo").getValue(long.class)));
+                }else{
+                    databaseReference.child("oferta").child(servicoId).child(firebaseAuth.getCurrentUser().getUid()).removeEventListener(this);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void aplicarTaxa() {
@@ -291,17 +306,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         });
-        databaseReference.child("visualizar").child(estadoId).child(servicoId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                servicoView = dataSnapshot.getValue(ServicoView.class);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
 

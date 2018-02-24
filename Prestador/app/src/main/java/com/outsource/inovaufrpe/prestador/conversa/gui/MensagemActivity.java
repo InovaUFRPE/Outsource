@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,7 +31,9 @@ import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.conversa.adapter.MensagemViewHolder;
 import com.outsource.inovaufrpe.prestador.conversa.dominio.Conversa;
 import com.outsource.inovaufrpe.prestador.conversa.dominio.Mensagem;
+import com.outsource.inovaufrpe.prestador.notificacao.dominio.Notificacao;
 import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
+import com.outsource.inovaufrpe.prestador.servico.dominio.Oferta;
 import com.outsource.inovaufrpe.prestador.servico.gui.VisualizarServicoActivity;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
@@ -161,6 +164,9 @@ public class MensagemActivity extends AppCompatActivity {
         mensagem.setTexto(texto);
         mensagem.setAutor(firebaseAuth.getCurrentUser().getUid());
         mensagem.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
+        if(!valor.isEmpty()){
+            realizarOferta(valor);
+        }
         mensagem.setvalor(valor);
         novaData = novaData.replace(".", "");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -185,6 +191,31 @@ public class MensagemActivity extends AppCompatActivity {
         databaseReference.child("conversaPrestador").child(prestadorID).child(servicoId).setValue(conversa);
         conversa.setNotificacao(true);
         databaseReference.child("conversaUsuario").child(usuarioID).child(servicoId+prestadorID).setValue(conversa);
+    }
+
+    private void realizarOferta(String valor) {
+        Oferta oferta1 = new Oferta();
+        oferta1.setPrestadorNome(firebaseAuth.getCurrentUser().getDisplayName());
+        oferta1.setPrestadorId(firebaseAuth.getCurrentUser().getUid());
+        oferta1.setOfertaValor(Double.parseDouble(valor));
+        oferta1.setTempo(new Date().getTime());
+        databaseReference.child("oferta").child(servicoId).child(oferta1.getPrestadorId()).setValue(oferta1).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                long data = new Date().getTime();
+                Notificacao notificacao = new Notificacao();
+                notificacao.setServicoID(servicoId);
+                notificacao.setNomeServico(nomeServico);
+                notificacao.setEstado(estado);
+                notificacao.setTempo(data);
+                notificacao.setOrdemRef(new Timestamp(data*-1).toString());
+                notificacao.setTextoNotificacao("Alguém ofertou o seu serviço!");
+                notificacao.setTipoNotificacao(0);
+                databaseReference.child("notificacao").child("usuario").child(usuarioID).push().setValue(notificacao);
+                Toast.makeText(MensagemActivity.this, "Orçamento enviado com sucesso!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void setarMarginCard(CardView card, int left, int right) {

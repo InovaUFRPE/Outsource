@@ -48,7 +48,6 @@ public class MensagemActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private ImageButton btenviar;
     private EditText etMensagem;
-    private EditText etValor;
     String servicoId;
     String myUserID;
     String nomePrestador;
@@ -90,19 +89,14 @@ public class MensagemActivity extends AppCompatActivity {
             toastTV.setText("Este serviço foi concluído, não é possível enviar mensagens");
             recycleNegociacoes.setPadding(0,150,0,0);
         }else {
-            etValor = findViewById(R.id.etValorID);
-            if (estado.equals(EstadoServico.ANDAMENTO.getValue())) {
-                etValor.setVisibility(View.GONE);
-            }
             btenviar = findViewById(R.id.btEnviarID);
             etMensagem = findViewById(R.id.etMensagemID);
             btenviar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (!etMensagem.getText().toString().equals("")) {
-                        escreverMensagem(etMensagem.getText().toString(), etValor.getText().toString());
+                        escreverMensagem(etMensagem.getText().toString());
                         etMensagem.setText("");
-                        etValor.setText("");
                     }
                 }
             });
@@ -133,7 +127,7 @@ public class MensagemActivity extends AppCompatActivity {
                     setarMarginCard(cardNegociacao, 16, 100);
                 }
 
-                if (model.getvalor().equals("")) {
+                if (model.getvalor().isEmpty()) {
                     viewHolder.precoSugerido.setVisibility(View.GONE);
                 } else {
                     viewHolder.precoSugerido.setText(CardFormat.dinheiroFormat(model.getvalor()));
@@ -152,7 +146,7 @@ public class MensagemActivity extends AppCompatActivity {
         recycleNegociacoes.setAdapter(adapter);
     }
 
-    private void escreverMensagem(String texto, String valor) {
+    private void escreverMensagem(String texto) {
         Mensagem mensagem = new Mensagem();
         Date data = new Date();
         String novaData = new Timestamp(data.getTime()).toString();
@@ -160,7 +154,7 @@ public class MensagemActivity extends AppCompatActivity {
         mensagem.setTexto(texto);
         mensagem.setAutor(firebaseAuth.getCurrentUser().getUid());
         mensagem.setNomeAutor(firebaseAuth.getCurrentUser().getDisplayName());
-        mensagem.setvalor(valor);
+        mensagem.setvalor("");
         novaData = novaData.replace(".", "");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("mensagem").child(servicoId).child(prestadorID).child(novaData).setValue(mensagem).addOnCompleteListener(new OnCompleteListener<Void>() {
