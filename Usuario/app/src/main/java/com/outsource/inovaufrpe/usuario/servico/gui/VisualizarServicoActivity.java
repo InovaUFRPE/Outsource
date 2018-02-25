@@ -500,6 +500,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
         avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
+        TextView nenhumaAvaliacao = v1.findViewById(R.id.nenhumaAvaliacaoTV);
 
         databaseReference.child("prestador").child(idPrestador).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -554,11 +555,15 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         Query query = databaseReference.child("feedback").child("prestador").child(idPrestador).orderByChild("data");
 
-        adapter = new FirebaseRecyclerAdapter<Critica, CriticaViewHolder>(Critica.class, R.layout.card_critica, CriticaViewHolder.class, query) {
+        adapter = new FirebaseRecyclerAdapter<Critica, CriticaViewHolder>(Critica.class, R.layout.item_avaliacao_dialog, CriticaViewHolder.class, query) {
+
+            @Override
+            public int getItemCount() {
+                return super.getItemCount();
+            }
 
             @Override
             protected void populateViewHolder(CriticaViewHolder viewHolder, Critica model, int position) {
-                viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.tvComentador.setText(model.getComentadorNome());
                 viewHolder.tvNota.setText(String.valueOf(model.getNota()));
@@ -566,6 +571,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         };
+
+        // NAO TÁ FUNCIONANDO O GET ITEM COUNT
+        if (adapter.getItemCount() == 0) {
+            nenhumaAvaliacao.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
 
         mRecyclerView.setAdapter(adapter);
         mBuilder.setView(v1);

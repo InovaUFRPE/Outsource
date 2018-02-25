@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -24,20 +24,18 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@color/colorTransparent"
-                android:contentDescription="@string/botao_fechar"
                 android:tint="@color/colorWhite"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_close_black_24dp"
-                tools:ignore="VectorDrawableCompat" />
+                app:srcCompat="@drawable/ic_close_black_24dp" />
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/default_profile"
                 app:civ_border_color="#FFFFFF"
                 app:civ_border_width="4dp"
@@ -52,10 +50,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:secondaryProgressTint="#00000000"
             android:numStars="5"
             android:stepSize="0.1"
-            android:isIndicator="true"/>
+            android:secondaryProgressTint="#00000000"
+            android:isIndicator="true"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:theme="@style/RatingBar" />
 
         <LinearLayout
             android:id="@+id/linearNomeID"
@@ -70,7 +71,7 @@
                 android:paddingBottom="10dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="26sp" />
+                android:textSize="24sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -88,6 +89,15 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Avaliações feitas"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginBottom="16dp"/>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/RecycleComentarioID"
                     android:layout_width="match_parent"
@@ -95,10 +105,17 @@
 
                 </android.support.v7.widget.RecyclerView>
 
+                <TextView
+                    android:id="@+id/nenhumaAvaliacaoTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    android:text="Nenhuma avaliação para este usuário"/>
+
             </LinearLayout>
 
         </RelativeLayout>
-
 
     </LinearLayout>
 </ScrollView>

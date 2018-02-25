@@ -43,7 +43,6 @@ import com.outsource.inovaufrpe.prestador.prestador.dominio.Critica;
 import com.outsource.inovaufrpe.prestador.servico.dominio.EstadoServico;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Oferta;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
-import com.outsource.inovaufrpe.prestador.servico.dominio.ServicoView;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseUtil;
@@ -416,6 +415,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         TextView nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
         RatingBar avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
+        TextView nenhumaAvaliacao = v1.findViewById(R.id.nenhumaAvaliacaoTV);
+
         nomeUsuario.setText(tvNomePessoa.getText().toString());
         if(uriFotoUsuario != null && !uriFotoUsuario.isEmpty()) {
             Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoUsuario)).centerCrop().fit().into((CircleImageView) v1.findViewById(R.id.profile_image));
@@ -441,11 +442,14 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         Query query = databaseReference.child("feedback").child("usuario").child(servico.getIdCriador()).orderByChild("data");
 
-        adapter = new FirebaseRecyclerAdapter<Critica, CriticaViewHolder>(Critica.class, R.layout.card_critica, CriticaViewHolder.class, query) {
+        adapter = new FirebaseRecyclerAdapter<Critica, CriticaViewHolder>(Critica.class, R.layout.item_avaliacao_dialog, CriticaViewHolder.class, query) {
+            @Override
+            public int getItemCount() {
+                return super.getItemCount();
+            }
 
             @Override
             protected void populateViewHolder(CriticaViewHolder viewHolder, Critica model, int position) {
-                viewHolder.mainLayout.setVisibility(View.VISIBLE);
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.tvComentador.setText(model.getComentadorNome());
                 viewHolder.tvNota.setText(String.valueOf(model.getNota()));
@@ -453,6 +457,12 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         };
+
+        // NAO TÁ FUNCIONANDO O GET ITEM COUNT
+        if (adapter.getItemCount() == 0) {
+            nenhumaAvaliacao.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
 
         mRecyclerView.setAdapter(adapter);
         mBuilder.setView(v1);
