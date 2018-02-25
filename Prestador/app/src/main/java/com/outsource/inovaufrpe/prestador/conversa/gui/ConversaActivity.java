@@ -63,6 +63,7 @@ public class ConversaActivity extends AppCompatActivity {
                         it.putExtra("nomeServico", conversa.getServicoNome());
                         it.putExtra("usuarioID", conversa.getUsuarioID());
                         it.putExtra("estado", conversa.getEstadoServico());
+                        conversa.setLido(true);
                         startActivity(it);
                     }
 

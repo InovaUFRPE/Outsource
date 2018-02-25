@@ -62,6 +62,7 @@ public class NotificacaoActivity extends AppCompatActivity {
                         it.putExtra("servicoID", notificacao.getServicoID());
                         it.putExtra("nomeServico", notificacao.getNomeServico());
                         it.putExtra("estado", notificacao.getEstado());
+                        notificacao.setLido(true);
                         startActivity(it);
                     }
 

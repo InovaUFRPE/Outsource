@@ -18,6 +18,7 @@ public class Notificacao {
     private long tempo;
     private String ordemRef;
     private int tipoNotificacao;
+    private boolean lido = false;
 
     public String getServicoID() {
         return servicoID;
@@ -73,6 +74,14 @@ public class Notificacao {
 
     public void setTipoNotificacao(int tipoNotificacao) {
         this.tipoNotificacao = tipoNotificacao;
+    }
+
+    public boolean isLido() {
+        return lido;
+    }
+
+    public void setLido(boolean lido) {
+        this.lido = lido;
     }
 }
 

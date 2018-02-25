@@ -17,6 +17,7 @@ public class Conversa {
     private long tempo;
     private String ordemRef;
     private boolean notificacao;
+    private boolean lido = false;
 
     public String getConversaID() {
         return conversaID;
@@ -96,5 +97,13 @@ public class Conversa {
 
     public void setNotificacao(boolean notificacao) {
         this.notificacao = notificacao;
+    }
+
+    public boolean isLido() {
+        return lido;
+    }
+
+    public void setLido(boolean lido) {
+        this.lido = lido;
     }
 }

@@ -5,13 +5,15 @@
     <item
         android:id="@+id/chatButton"
         android:icon="@drawable/ic_chat_black_24dp"
+        app:actionLayout="@layout/chat_badge_item"
         android:title="Conversas"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/notificacoesBtn"
+        app:actionLayout="@layout/notification_badge_item"
         android:icon="@drawable/ic_notifications_white_24dp"
         android:title="notificacoes"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="always" />
 
 </menu>

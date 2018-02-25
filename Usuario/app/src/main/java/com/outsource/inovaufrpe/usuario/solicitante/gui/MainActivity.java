@@ -15,7 +15,17 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.carteira.gui.MainCarteiraFragment;
 import com.outsource.inovaufrpe.usuario.conversa.gui.ConversaActivity;
@@ -30,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
     private int mSelectedItem;
     private String ultimoFrag;
     private boolean doubleBackToExitPressedOnce = false;
+    private TextView contNotificacoes;
+    private TextView contChat;
+    private Query queryNotfy;
+    private Query queryChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (!checkGpsStatus()) {
-            dialogErroGps();
-        }
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -63,6 +73,16 @@ public class MainActivity extends AppCompatActivity {
         }
         selectFragment(selectedItem);
         fm.popBackStack();
+
+        if (!checkGpsStatus()) {
+            dialogErroGps();
+            return;
+        }
+// TODO: colocar um loading pra buscar essas infos...
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        queryChat = databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("lido").equalTo(false);
+        queryNotfy = databaseReference.child("notificacao").child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("lido").equalTo(false);
     }
 
     @Override
@@ -127,21 +147,39 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        final View notificacoesMenuBtn = menu.findItem(R.id.notificacoesBtn).getActionView();
+        final View chatMenuBtn = menu.findItem(R.id.chatButton).getActionView();
+
+        contNotificacoes = notificacoesMenuBtn.findViewById(R.id.badgeTextView);
+        contChat = chatMenuBtn.findViewById(R.id.badgeTextView);
+
+        setMenuBadge(queryChat, contChat);
+        setMenuBadge(queryNotfy, contNotificacoes);
+
+        notificacoesMenuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(MainActivity.this, NotificacaoActivity.class);
+                startActivity(it);
+            }
+        });
+
+        chatMenuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(MainActivity.this, ConversaActivity.class);
+                startActivity(it);
+            }
+        });
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.notificacoesBtn) {
-            startActivity(new Intent(this, NotificacaoActivity.class));
-        }
         if (id == R.id.inserirBtn) {
             startActivity(new Intent(this, CadastroServicoActivity.class));
-        }
-        if (id == R.id.chatButton) {
-            startActivity(new Intent(this, ConversaActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -181,5 +219,65 @@ public class MainActivity extends AppCompatActivity {
                 });
         builder.create();
         builder.show();
+    }
+
+/*    datachange
+    private void setMenuBagde(Query query, final TextView tv) {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String out = ""+dataSnapshot.getChildrenCount();
+                if (out.equals("0")) {
+                    tv.setVisibility(View.GONE);
+                } else if (Integer.valueOf(out) > 9){
+                    tv.setText("9+");
+                } else {
+                    tv.setText(out);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }*/
+
+//    childadded
+    private void setMenuBadge(Query query, final TextView tv) {
+        tv.setVisibility(View.GONE);
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String out = ""+dataSnapshot.getChildrenCount();
+                if (Integer.valueOf(out) > 9){
+                    tv.setVisibility(View.VISIBLE);
+                    tv.setText("9+");
+                } else if (Integer.valueOf(out) > 0) {
+                    tv.setVisibility(View.VISIBLE);
+                    tv.setText(out);
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
