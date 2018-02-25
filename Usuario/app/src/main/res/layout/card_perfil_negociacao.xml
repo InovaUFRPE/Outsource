@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    card_view:cardCornerRadius="6dp">
+    card_view:cardCornerRadius="6dp"
+    android:id="@+id/cvPerfilNegociacao">
 
     <RelativeLayout
         android:id="@+id/layoutPrestador"
@@ -12,12 +13,13 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/ivFotoPrestador"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/default_profile" />
+            android:src="@drawable/default_profile"
+            app:civ_border_color="#FFFFFF"/>
 
         <TextView
             android:id="@+id/tvNomeOfertanteID"

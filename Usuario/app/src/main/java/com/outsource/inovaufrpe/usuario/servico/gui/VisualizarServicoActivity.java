@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -132,6 +133,8 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         swipeConcluir = findViewById(R.id.btnConcluirServico);
 
         btConversas = findViewById(R.id.btConversasID);
+
+        dadosServico();
 
         swipeConcluir.setOnActiveListener(new OnActiveListener() {
             @Override
@@ -330,10 +333,22 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Oferta, OfertaViewHolder>(Oferta.class, R.layout.card_perfil_negociacao, OfertaViewHolder.class, query) {
 
             @Override
-            protected void populateViewHolder(OfertaViewHolder viewHolder, Oferta model, int position) {
+            protected void populateViewHolder(final OfertaViewHolder viewHolder, final Oferta model, int position) {
                 viewHolder.tvNomeOfertante.setText(model.getPrestadorNome());
                 viewHolder.tvValorOferta.setText(CardFormat.dinheiroFormat(String.valueOf(model.getOfertaValor())));
                 viewHolder.tvTempo.setText(CardFormat.tempoFormat(model.getTempo()));
+                databaseReference.child("prestador").child(model.getPrestadorId()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        uriFotoPrestador = dataSnapshot.child("foto").getValue(String.class);
+                        if(uriFotoPrestador != null && !uriFotoPrestador.isEmpty()) {
+                            Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoPrestador)).centerCrop().fit().into(viewHolder.cimFoto);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
             }
 
             @Override
@@ -385,6 +400,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 somatorio = dataSnapshot.child("nota").getValue(int.class);
                 peso = dataSnapshot.child("pesoNota").getValue(int.class);
                 uriFotoPrestador = dataSnapshot.child("foto").getValue(String.class);
+                if(uriFotoPrestador != null && !uriFotoPrestador.isEmpty()) {
+                    Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoPrestador)).centerCrop().fit().into((CircleImageView) findViewById(R.id.rlPessoa).findViewById(R.id.ivFotoSolicitante));
+                }
                 if(peso != 0) {
                     tvNotaPessoa.setText(String.format("%.02f", (float)somatorio / peso));
                 }else{
@@ -486,7 +504,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         databaseReference.child("prestador").child(idPrestador).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                nomeUsuario.setText(dataSnapshot.child("nome").getValue(String.class) + dataSnapshot.child("sobrenome").getValue(String.class));
+                nomeUsuario.setText(nomePrestador);
                 somatorio = dataSnapshot.child("nota").getValue(int.class);
                 peso = dataSnapshot.child("pesoNota").getValue(int.class);
                 uriFotoPrestador = dataSnapshot.child("foto").getValue(String.class);

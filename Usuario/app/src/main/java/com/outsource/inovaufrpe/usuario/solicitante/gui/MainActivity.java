@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            finish();
+            this.finishAffinity();
             return;
         }
 

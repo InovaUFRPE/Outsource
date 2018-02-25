@@ -89,7 +89,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/rlPessoa">
 
             <TextView
                 android:id="@+id/tvNomePessoa"
@@ -119,14 +120,15 @@
                 android:textStyle="bold"
                 android:textSize="18sp" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/ivFotoSolicitante"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/default_profile"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentTop="true"
+                app:civ_border_color="#FFFFFF"/>
 
         </RelativeLayout>
     </LinearLayout>

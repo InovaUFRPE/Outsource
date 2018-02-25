@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,6 +130,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         dadosServico();
 
+
         btNegociar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,6 +183,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
@@ -319,6 +322,9 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 somatorio = dataSnapshot.child("nota").getValue(int.class);
                 peso = dataSnapshot.child("pesoNota").getValue(int.class);
                 uriFotoUsuario = dataSnapshot.child("foto").getValue(String.class);
+                if(uriFotoUsuario != null && !uriFotoUsuario.isEmpty()) {
+                    Picasso.with(VisualizarServicoActivity.this).load(Uri.parse(uriFotoUsuario)).centerCrop().fit().into((CircleImageView) findViewById(R.id.rlPessoa).findViewById(R.id.ivFotoSolicitante));
+                }
                 if(peso != 0) {
                     tvNotaPessoa.setText(String.format("%.02f", (float)somatorio / peso));
                 }else{
