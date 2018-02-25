@@ -500,7 +500,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
 
         nomeUsuario = v1.findViewById(R.id.tvNomePerfil);
         avaliarPerfil = v1.findViewById(R.id.rbAvaliarServico);
-        TextView nenhumaAvaliacao = v1.findViewById(R.id.nenhumaAvaliacaoTV);
+        final TextView nenhumaAvaliacao = v1.findViewById(R.id.nenhumaAvaliacaoTV);
 
         databaseReference.child("prestador").child(idPrestador).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -549,7 +549,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         });
 
 
-        RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
+        final RecyclerView mRecyclerView = v1.findViewById(R.id.RecycleComentarioID);
         mRecyclerView.setFocusable(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(VisualizarServicoActivity.this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -558,25 +558,18 @@ public class VisualizarServicoActivity extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<Critica, CriticaViewHolder>(Critica.class, R.layout.item_avaliacao_dialog, CriticaViewHolder.class, query) {
 
             @Override
-            public int getItemCount() {
-                return super.getItemCount();
-            }
-
-            @Override
             protected void populateViewHolder(CriticaViewHolder viewHolder, Critica model, int position) {
                 viewHolder.linearLayout.setVisibility(View.VISIBLE);
                 viewHolder.tvComentador.setText(model.getComentadorNome());
                 viewHolder.tvNota.setText(String.valueOf(model.getNota()));
                 viewHolder.tvComentario.setText(model.getComentario());
+                if (getItemCount() == 0) {
+                    nenhumaAvaliacao.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+                }
 
             }
         };
-
-        // NAO TÁ FUNCIONANDO O GET ITEM COUNT
-        if (adapter.getItemCount() == 0) {
-            nenhumaAvaliacao.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(View.GONE);
-        }
 
         mRecyclerView.setAdapter(adapter);
         mBuilder.setView(v1);
