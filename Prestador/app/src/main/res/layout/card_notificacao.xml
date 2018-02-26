@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_notificacao"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,37 +8,34 @@
     card_view:cardCornerRadius="4dp">
 
     <RelativeLayout
+        android:id="@+id/tipo_notificacao_bar"
+        android:layout_width="6dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorDanger"/>
+
+    <RelativeLayout
         android:id="@+id/notificacao_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp">
 
-        <LinearLayout
-            android:id="@+id/layoutNomeServico"
+        <TextView
+            android:id="@+id/tvnomeServicoID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvnomeServicoID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:textColor="@color/colorBlack"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+            android:textColor="@color/colorBlack"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvTextoNotificacaoID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/layoutNomeServico"
-            android:layout_alignStart="@+id/layoutNomeServico"
-            android:layout_below="@+id/layoutNomeServico"
+            android:layout_alignLeft="@+id/tvnomeServicoID"
+            android:layout_alignStart="@+id/tvnomeServicoID"
+            android:layout_below="@+id/tvnomeServicoID"
             android:textAlignment="textStart"
             android:gravity="start"
             android:textColor="@color/colorBlack"
@@ -47,9 +43,11 @@
 
         <TextView
             android:id="@+id/tvTempoID"
-            android:layout_below="@+id/tvTextoNotificacaoID"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTextoNotificacaoID"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
