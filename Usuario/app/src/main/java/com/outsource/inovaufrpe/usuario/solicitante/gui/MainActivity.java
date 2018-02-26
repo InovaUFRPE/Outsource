@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private int mSelectedItem;
     private String ultimoFrag;
     private boolean doubleBackToExitPressedOnce = false;
-    private TextView contNotificacoes;
-    private TextView contChat;
     private Query queryNotfy;
     private Query queryChat;
 
@@ -150,8 +147,8 @@ public class MainActivity extends AppCompatActivity {
         final View notificacoesMenuBtn = menu.findItem(R.id.notificacoesBtn).getActionView();
         final View chatMenuBtn = menu.findItem(R.id.chatButton).getActionView();
 
-        contNotificacoes = notificacoesMenuBtn.findViewById(R.id.badgeTextView);
-        contChat = chatMenuBtn.findViewById(R.id.badgeTextView);
+        TextView contNotificacoes = notificacoesMenuBtn.findViewById(R.id.badgeTextView);
+        TextView contChat = chatMenuBtn.findViewById(R.id.badgeTextView);
 
         setMenuBadge(queryChat, contChat);
         setMenuBadge(queryNotfy, contNotificacoes);
@@ -221,34 +218,11 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-/*    datachange
-    private void setMenuBagde(Query query, final TextView tv) {
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String out = ""+dataSnapshot.getChildrenCount();
-                if (out.equals("0")) {
-                    tv.setVisibility(View.GONE);
-                } else if (Integer.valueOf(out) > 9){
-                    tv.setText("9+");
-                } else {
-                    tv.setText(out);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }*/
-
-//    childadded
     private void setMenuBadge(Query query, final TextView tv) {
         tv.setVisibility(View.GONE);
-        query.addChildEventListener(new ChildEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 String out = ""+dataSnapshot.getChildrenCount();
                 if (Integer.valueOf(out) > 9){
                     tv.setVisibility(View.VISIBLE);
@@ -260,24 +234,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 }

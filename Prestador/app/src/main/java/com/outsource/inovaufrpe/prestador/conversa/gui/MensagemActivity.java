@@ -190,6 +190,7 @@ public class MensagemActivity extends AppCompatActivity {
         conversa.setOrdemRef(new Timestamp(-1 * data.getTime()).toString());
         databaseReference.child("conversaPrestador").child(prestadorID).child(servicoId).setValue(conversa);
         conversa.setNotificacao(true);
+        conversa.setLido(false);
         databaseReference.child("conversaUsuario").child(usuarioID).child(servicoId+prestadorID).setValue(conversa);
     }
 
@@ -211,6 +212,7 @@ public class MensagemActivity extends AppCompatActivity {
                 notificacao.setOrdemRef(new Timestamp(data*-1).toString());
                 notificacao.setTextoNotificacao("Alguém ofertou o seu serviço!");
                 notificacao.setTipoNotificacao(0);
+                notificacao.setLido(false);
                 databaseReference.child("notificacao").child("usuario").child(usuarioID).push().setValue(notificacao);
                 Toast.makeText(MensagemActivity.this, "Orçamento enviado com sucesso!", Toast.LENGTH_SHORT).show();
             }

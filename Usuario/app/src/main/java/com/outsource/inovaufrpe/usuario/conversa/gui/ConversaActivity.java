@@ -1,6 +1,7 @@
 package com.outsource.inovaufrpe.usuario.conversa.gui;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,12 +11,16 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.usuario.R;
 import com.outsource.inovaufrpe.usuario.conversa.adapter.ConversaViewHolder;
 import com.outsource.inovaufrpe.usuario.conversa.dominio.Conversa;
+import com.outsource.inovaufrpe.usuario.servico.dominio.Servico;
 import com.outsource.inovaufrpe.usuario.utils.CardFormat;
 
 public class ConversaActivity extends AppCompatActivity {
@@ -50,12 +55,34 @@ public class ConversaActivity extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<Conversa, ConversaViewHolder>(Conversa.class, R.layout.card_conversa, ConversaViewHolder.class, query) {
 
             @Override
-            protected void populateViewHolder(ConversaViewHolder viewHolder, Conversa model, int position) {
+            protected void populateViewHolder(final ConversaViewHolder viewHolder, Conversa model, int position) {
                 viewHolder.tvnomeServico.setText(model.getServicoNome());
                 viewHolder.tvMensagem.setText(model.getUltimaMensagem());
                 viewHolder.tvtempo.setText(CardFormat.tempoFormat(model.getTempo()));
+                //trocar cor para identificar tipo serviço
+                databaseReference.child("servico").child(model.getServicoID()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean oi = dataSnapshot.getValue(Servico.class).isUrgente();
+                        if (!oi) {
+                            viewHolder.tipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                        }
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
+                    }
+                });
+
+                //verificar lido da conversa
+                if (!model.isLido()) {
+                    viewHolder.tvMensagem.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+                    viewHolder.tvnomeServico.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+                } else {
+                    viewHolder.tvMensagem.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
+                    viewHolder.tvnomeServico.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
+                }
             }
 
             @Override
@@ -71,7 +98,9 @@ public class ConversaActivity extends AppCompatActivity {
                         it.putExtra("nomeServico", conversa.getServicoNome());
                         it.putExtra("usuarioID", conversa.getUsuarioID());
                         it.putExtra("estado", conversa.getEstadoServico());
-                        conversa.setLido(true);
+                        if (!conversa.isLido()) {
+                            databaseReference.child("conversaUsuario").child(conversa.getUsuarioID()).child(conversa.getServicoID()+conversa.getPrestadorID()).child("lido").setValue(true);
+                        }
                         startActivity(it);
                     }
 

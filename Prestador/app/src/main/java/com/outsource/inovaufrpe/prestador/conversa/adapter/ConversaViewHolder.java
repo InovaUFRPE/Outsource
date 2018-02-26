@@ -2,6 +2,7 @@ package com.outsource.inovaufrpe.prestador.conversa.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.outsource.inovaufrpe.prestador.R;
@@ -15,6 +16,7 @@ public class ConversaViewHolder extends RecyclerView.ViewHolder {
     public TextView tvnomeServico;
     public TextView tvtempo;
     public TextView tvMensagem;
+    public RelativeLayout tipoServico;
 
     public ConversaViewHolder(View v) {
         super(v);
@@ -22,6 +24,7 @@ public class ConversaViewHolder extends RecyclerView.ViewHolder {
         tvnomeServico = v.findViewById(R.id.tvnomeServicoID);
         tvtempo = v.findViewById(R.id.tvTempoID);
         tvMensagem = v.findViewById(R.id.tvMensagemID);
+        tipoServico = v.findViewById(R.id.tipo_servico_bar);
 
 
         itemView.setOnClickListener(new View.OnClickListener() {
