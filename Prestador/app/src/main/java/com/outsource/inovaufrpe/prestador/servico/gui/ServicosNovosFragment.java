@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -53,7 +54,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
     private final int MY_PERMISSIONS_REQUEST = 0;
     private FloatingActionButton filtroBtn;
     private Sessao sessao;
-    private TextView tvNenhumServico;
+    private RelativeLayout lyNenhumServico;
 
 
     DatabaseReference databaseReference;
@@ -73,10 +74,10 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
         mRecyclerView.setLayoutManager(mLayoutManager);
         databaseReference = FirebaseDatabase.getInstance().getReference("visualizacao").child("aberto");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        tvNenhumServico = layout.findViewById(R.id.nenhum_servico);
+        lyNenhumServico = layout.findViewById(R.id.nenhum_servico);
+        TextView tvNenhumServico = layout.findViewById(R.id.tvNenhumServico);
         String s = getContext().getString(R.string.nenhum_servico) + " novo";
         tvNenhumServico.setText(s);
-        tvNenhumServico.setVisibility(View.GONE);
         filtroBtn = layout.findViewById(R.id.filtrarBtn);
 
         sessao = Sessao.getInstancia(getContext());
@@ -113,9 +114,9 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
                     }
                 }
                 if (servicos.isEmpty()) {
-                    tvNenhumServico.setVisibility(View.VISIBLE);
+                    lyNenhumServico.setVisibility(View.VISIBLE);
                 } else {
-                    tvNenhumServico.setVisibility(View.GONE);
+                    lyNenhumServico.setVisibility(View.GONE);
                     mRecyclerView.setAdapter(new ServicoDistanciaAdapter(servicos, getContext(), ServicosNovosFragment.this));
                 }
                 mRecyclerView.setAdapter(new ServicoDistanciaAdapter(servicos, getContext(), ServicosNovosFragment.this));
@@ -123,7 +124,7 @@ public class ServicosNovosFragment extends Fragment implements ServicoDistanciaA
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                tvNenhumServico.setVisibility(View.VISIBLE);
+                lyNenhumServico.setVisibility(View.VISIBLE);
                 Utils.criarToast(getActivity(), "Erro ao carregar os dados");
             }
         };

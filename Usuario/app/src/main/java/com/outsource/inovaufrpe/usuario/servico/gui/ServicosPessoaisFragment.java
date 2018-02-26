@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -32,7 +33,7 @@ public class ServicosPessoaisFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private FirebaseRecyclerAdapter adapter;
-    private TextView tvNenhumServico;
+    private RelativeLayout lyNenhumServico;
 
 
     DatabaseReference databaseReference;
@@ -50,10 +51,10 @@ public class ServicosPessoaisFragment extends Fragment {
 
         mRecyclerView = view.findViewById(R.id.RecycleID);
 
-        tvNenhumServico = view.findViewById(R.id.nenhum_servico);
+        lyNenhumServico = view.findViewById(R.id.nenhum_servico);
+        TextView tvNenhumServico = view.findViewById(R.id.tvNenhumServico);
         String s = getContext().getString(R.string.nenhum_servico) + " criado";
         tvNenhumServico.setText(s);
-        tvNenhumServico.setVisibility(View.GONE);
 
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -121,9 +122,9 @@ public class ServicosPessoaisFragment extends Fragment {
             @Override
             public int getItemCount(){
                 if (super.getItemCount() < 1) {
-                    tvNenhumServico.setVisibility(View.VISIBLE);
+                    lyNenhumServico.setVisibility(View.VISIBLE);
                 }else{
-                    tvNenhumServico.setVisibility(View.GONE);
+                    lyNenhumServico.setVisibility(View.GONE);
                 }
                 return super.getItemCount();
             }

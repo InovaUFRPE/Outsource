@@ -6,6 +6,13 @@
     android:orientation="vertical"
     tools:context=".servico.gui.ServicosAndamentoFragment">
 
+    <include
+        android:id="@+id/nenhum_servico"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_nenhum_servico"
+        android:visibility="gone"/>
+
     <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,12 +44,5 @@
         android:layout_height="wrap_content"
         android:paddingBottom="12dp"
         android:clipToPadding="false" />
-
-    <TextView
-        android:id="@+id/nenhum_servico"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/nenhum_servico"
-        android:textAlignment="center" />
 
 </LinearLayout>
