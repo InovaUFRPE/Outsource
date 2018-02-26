@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +26,7 @@ public class NotificacaoActivity extends AppCompatActivity {
     private FirebaseRecyclerAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private DatabaseReference databaseReference;
+    private RelativeLayout lyNenhumaNotificacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,15 @@ public class NotificacaoActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         recycleNotificacao.setLayoutManager(mLayoutManager);
 
+        lyNenhumaNotificacao = findViewById(R.id.nenhuma_notificacao);
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Query query = databaseReference.child("notificacao").child("prestador").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("ordemRef");
         adapter = new FirebaseRecyclerAdapter<Notificacao, NotificacaoViewHolder>(Notificacao.class, R.layout.card_notificacao, NotificacaoViewHolder.class, query) {
 
             @Override
             protected void populateViewHolder(NotificacaoViewHolder viewHolder, Notificacao model, int position) {
+                getItemCount();
                 viewHolder.tvnomeServico.setText(model.getNomeServico());
                 viewHolder.tvTextoNotificacao.setText(model.getTextoNotificacao());
                 viewHolder.tvtempo.setText(CardFormat.tempoFormat(model.getTempo()));
@@ -66,7 +71,7 @@ public class NotificacaoActivity extends AppCompatActivity {
 
                 //mudar fundo se a notificação não tiver lida
                 if (!model.isLido()) {
-                    viewHolder.cardNotificacao.setCardBackgroundColor(getResources().getColor(R.color.colorTextMuted));
+                    viewHolder.cardNotificacao.setCardBackgroundColor(getResources().getColor(R.color.colorIsabelline));
                 }
             }
 
@@ -89,6 +94,16 @@ public class NotificacaoActivity extends AppCompatActivity {
 
                 });
                 return viewHolder;
+            }
+
+            @Override
+            public int getItemCount() {
+                if (super.getItemCount() < 1) {
+                    lyNenhumaNotificacao.setVisibility(View.VISIBLE);
+                }else{
+                    lyNenhumaNotificacao.setVisibility(View.GONE);
+                }
+                return super.getItemCount();
             }
         };
 

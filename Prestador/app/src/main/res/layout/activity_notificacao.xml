@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context="com.outsource.inovaufrpe.prestador.notificacao.gui.NotificacaoActivity">
 
+    <include
+        android:id="@+id/nenhuma_notificacao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_nenhuma_notificacao"
+        android:visibility="gone"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvNotificacaoID"
         android:layout_width="match_parent"
