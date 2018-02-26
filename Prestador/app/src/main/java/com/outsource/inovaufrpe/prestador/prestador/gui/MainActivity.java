@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
 // TODO: colocar um loading pra buscar essas infos...
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        queryChat = databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("lido").equalTo(false);
-        queryNotfy = databaseReference.child("notificacao").child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("lido").equalTo(false);
+        queryChat = databaseReference.child("conversaPrestador").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("lido").equalTo(false);
+        queryNotfy = databaseReference.child("notificacao").child("prestador").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).orderByChild("lido").equalTo(false);
     }
 
     @Override
