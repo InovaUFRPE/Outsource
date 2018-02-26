@@ -445,6 +445,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
     private void enviarNotificacao(int tiponotificacao, String idPrestador){
         long data = new Date().getTime();
         Notificacao notificacao = new Notificacao();
+        notificacao.setNotificacaoID(databaseReference.child("notificacao").child("usuario").child(firebaseAuth.getCurrentUser().getUid()).push().getKey());
         notificacao.setServicoID(servico.getId());
         notificacao.setNomeServico(servico.getNome());
         notificacao.setEstado(servico.getEstado());
@@ -465,7 +466,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 break;
         }
         notificacao.setTipoNotificacao(tiponotificacao);
-        databaseReference.child("notificacao").child("prestador").child(idPrestador).push().setValue(notificacao);
+        databaseReference.child("notificacao").child("prestador").child(idPrestador).child(notificacao.getNotificacaoID()).setValue(notificacao);
 
     }
 

@@ -76,7 +76,9 @@ public class NotificacaoActivity extends AppCompatActivity {
                         it.putExtra("servicoID", notificacao.getServicoID());
                         it.putExtra("nomeServico", notificacao.getNomeServico());
                         it.putExtra("estado", notificacao.getEstado());
-                        notificacao.setLido(true);
+                        if (!notificacao.isLido()) {
+                            databaseReference.child("notificacao").child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(notificacao.getNotificacaoID()).child("lido").setValue(true);
+                        }
                         startActivity(it);
                     }
 

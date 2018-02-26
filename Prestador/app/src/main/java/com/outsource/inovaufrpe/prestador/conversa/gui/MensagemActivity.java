@@ -181,6 +181,7 @@ public class MensagemActivity extends AppCompatActivity {
 
         Conversa conversa = new Conversa();
         conversa.setPrestadorID(prestadorID);
+        conversa.setConversaID(servicoId+prestadorID);
         conversa.setUsuarioID(usuarioID);
         conversa.setServicoID(servicoId);
         conversa.setServicoNome(nomeServico);

@@ -7,6 +7,7 @@ package com.outsource.inovaufrpe.usuario.notificacao.dominio;
 
 public class Notificacao {
 
+    private String notificacaoID;
     private String servicoID;
     private String estado;
     private String nomeServico;
@@ -15,6 +16,14 @@ public class Notificacao {
     private String ordemRef;
     private int tipoNotificacao;
     private boolean lido = false;
+
+    public String getNotificacaoID() {
+        return notificacaoID;
+    }
+
+    public void setNotificacaoID(String notificacaoID) {
+        this.notificacaoID = notificacaoID;
+    }
 
     public String getServicoID() {
         return servicoID;

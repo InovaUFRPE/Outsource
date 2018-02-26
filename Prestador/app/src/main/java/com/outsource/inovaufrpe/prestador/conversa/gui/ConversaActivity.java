@@ -22,6 +22,7 @@ import com.outsource.inovaufrpe.prestador.conversa.dominio.Conversa;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.servico.dominio.Servico;
 import com.outsource.inovaufrpe.prestador.utils.CardFormat;
+import com.outsource.inovaufrpe.prestador.utils.Utils;
 
 public class ConversaActivity extends AppCompatActivity {
 
@@ -93,7 +94,7 @@ public class ConversaActivity extends AppCompatActivity {
                         it.putExtra("usuarioID", conversa.getUsuarioID());
                         it.putExtra("estado", conversa.getEstadoServico());
                         if (!conversa.isLido()) {
-                            databaseReference.child("conversaPrestador").child(conversa.getPrestadorID()).child(conversa.getServicoID()+conversa.getUsuarioID()).child("lido").setValue(true);
+                            databaseReference.child("conversaPrestador").child(conversa.getPrestadorID()).child(conversa.getConversaID()).child("lido").setValue(true);
                         }
                         startActivity(it);
                     }
