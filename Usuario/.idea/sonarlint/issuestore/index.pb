@@ -14,3 +14,17 @@ A
 gradlew.bat,2\a\2a45a911a8f1836b0b6c5b758962572012d8f8c3
 @
 local.properties,0\7\0712df971a99ac4d2fccb8e0fb19f377f3374cca
+Ö
+Uapp\src\main\java\com\outsource\inovaufrpe\usuario\conversa\gui\ConversaActivity.java,5\3\5351deb501a659f1a069361b50a2ea9078a8e3de
+Ö
+Uapp\src\main\java\com\outsource\inovaufrpe\usuario\servico\dominio\EstadoServico.java,6\8\68ed8308ccdfb3e924b5210e8dc0baa20e8d1e72
+P
+ app\src\main\AndroidManifest.xml,a\c\ac6e0c942798c8a768fab2e3ab7e6a6b69b346f1
+ä
+Zapp\src\main\java\com\outsource\inovaufrpe\usuario\solicitante\gui\MainPerfilFragment.java,c\2\c22642ffe317ffcb7d4cbad6bf3ac7cdec067a04
+ç
+]app\src\main\java\com\outsource\inovaufrpe\usuario\servico\gui\VisualizarServicoActivity.java,4\a\4adb1f36ebc1980aa6547b7c7d3eae5d7bf86e36
+Ö
+Uapp\src\main\java\com\outsource\inovaufrpe\usuario\conversa\gui\MensagemActivity.java,b\5\b5c06bc1e1b483aa7ffcf1ba2a2de779a8668ee6
+Ü
+Vapp\src\main\java\com\outsource\inovaufrpe\usuario\utils\gui\SplashScreenActivity.java,e\7\e7cf100d83d5f048ce8d98fa1362010ca0e8d644

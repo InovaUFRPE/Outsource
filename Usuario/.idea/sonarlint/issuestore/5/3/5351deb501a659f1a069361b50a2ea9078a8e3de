@@ -1,0 +1,6 @@
+
+_squid:S1192"JDefine a constant instead of duplicating this literal "servicoID" 3 times.(î®Ø»
+rsquid:S1450"]Remove the "mLayoutManager" field and declare it as a local variable in the relevant methods.(¡¾•Ÿ
+zsquid:S1450"`Remove the "databaseReference" field and declare it as a local variable in the relevant methods.(Ï¨Î·ùÿÿÿÿ
+msquid:S1450"XRemove the "servicoID" field and declare it as a local variable in the relevant methods.(Þƒ«—
+isquid:MaximumInheritanceDepth"=This class has 10 parents which is greater than 5 authorized.(ƒ×í™ùÿÿÿÿ

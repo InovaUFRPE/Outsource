@@ -25,11 +25,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         }, DOIS_MIL);
 
-        Sessao sessao = Sessao.getInstancia(this.getApplicationContext());
-        sessao.setFiltro("");
-        sessao.setRange(10);
-        sessao.setUrgencia(true);
-        sessao.salvarSessao();
     }
 
     private void mostrarLogin() {

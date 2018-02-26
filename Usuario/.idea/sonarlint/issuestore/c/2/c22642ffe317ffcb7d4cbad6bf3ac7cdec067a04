@@ -1,0 +1,7 @@
+
+Bsquid:S1905"(Remove this unnecessary cast to "float".(çè›Ëúÿÿÿÿ
+›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÿŠÇ×ıÿÿÿÿ
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+lsquid:S00116"VRename this field "foto_perfil" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½ªõ
+csquid:UselessImportCheck"ARemove this unused import 'android.preference.PreferenceManager'.(ìùÖõ

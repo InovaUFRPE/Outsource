@@ -1,0 +1,9 @@
+
+Ksquid:S1068"6Remove this unused "valueEventListener" private field.(žÐý 
+rsquid:S1450"]Remove the "mLayoutManager" field and declare it as a local variable in the relevant methods.(¡¾•Ÿ
+qsquid:S1450"WRemove the "btenviar" field and declare it as a local variable in the relevant methods.(÷¾À»þÿÿÿÿ
+zsquid:S1450"`Remove the "databaseReference" field and declare it as a local variable in the relevant methods.(Ï¨Î·ùÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(×ü«
+jsquid:HiddenFieldCheck"ERename "databaseReference" which hides the field declared at line 55.(´ý®¹úÿÿÿÿ
+Vsquid:CallToDeprecatedMethod"0Remove this use of "getColor"; it is deprecated.(ËË‘¡
+isquid:MaximumInheritanceDepth"=This class has 10 parents which is greater than 5 authorized.(€à¡‚þÿÿÿÿ

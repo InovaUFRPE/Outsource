@@ -1,0 +1,27 @@
+
+Tsquid:UnusedPrivateMethod"2Remove this unused private "encerraDialog" method.(Ê—™R
+]squid:UnusedPrivateMethod":Remove this unused private "criarDialogNegociacao" method.(àŞı
+S"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(öÛ«°şÿÿÿÿ
+S"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(Ãß¯Ùüÿÿÿÿ
+gsquid:S1192"MDefine a constant instead of duplicating this literal "visualizacao" 8 times.(»ÂÓçûÿÿÿÿ
+dsquid:S1192"JDefine a constant instead of duplicating this literal "prestador" 6 times.(¨åĞÃûÿÿÿÿ
+[squid:S1192"FDefine a constant instead of duplicating this literal "dataf" 4 times.(‰çã½
+asquid:S1192"GDefine a constant instead of duplicating this literal "estado" 4 times.(”ú¼ÿÿÿÿÿ
+^squid:S1192"JDefine a constant instead of duplicating this literal "concluido" 5 times.(÷ ’w
+_squid:S1192"JDefine a constant instead of duplicating this literal "sobrenome" 3 times.(ç§è
+bsquid:S1192"HDefine a constant instead of duplicating this literal "servico" 9 times.(èÖ¾úÿÿÿÿ
+^squid:S1192"IDefine a constant instead of duplicating this literal "feedback" 3 times.(ÄŞÈ¼
+bsquid:S1192"HDefine a constant instead of duplicating this literal "usuario" 3 times.(ºÎ‡ÿÿÿÿÿ
+_squid:S1192"JDefine a constant instead of duplicating this literal "servicoID" 4 times.(Õİ¨Á
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ô¢àâ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(’ÁÌúÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ô¢àâ
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Ş‰
+isquid:MaximumInheritanceDepth"=This class has 10 parents which is greater than 5 authorized.(ƒãÂşÿÿÿÿ

@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.outsource.inovaufrpe.prestador.R;
 import com.outsource.inovaufrpe.prestador.prestador.dominio.Prestador;
 import com.outsource.inovaufrpe.prestador.utils.FirebaseAux;
+import com.outsource.inovaufrpe.prestador.utils.Sessao;
 import com.outsource.inovaufrpe.prestador.utils.Utils;
 
 public class EditarPerfilActivity extends AppCompatActivity {
@@ -142,6 +143,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         Utils.criarToast(EditarPerfilActivity.this, "Saiu com sucesso");
         firebase.getFirebaseAuth().signOut();
         LoginManager.getInstance().logOut();
+        Sessao.getInstancia(this).encerraSessao();
         finish();
         startActivity(new Intent(EditarPerfilActivity.this, LoginActivity.class));
     }
