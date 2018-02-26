@@ -49,6 +49,20 @@ public class NotificacaoActivity extends AppCompatActivity {
                 viewHolder.tvTextoNotificacao.setText(model.getTextoNotificacao());
                 viewHolder.tvtempo.setText(CardFormat.tempoFormat(model.getTempo()));
 
+                //ver tipo de notificação
+                switch (model.getTipoNotificacao()) {
+                    case 0://alguem ofertou
+                        viewHolder.tipoNotificacao.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                        break;
+                    case 1://prestador concluiu servico
+                        viewHolder.tipoNotificacao.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                        break;
+                }
+
+                //mudar fundo se a notificação não tiver lida
+                if (!model.isLido()) {
+                    viewHolder.cardNotificacao.setCardBackgroundColor(getResources().getColor(R.color.colorTextMuted));
+                }
             }
 
             @Override
