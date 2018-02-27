@@ -46,7 +46,7 @@ public class ServicosAndamentoFragment extends Fragment {
 
         lyNenhumServico = view.findViewById(R.id.nenhum_servico);
         TextView tvNenhumServico = view.findViewById(R.id.tvNenhumServico);
-        String s = R.string.nenhum_servico + " em andamento";
+        String s = getContext().getString(R.string.nenhum_servico) + " em andamento";
         tvNenhumServico.setText(s);
 
 //        mRecyclerViewNegociacao = view.findViewById(R.id.RecycleID);
