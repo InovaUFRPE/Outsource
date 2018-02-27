@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +31,7 @@ public class ConversaActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private DatabaseReference databaseReference;
     private String servicoID;
+    private RelativeLayout lyNenhumaConversa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class ConversaActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         recycleConversas.setLayoutManager(mLayoutManager);
 
+        lyNenhumaConversa = findViewById(R.id.nenhuma_conversa);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Query query;
@@ -56,6 +59,7 @@ public class ConversaActivity extends AppCompatActivity {
 
             @Override
             protected void populateViewHolder(final ConversaViewHolder viewHolder, Conversa model, int position) {
+                getItemCount();
                 viewHolder.tvnomeServico.setText(model.getServicoNome());
                 viewHolder.tvMensagem.setText(model.getUltimaMensagem());
                 viewHolder.tvtempo.setText(CardFormat.tempoFormat(model.getTempo()));
@@ -106,6 +110,16 @@ public class ConversaActivity extends AppCompatActivity {
 
                 });
                 return viewHolder;
+            }
+
+            @Override
+            public int getItemCount() {
+                if (super.getItemCount() < 1) {
+                    lyNenhumaConversa.setVisibility(View.VISIBLE);
+                }else{
+                    lyNenhumaConversa.setVisibility(View.GONE);
+                }
+                return super.getItemCount();
             }
         };
 

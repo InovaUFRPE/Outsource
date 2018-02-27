@@ -136,4 +136,5 @@
     <string name="aberto">aberto</string>
     <string name="andamento">andamento</string>
     <string name="nenhuma_notificacao">Você não possui nenhuma notificação. Calma, quando tiver uma, ela será mostrada aqui</string>
+    <string name="nenhuma_conversa_iniciada">Nenhuma conversa iniciada</string>
 </resources>
