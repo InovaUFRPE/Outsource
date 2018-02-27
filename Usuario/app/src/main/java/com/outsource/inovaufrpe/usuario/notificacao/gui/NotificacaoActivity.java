@@ -79,13 +79,12 @@ public class NotificacaoActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(NotificacaoActivity.this, VisualizarServicoActivity.class);
                         Notificacao notificacao = (Notificacao) adapter.getItem(position);
-                        Toast.makeText(NotificacaoActivity.this, ""+notificacao.getNotificacaoID()+" "+notificacao.getNomeServico(), Toast.LENGTH_SHORT).show();
                         it.putExtra("servicoID", notificacao.getServicoID());
                         it.putExtra("nomeServico", notificacao.getNomeServico());
                         it.putExtra("estado", notificacao.getEstado());
 
                         if (!notificacao.isLido()) {
-                            //databaseReference.child("notificacao").child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(notificacao.getNotificacaoID()).child("lido").setValue(true);
+                            databaseReference.child("notificacao").child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(notificacao.getNotificacaoID()).child("lido").setValue(true);
                         }
                         startActivity(it);
                     }
