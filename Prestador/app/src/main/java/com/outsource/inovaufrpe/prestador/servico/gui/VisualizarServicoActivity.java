@@ -271,7 +271,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 if (dataSnapshot.child("fundos").child("valor").getValue(double.class) == null) {
                     databaseReference.child("fundos").child("valor").setValue(God.getFundos());
                 } else {
-                    double fundos = God.getFundos()+dataSnapshot.child("fundos").getValue(Double.class);
+                    double fundos = God.getFundos()+dataSnapshot.child("fundos").child("valor").getValue(Double.class);
                     databaseReference.child("fundos").child("valor").setValue(fundos);
                 }
             }
