@@ -250,7 +250,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for(DataSnapshot data: dataSnapshot.getChildren()){
                                 String id = data.getKey();
-                                if(id!= null && !id.equals(servico.getIdPrestador())){
+                                if(id!= null && !id.equals(oferta.getPrestadorId())){
                                     enviarNotificacao(2,id);
                                 }
                             }
