@@ -103,7 +103,7 @@ public class ConversaActivity extends AppCompatActivity {
                         it.putExtra("usuarioID", conversa.getUsuarioID());
                         it.putExtra("estado", conversa.getEstadoServico());
                         if (!conversa.isLido()) {
-                            databaseReference.child("conversaUsuario").child(conversa.getUsuarioID()).child(conversa.getConversaID()).child("lido").setValue(true);
+                            databaseReference.child("conversaUsuario").child(conversa.getServicoID()).child(conversa.getConversaID()).child("lido").setValue(true);
                         }
                         startActivity(it);
                     }

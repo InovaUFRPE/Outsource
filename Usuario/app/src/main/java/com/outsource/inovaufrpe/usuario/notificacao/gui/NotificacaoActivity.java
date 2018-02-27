@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,11 +79,13 @@ public class NotificacaoActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         Intent it = new Intent(NotificacaoActivity.this, VisualizarServicoActivity.class);
                         Notificacao notificacao = (Notificacao) adapter.getItem(position);
+                        Toast.makeText(NotificacaoActivity.this, ""+notificacao.getNotificacaoID()+" "+notificacao.getNomeServico(), Toast.LENGTH_SHORT).show();
                         it.putExtra("servicoID", notificacao.getServicoID());
                         it.putExtra("nomeServico", notificacao.getNomeServico());
                         it.putExtra("estado", notificacao.getEstado());
+
                         if (!notificacao.isLido()) {
-                            databaseReference.child("notificacao").child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(notificacao.getNotificacaoID()).child("lido").setValue(true);
+                            //databaseReference.child("notificacao").child("usuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(notificacao.getNotificacaoID()).child("lido").setValue(true);
                         }
                         startActivity(it);
                     }

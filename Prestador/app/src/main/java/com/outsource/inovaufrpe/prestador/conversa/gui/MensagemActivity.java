@@ -206,6 +206,7 @@ public class MensagemActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 long data = new Date().getTime();
                 Notificacao notificacao = new Notificacao();
+                notificacao.setNotificacaoID(databaseReference.child("notificacao").child("usuario").child(usuarioID).push().getKey());
                 notificacao.setServicoID(servicoId);
                 notificacao.setNomeServico(nomeServico);
                 notificacao.setEstado(estado);
@@ -214,7 +215,7 @@ public class MensagemActivity extends AppCompatActivity {
                 notificacao.setTextoNotificacao("Alguém ofertou o seu serviço!");
                 notificacao.setTipoNotificacao(0);
                 notificacao.setLido(false);
-                databaseReference.child("notificacao").child("usuario").child(usuarioID).push().setValue(notificacao);
+                databaseReference.child("notificacao").child("usuario").child(usuarioID).child(notificacao.getNotificacaoID()).setValue(notificacao);
                 Toast.makeText(MensagemActivity.this, "Orçamento enviado com sucesso!", Toast.LENGTH_SHORT).show();
             }
         });
