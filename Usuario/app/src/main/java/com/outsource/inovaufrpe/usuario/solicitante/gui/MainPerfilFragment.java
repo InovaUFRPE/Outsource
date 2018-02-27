@@ -36,6 +36,8 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.app.Activity.RESULT_OK;
+
 public class MainPerfilFragment extends Fragment {
     ImageButton btnConfig;
     TextView nomeUsuario;
@@ -84,7 +86,23 @@ public class MainPerfilFragment extends Fragment {
                         Usuario user = dataSnapshot.getValue(Usuario.class);
                         String nomeCompleto = user.getNome() + " " + user.getSobrenome();
                         if(user.getFoto() != null && !user.getFoto().isEmpty()) {
-                            Picasso.with(getActivity()).load(Uri.parse(user.getFoto())).fit().centerCrop().into(foto_perfil);
+                            pbFoto.setVisibility(View.VISIBLE);
+                            pbFoto.setIndeterminate(true);
+                            Picasso.with(getActivity()).load(Uri.parse(user.getFoto())).fit().centerCrop().into(foto_perfil, new com.squareup.picasso.Callback(){
+                                @Override
+                                public void onSuccess() {
+                                    pbFoto.setIndeterminate(false);
+                                    pbFoto.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onError() {
+                                    pbFoto.setIndeterminate(false);
+                                    pbFoto.setVisibility(View.GONE);
+                                    Toast.makeText(getActivity(), "Falha ao Carregar foto!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                         }
                         nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(user.getEmail());
@@ -141,7 +159,7 @@ public class MainPerfilFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == GALLERY_INTENT ){
+        if(requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
             pbFoto.setVisibility(View.VISIBLE);
             pbFoto.setIndeterminate(true);
             Uri uri = data.getData();

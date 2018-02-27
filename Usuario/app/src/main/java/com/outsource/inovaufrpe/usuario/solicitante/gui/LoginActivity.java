@@ -86,8 +86,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.hasChild(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        dialog.dismiss();
                         finish();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
                     } else {
                         FirebaseAuth.getInstance().signOut();
                         LoginManager.getInstance().logOut();

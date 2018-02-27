@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.hasChild(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        dialog.dismiss();
                         finish();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     } else {

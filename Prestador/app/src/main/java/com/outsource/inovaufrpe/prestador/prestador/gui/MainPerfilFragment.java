@@ -36,6 +36,8 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,7 +95,24 @@ public class MainPerfilFragment extends Fragment {
                         nomeUsuario.setText(nomeCompleto);
                         emailUsuario.setText(prestador.getEmail());
                         if(prestador.getFoto() != null && !prestador.getFoto().isEmpty()) {
-                            Picasso.with(getActivity()).load(Uri.parse(prestador.getFoto())).fit().centerCrop().into(foto_perfil);
+                            pbFoto.setVisibility(View.VISIBLE);
+                            pbFoto.setIndeterminate(true);
+                            Picasso.with(getActivity()).load(Uri.parse(prestador.getFoto())).fit().centerCrop().into(foto_perfil, new com.squareup.picasso.Callback(){
+
+                                @Override
+                                public void onSuccess() {
+                                    pbFoto.setIndeterminate(false);
+                                    pbFoto.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onError() {
+                                    pbFoto.setIndeterminate(false);
+                                    pbFoto.setVisibility(View.GONE);
+                                    Toast.makeText(getActivity(), "Falha ao Carregar foto!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                         }
                         telefoneUsuario.setText(prestador.getTelefone());
                         numAvaliacoes.setText(String.valueOf(prestador.getPesoNota()));
@@ -147,7 +166,7 @@ public class MainPerfilFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == GALLERY_INTENT ){
+        if(requestCode == GALLERY_INTENT  && resultCode == RESULT_OK){
             if (data == null){
                 return;
             }
