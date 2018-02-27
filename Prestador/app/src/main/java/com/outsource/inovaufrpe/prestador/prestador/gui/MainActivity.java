@@ -87,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateOptionsMenu();
+    }
+
     private void selectFragment(MenuItem item) {
         FragmentTransaction ft = fm.beginTransaction();
 

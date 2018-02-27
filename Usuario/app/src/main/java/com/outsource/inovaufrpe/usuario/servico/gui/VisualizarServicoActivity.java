@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -250,7 +251,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for(DataSnapshot data: dataSnapshot.getChildren()){
                                 String id = data.getKey();
-                                if(id!= null && !id.equals(oferta.getPrestadorId())){
+                                if(id!= null && !id.trim().equals(oferta.getPrestadorId().trim())){
                                     enviarNotificacao(2,id);
                                 }
                             }
@@ -601,7 +602,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 enviarNotificacao(3,servico.getIdPrestador());
                 if(conclusao) {
                     databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()+servico.getIdPrestador()).child("estadoServico").setValue("concluido");
-                    databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()).child("estadoServico").setValue("concluido");
+                    databaseReference.child("conversaPrestador").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()).child("estadoServico").setValue("concluido");
                     atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                 }
                 dialog.dismiss();

@@ -59,21 +59,22 @@ public class ConversaActivity extends AppCompatActivity {
                 viewHolder.tvtempo.setText(CardFormat.tempoFormat(model.getTempo()));
 
                 //trocar cor para identificar tipo serviço
-                databaseReference.child("servico").child(model.getServicoID()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        boolean oi = dataSnapshot.getValue(Servico.class).isUrgente();
-                        if (!oi) {
-                            viewHolder.tipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                if(model.getServicoID() != null) {
+                    databaseReference.child("servico").child(model.getServicoID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            boolean oi = dataSnapshot.getValue(Servico.class).isUrgente();
+                            if (!oi) {
+                                viewHolder.tipoServico.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
-
+                        }
+                    });
+                }
                 //verificar lido da conversa
                 if (!model.isLido()) {
                     viewHolder.tvMensagem.setTypeface(Typeface.DEFAULT, Typeface.BOLD);

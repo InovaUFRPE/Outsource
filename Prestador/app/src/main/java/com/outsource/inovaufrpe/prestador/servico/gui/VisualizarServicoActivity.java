@@ -148,6 +148,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(VisualizarServicoActivity.this, "Orçamento enviado com sucesso!", Toast.LENGTH_SHORT).show();
+                                checaOferta();
                             }
                         });
                         enviarNotificacao(0);
@@ -490,7 +491,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                 enviarNotificacao(1);
                 if(conclusao){
                     databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()+servico.getIdPrestador()).child("estadoServico").setValue("concluido");
-                    databaseReference.child("conversaUsuario").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()).child("estadoServico").setValue("concluido");
+                    databaseReference.child("conversaPrestador").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(servico.getId()).child("estadoServico").setValue("concluido");
                     atualizarEstadoServico(servico.getEstado(), EstadoServico.CONCLUIDA.getValue());
                 }
                 dialog.dismiss();

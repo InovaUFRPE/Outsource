@@ -176,6 +176,7 @@ public class MensagemActivity extends AppCompatActivity {
         conversa.setTempo(data.getTime());
         conversa.setUltimaMensagem(mensagem.getTexto());
         conversa.setOrdemRef(new Timestamp(-1 * data.getTime()).toString());
+        conversa.setLido(true);
         databaseReference.child("conversaUsuario").child(usuarioID).child(servicoId+prestadorID).setValue(conversa);
         conversa.setNotificacao(true);
         conversa.setLido(false);

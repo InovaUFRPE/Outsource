@@ -218,6 +218,12 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateOptionsMenu();
+    }
+
     private void setMenuBadge(Query query, final TextView tv) {
         tv.setVisibility(View.GONE);
         query.addValueEventListener(new ValueEventListener() {

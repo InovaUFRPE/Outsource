@@ -17,7 +17,7 @@ public class Conversa {
     private long tempo;
     private String ordemRef;
     private boolean notificacao;
-    private boolean lido = false;
+    private boolean lido;
 
     public String getConversaID() {
         return conversaID;
