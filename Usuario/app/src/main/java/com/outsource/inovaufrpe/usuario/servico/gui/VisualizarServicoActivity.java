@@ -227,6 +227,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                     databaseReference.child("servico").child(servicoId).setValue(servico);
                     databaseReference.child("visualizacao").child(estadoId).child(servicoId).setValue(servicoView);
                     atualizarEstadoServico(estadoId, EstadoServico.ANDAMENTO.getValue());
+                    definirLayout();
 
                 }else {
                     Utils.criarToast(VisualizarServicoActivity.this,"O saldo na carteira é insuficiente.");
